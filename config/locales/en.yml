@@ -1,5 +1,14 @@
-# Sample localization file for English. Add more files in this directory for other locales.
-# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
-
 en:
-  hello: "Hello world"
+  activerecord:
+    models:
+      spree/vendor:
+        one: Vendor
+        other: Vendors
+  spree:
+    back_to_vendors_list: Back To Vendors List
+    edit_vendor: Edit Vendor
+    new_vendor: New Vendor
+    vendor_states:
+      active: Active
+      blocked: Blocked
+      pending: Pending

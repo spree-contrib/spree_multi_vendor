@@ -11,5 +11,7 @@ module Spree
         transition to: :blocked
       end
     end
+
+    self.whitelisted_ransackable_attributes = %w[name state]
   end
 end
