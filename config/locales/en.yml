@@ -4,6 +4,11 @@ en:
       spree/vendor:
         one: Vendor
         other: Vendors
+    attributes:
+      spree/vendor:
+        name: name
+        state: state
+        created_at: created at
   spree:
     back_to_vendors_list: Back To Vendors List
     edit_vendor: Edit Vendor
