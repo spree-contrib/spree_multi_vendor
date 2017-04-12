@@ -4,6 +4,10 @@ module Spree
 
     validates :name, presence: true, uniqueness: true
 
+    has_many :stock_locations
+
+    after_create :create_stock_location
+
     state_machine :state, initial: :pending do
       event :activate do
         transition to: :active
@@ -15,5 +19,11 @@ module Spree
     end
 
     self.whitelisted_ransackable_attributes = %w[name state]
+
+    private
+
+    def create_stock_location
+      stock_locations.where(name: name, country: Spree::Country.default).first_or_create!
+    end
   end
 end
