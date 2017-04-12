@@ -1,5 +1,7 @@
 module Spree
   class Vendor < Spree::Base
+    acts_as_paranoid
+
     validates :name, presence: true, uniqueness: true
 
     state_machine :state, initial: :pending do
