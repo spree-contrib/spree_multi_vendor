@@ -1,12 +1,12 @@
-# Spree Vendors
+# Spree Multi Vendor
 
-This is a collection of building blocks for creating marketplace or suppliers features for Spree
+Spree multi vendor marketplace extension
 
 ## Installation
 
 1. Add this extension to your Gemfile with this line:
   ```ruby
-  gem 'spree_vendors', github: 'spree-contrib/spree_vendors'
+  gem 'spree_multi_vendor', github: 'spree-contrib/spree_multi_vendor'
   ```
 
 2. Install the gem using Bundler:
@@ -16,7 +16,7 @@ This is a collection of building blocks for creating marketplace or suppliers fe
 
 3. Copy & run migrations
   ```ruby
-  bundle exec rails g spree_vendors:install
+  bundle exec rails g spree_multi_vendor:install
   ```
 
 4. Restart your server
@@ -36,7 +36,7 @@ When testing your applications integration with this extension you may use it's 
 Simply add this require statement to your spec_helper:
 
 ```ruby
-require 'spree_vendors/factories'
+require 'spree_multi_vendor/factories'
 ```
 
 
@@ -48,7 +48,7 @@ pull request.
 
 ## License
 
-Spree Vendors is copyright © 2017
+Spree Multi Vendor is copyright © 2017
 [Spark Solutions Sp. z o.o.][spark]. It is free software,
 and may be redistributed under the terms specified in the
 [LICENCE](LICENSE) file.

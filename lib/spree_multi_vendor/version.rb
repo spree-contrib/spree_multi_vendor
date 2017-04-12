@@ -1,7 +1,7 @@
-module SpreeVendors
+module SpreeMultiVendor
   module_function
 
-  # Returns the version of the currently loaded SpreeVendors as a
+  # Returns the version of the currently loaded SpreeMultiVendor as a
   # <tt>Gem::Version</tt>.
   def version
     Gem::Version.new VERSION::STRING

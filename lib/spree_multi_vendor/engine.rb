@@ -1,8 +1,8 @@
-module SpreeVendors
+module SpreeMultiVendor
   class Engine < Rails::Engine
     require 'spree/core'
     isolate_namespace Spree
-    engine_name 'spree_vendors'
+    engine_name 'spree_multi_vendor'
 
     # use rspec for tests
     config.generators do |g|
