@@ -2,9 +2,11 @@ module Spree
   class Vendor < Spree::Base
     acts_as_paranoid
 
-    validates :name, presence: true, uniqueness: true
+    validates :name, presence: true, uniqueness: { case_sensitive: false }
 
-    has_many :stock_locations
+    has_many :stock_locations, class_name: Spree::StockLocation
+    has_many :vendor_users, class_name: Spree::VendorUser
+    has_many :users, through: :vendor_users
 
     after_create :create_stock_location
 
