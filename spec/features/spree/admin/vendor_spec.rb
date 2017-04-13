@@ -3,10 +3,7 @@ require 'spec_helper'
 RSpec.feature 'Admin Vendors', :js do
   stub_authorization!
 
-  let!(:country) { create(:country) }
-
   background do
-    Spree::Config[:default_country_id] = country.id
     create(:vendor, name: 'My vendor')
     visit spree.admin_vendors_path
   end
