@@ -2,9 +2,9 @@ class Spree::VendorAbility
   include CanCan::Ability
 
   def initialize(user)
-    @vendors_ids = user.vendors.pluck(:id)
+    @vendor_ids = user.vendors.pluck(:id)
 
-    if @vendors_ids.any?
+    if @vendor_ids.any?
       apply_order_permissions
       apply_image_permissions
       apply_price_permissions
@@ -24,7 +24,7 @@ class Spree::VendorAbility
 
   def apply_order_permissions
     can [:manage, :modify], Spree::Order do |order|
-      order.joins(line_items: :variant).where(vendor_id: @vendors_ids)
+      order.joins(line_items: :variant).where(vendor_id: @vendor_ids)
     end
   end
 
@@ -32,7 +32,7 @@ class Spree::VendorAbility
     can :create, Spree::Image
 
     can [:manage, :modify], Spree::Image do |image|
-      image.viewable_type == 'Spree::Variant' && @vendors_ids.include?(image.viewable.vendor_id)
+      image.viewable_type == 'Spree::Variant' && @vendor_ids.include?(image.viewable.vendor_id)
     end
   end
 
