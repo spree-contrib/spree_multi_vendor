@@ -2,14 +2,17 @@ class Spree::VendorAbility
   include CanCan::Ability
 
   def initialize(user)
-    @vendors_ids = user.vendors.pluck(:id)
+    @vendor_ids = user.vendors.pluck(:id)
 
-    if @vendors_ids.any?
+    if @vendor_ids.any?
       apply_order_permissions
       apply_image_permissions
+      apply_option_type_permissions
       apply_price_permissions
       apply_product_option_type_permissions
       apply_product_permissions
+      apply_product_properties_permissions
+      apply_properties_permissions
       apply_shipping_methods_permissions
       apply_stock_permissions
       apply_stock_item_permissions
@@ -24,7 +27,7 @@ class Spree::VendorAbility
 
   def apply_order_permissions
     can [:manage, :modify], Spree::Order do |order|
-      order.joins(line_items: :variant).where(vendor_id: @vendors_ids)
+      order.joins(line_items: :variant).where(vendor_id: @vendor_ids)
     end
   end
 
@@ -32,8 +35,14 @@ class Spree::VendorAbility
     can :create, Spree::Image
 
     can [:manage, :modify], Spree::Image do |image|
-      image.viewable_type == 'Spree::Variant' && @vendors_ids.include?(image.viewable.vendor_id)
+      image.viewable_type == 'Spree::Variant' && @vendor_ids.include?(image.viewable.vendor_id)
     end
+  end
+
+  def apply_option_type_permissions
+    cannot :display, Spree::OptionType
+    can :manage, Spree::OptionType, vendor_id: @vendor_ids
+    can :create, Spree::OptionType
   end
 
   def apply_price_permissions
@@ -48,6 +57,17 @@ class Spree::VendorAbility
     cannot :display, Spree::Product
     can :manage, Spree::Product, vendor_id: @vendor_ids
     can :create, Spree::Product
+  end
+
+  def apply_properties_permissions
+    cannot :display, Spree::Property
+    can :manage, Spree::Property, vendor_id: @vendor_ids
+    can :create, Spree::Property
+  end
+
+  def apply_product_properties_permissions
+    cannot :display, Spree::ProductProperty
+    can :manage, Spree::ProductProperty, property: { vendor_id: @vendor_ids }
   end
 
   def apply_shipping_methods_permissions

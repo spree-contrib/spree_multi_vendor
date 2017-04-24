@@ -7,6 +7,7 @@ module Spree
     has_many :stock_locations, class_name: Spree::StockLocation
     has_many :vendor_users, class_name: Spree::VendorUser
     has_many :users, through: :vendor_users
+    has_many :products
 
     after_create :create_stock_location
 

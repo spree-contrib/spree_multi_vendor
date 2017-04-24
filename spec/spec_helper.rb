@@ -15,6 +15,9 @@ require 'ffaker'
 require 'rspec/rails'
 require 'shoulda/matchers'
 
+include Warden::Test::Helpers
+Warden.test_mode!
+
 RSpec.configure do |config|
   config.mock_with :rspec
   config.use_transactional_fixtures = false
