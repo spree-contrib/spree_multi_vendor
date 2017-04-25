@@ -1,10 +1,11 @@
 Spree::ProductProperty.class_eval do
-  def property_name=(name)
-    if name.present?
-      # don't use `find_by :name` to workaround globalize/globalize#423 bug
-      self.property = Spree::Property
-                      .where(name: name, vendor_id: product.try(:vendor_id))
-                      .first_or_create(presentation: name)
-    end
+  attr_accessor :vendor_id
+
+  before_validation :set_vendor_id, unless: proc { property.vendor_id }
+
+  private
+
+  def set_vendor_id
+    property.update(vendor_id: vendor_id)
   end
 end

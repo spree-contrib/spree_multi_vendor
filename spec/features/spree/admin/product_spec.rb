@@ -74,7 +74,7 @@ RSpec.feature 'Admin Products', :js do
         fill_in 'product[product_properties_attributes][0][property_name]', with: 'Testing edit'
         click_button 'Update'
         expect(page).to have_text 'successfully updated!'
-        # expect(Spree::ProductProperty.last.property.vendor_id).to eq vendor.id
+        expect(Spree::ProductProperty.last.property.vendor_id).to eq vendor.id
       end
     end
 
