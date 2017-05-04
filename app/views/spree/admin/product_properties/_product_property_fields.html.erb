@@ -11,8 +11,8 @@
   <td class='value'>
     <%= f.text_field :value, class: 'form-control' %>
   </td>
-  <% if spree_current_user.vendors.any? %>
-    <%= f.hidden_field :vendor_id, value: spree_current_user.vendors.first.id %>
+  <% if spree_current_vendor %>
+    <%= f.hidden_field :vendor_id, value: spree_current_vendor.id %>
   <% end %>
   <td class="actions actions-1">
     <% if f.object.persisted? && can?(:destroy, f.object) %>
