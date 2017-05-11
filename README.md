@@ -1,6 +1,20 @@
 # Spree Multi Vendor
 
-Spree multi vendor marketplace extension
+This is a spree multi vendor marketplace extension.
+
+# What it has?
+Vendorized management of:
+
+* Products
+* Option Types
+* Properties
+* Stock Locations
+* Shipping Methods
+
+# What it doesn't have (yet)?
+* Vendorized Orders management
+
+Contributions welcome! :)
 
 ## Installation
 
