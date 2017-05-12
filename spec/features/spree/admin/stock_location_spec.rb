@@ -28,6 +28,13 @@ RSpec.feature 'Admin Stock Locations', :js do
       end
     end
 
+    context 'stock movements' do
+      scenario 'displays stock movements for vendor stock location' do
+        click_on 'Stock Movements'
+        expect(page).to have_text 'Stock Movements for Test vendor'
+      end
+    end
+
     context 'create' do
       scenario 'can create a new stock location' do
         click_link 'New Stock Location'

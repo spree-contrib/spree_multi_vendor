@@ -80,7 +80,7 @@ class Spree::VendorAbility
   end
 
   def apply_stock_item_permissions
-    can [:admin, :modify], Spree::StockItem
+    can [:admin, :modify, :read], Spree::StockItem, stock_location: { vendor_id: @vendor_ids }
   end
 
   def apply_stock_location_permissions
@@ -90,6 +90,7 @@ class Spree::VendorAbility
 
   def apply_stock_movement_permissions
     can :create, Spree::StockMovement
+    can :manage, Spree::StockMovement, stock_item: { stock_location: { vendor_id: @vendor_ids } }
   end
 
   def apply_variant_permissions
