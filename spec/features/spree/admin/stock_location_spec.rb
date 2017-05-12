@@ -2,6 +2,7 @@ require 'spec_helper'
 
 RSpec.feature 'Admin Stock Locations', :js do
   let(:vendor) { create(:vendor) }
+  let!(:product) { create(:product, vendor_id: vendor.id, name: 'Test') }
   let!(:user) { create(:user, vendors: [vendor]) }
   let!(:stock_location) { create(:stock_location, name: 'Test') }
 
@@ -32,6 +33,20 @@ RSpec.feature 'Admin Stock Locations', :js do
       scenario 'displays stock movements for vendor stock location' do
         click_on 'Stock Movements'
         expect(page).to have_text 'Stock Movements for Test vendor'
+      end
+
+      scenario 'can create a new stock movement for vendor stock location' do
+        click_on 'Stock Movements'
+        click_on 'New Stock Movement'
+        expect(current_path).to eq spree.new_admin_stock_location_stock_movement_path(vendor.stock_locations.first)
+
+        fill_in 'stock_movement_quantity', with: 5
+        fill_in 'stock_movement_stock_item_id', with: 1
+
+        click_button 'Create'
+
+        expect(page).to have_text 'successfully created!'
+        expect(Spree::StockMovement.count).to eq 1
       end
     end
 
