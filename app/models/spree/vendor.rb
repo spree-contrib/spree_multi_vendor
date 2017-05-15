@@ -4,11 +4,14 @@ module Spree
 
     validates :name, presence: true, uniqueness: { case_sensitive: false }
 
-    has_many :shipping_methods, class_name: Spree::ShippingMethod
-    has_many :stock_locations, class_name: Spree::StockLocation
-    has_many :vendor_users, class_name: Spree::VendorUser
-    has_many :users, through: :vendor_users
+    has_many :option_types
     has_many :products
+    has_many :properties
+    has_many :shipping_methods
+    has_many :stock_locations
+    has_many :variants
+    has_many :vendor_users
+    has_many :users, through: :vendor_users
 
     after_create :create_stock_location
 
