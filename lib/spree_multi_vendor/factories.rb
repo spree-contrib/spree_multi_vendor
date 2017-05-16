@@ -1,5 +1,7 @@
 FactoryGirl.define do
-  Dir[Dir.pwd + '/spec/factories/**/*.rb'].each do |factory|
-    require File.expand_path(factory)
+  GEM_ROOT = File.dirname(File.dirname(File.dirname(__FILE__)))
+
+  Dir[File.join(GEM_ROOT, 'spec', 'factories', '**', '*.rb')].each do |factory|
+    require(factory)
   end
 end
