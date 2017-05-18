@@ -5,6 +5,7 @@ class Spree::VendorAbility
     @vendor_ids = user.vendors.pluck(:id)
 
     if @vendor_ids.any?
+      apply_classifications_permissions
       apply_order_permissions
       apply_image_permissions
       apply_option_type_permissions
@@ -24,6 +25,10 @@ class Spree::VendorAbility
   end
 
   private
+
+  def apply_classifications_permissions
+    can :manage, Spree::Classification, product: { vendor_id: @vendor_ids }
+  end
 
   def apply_order_permissions
     can [:manage, :modify], Spree::Order do |order|
