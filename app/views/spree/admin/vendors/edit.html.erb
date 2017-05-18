@@ -3,8 +3,6 @@
   <%= @vendor.name %>
 <% end %>
 
-<%= render partial: 'spree/admin/shared/error_messages', locals: { target: @vendor } %>
-
 <%= form_for [:admin, @vendor] do |f| %>
   <fieldset>
     <%= render partial: 'form', locals: { f: f } %>
