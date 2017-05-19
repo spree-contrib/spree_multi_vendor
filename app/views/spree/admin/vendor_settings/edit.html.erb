@@ -1,0 +1,20 @@
+<% content_for :page_title do %>
+  <%= @vendor.name %>
+<% end %>
+
+<%= form_for [:admin, @vendor], url: admin_vendor_settings_url do |f| %>
+  <fieldset>
+    <%= render partial: 'spree/shared/error_messages', locals: { target: @vendor } %>
+      <div class="form-group">
+        <%= f.field_container :name do %>
+        <%= f.label :name %>
+        <%= f.text_field :name, class: 'form-control' %>
+      <% end %>
+    </div>
+    <div class="form-actions" data-hook="buttons">
+      <%= button Spree.t('actions.update'), 'save' %>
+      <span class="or"><%= Spree.t(:or) %></span>
+      <%= button_link_to Spree.t('actions.cancel'), admin_vendor_settings_url, icon: 'delete' %>
+    </div>
+  </fieldset>
+<% end %>
