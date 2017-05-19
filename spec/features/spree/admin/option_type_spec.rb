@@ -3,14 +3,14 @@ require 'spec_helper'
 RSpec.feature 'Admin Option Types', :js do
   let(:vendor) { create(:vendor) }
   let!(:user) { create(:user, vendors: [vendor]) }
+  let!(:admin) { create(:admin_user) }
   let!(:option_type) { create(:option_type, name: 'Test1') }
   let!(:vendor_option_type) { create(:option_type, vendor_id: vendor.id, name: 'Test2') }
 
   context 'for user with admin role' do
     context 'index' do
-      stub_authorization!
-
       scenario 'displays all option types' do
+        login_as(admin, scope: :spree_user)
         visit spree.admin_option_types_path
         expect(page).to have_selector('tr', count: 3)
       end

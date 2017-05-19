@@ -3,6 +3,7 @@ require 'spec_helper'
 RSpec.feature 'Admin Products', :js do
   let(:vendor) { create(:vendor) }
   let!(:user) { create(:user, vendors: [vendor]) }
+  let!(:admin) { create(:admin_user) }
   let!(:option_type) { create(:option_type, name: 'Testing option', vendor_id: vendor.id) }
   let!(:option_value) { create(:option_value, option_type: option_type) }
   let!(:product) { create(:product, sku: 'Test1') }
@@ -10,9 +11,8 @@ RSpec.feature 'Admin Products', :js do
 
   context 'for user with admin role' do
     context 'index' do
-      stub_authorization!
-
       scenario 'displays all products' do
+        login_as(admin, scope: :spree_user)
         visit spree.admin_products_path
         expect(page).to have_selector('tr', count: 3)
       end
