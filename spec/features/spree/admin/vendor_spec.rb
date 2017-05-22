@@ -1,9 +1,10 @@
 require 'spec_helper'
 
 RSpec.feature 'Admin Vendors', :js do
-  stub_authorization!
+  let!(:admin) { create(:admin_user) }
 
   background do
+    login_as(admin, scope: :spree_user)
     create(:vendor, name: 'My vendor')
     visit spree.admin_vendors_path
   end

@@ -3,14 +3,14 @@ require 'spec_helper'
 RSpec.feature 'Admin Property', :js do
   let(:vendor) { create(:vendor) }
   let!(:user) { create(:user, vendors: [vendor]) }
+  let!(:admin) { create(:admin_user) }
   let!(:property) { create(:property, name: 'Test1') }
   let!(:vendor_property) { create(:property, vendor_id: vendor.id, name: 'Test2') }
 
   context 'for user with admin role' do
     context 'index' do
-      stub_authorization!
-
       scenario 'displays all properties' do
+        login_as(admin, scope: :spree_user)
         visit spree.admin_properties_path
         expect(page).to have_selector('tr', count: 3)
       end

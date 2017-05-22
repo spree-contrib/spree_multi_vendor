@@ -3,14 +3,14 @@ require 'spec_helper'
 RSpec.feature 'Admin Shipping Methods', :js do
   let(:vendor) { create(:vendor) }
   let!(:user) { create(:user, vendors: [vendor]) }
+  let!(:admin) { create(:admin_user) }
   let!(:shipping_method) { create(:shipping_method, name: 'Test') }
   let!(:vendor_shipping_method) { create(:shipping_method, name: 'Test', vendor: vendor) }
 
   context 'for user with admin role' do
     context 'index' do
-      stub_authorization!
-
       scenario 'displays all shipping methods' do
+        login_as(admin, scope: :spree_user)
         visit spree.admin_shipping_methods_path
         expect(page).to have_selector('tr', count: 3)
       end

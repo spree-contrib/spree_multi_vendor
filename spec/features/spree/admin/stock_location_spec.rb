@@ -4,13 +4,13 @@ RSpec.feature 'Admin Stock Locations', :js do
   let(:vendor) { create(:vendor) }
   let!(:product) { create(:product, vendor_id: vendor.id, name: 'Test') }
   let!(:user) { create(:user, vendors: [vendor]) }
+  let!(:admin) { create(:admin_user) }
   let!(:stock_location) { create(:stock_location, name: 'Test') }
 
   context 'for user with admin role' do
     context 'index' do
-      stub_authorization!
-
       scenario 'displays all stock locations' do
+        login_as(admin, scope: :spree_user)
         visit spree.admin_stock_locations_path
         expect(page).to have_selector('tr', count: 3)
       end
