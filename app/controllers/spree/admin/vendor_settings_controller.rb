@@ -1,8 +1,8 @@
 module Spree
   module Admin
     class VendorSettingsController < Spree::Admin::BaseController
-      before_filter :authorize
-      before_filter :load_vendor
+      before_action :authorize
+      before_action :load_vendor
 
       def update
         if @vendor.update(vendor_params)
