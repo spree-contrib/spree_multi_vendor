@@ -10,6 +10,7 @@ Vendorized management of:
 * Properties
 * Stock Locations
 * Shipping Methods
+* Vendor info
 
 # What it doesn't have (yet)?
 * Vendorized Orders management
