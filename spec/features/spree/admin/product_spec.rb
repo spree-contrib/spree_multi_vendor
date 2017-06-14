@@ -10,11 +10,23 @@ RSpec.feature 'Admin Products', :js do
   let!(:vendor_product) { create(:product, vendor: vendor, sku: 'Test2', option_types: [option_type]) }
 
   context 'for user with admin role' do
+    before { login_as(admin, scope: :spree_user) }
+
     context 'index' do
       scenario 'displays all products' do
-        login_as(admin, scope: :spree_user)
         visit spree.admin_products_path
         expect(page).to have_selector('tr', count: 3)
+      end
+    end
+
+    context 'create variant' do
+      scenario 'creates new variant with vendor id assigned' do
+        visit spree.admin_product_variants_path(vendor_product)
+        click_link 'New Variant'
+        select 'S'
+        click_button 'Create'
+        expect(page).to have_text 'successfully created!'
+        expect(Spree::Variant.last.vendor_id).to eq vendor.id
       end
     end
   end
@@ -38,7 +50,7 @@ RSpec.feature 'Admin Products', :js do
 
         fill_in 'product_name', with: 'Vendor product'
         fill_in 'product_price', with: 15
-        select 'ShippingCategory #3'
+        select Spree::ShippingCategory.last.name
 
         click_button 'Create'
 
