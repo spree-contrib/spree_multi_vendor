@@ -32,9 +32,8 @@ class Spree::VendorAbility
   end
 
   def apply_order_permissions
-    can [:manage, :modify], Spree::Order do |order|
-      order.joins(line_items: :variant).where(vendor_id: @vendor_ids)
-    end
+    cannot :create, Spree::Order
+    can [:admin, :index, :edit, :update], Spree::Order, line_items: { variant: { vendor_id: @vendor_ids } }
   end
 
   def apply_image_permissions
