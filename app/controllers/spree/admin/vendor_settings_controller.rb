@@ -23,7 +23,7 @@ module Spree
       end
 
       def vendor_params
-        params.require(:vendor).permit(:name)
+        params.require(:vendor).permit(Spree::PermittedAttributes.vendor_attributes)
       end
     end
   end
