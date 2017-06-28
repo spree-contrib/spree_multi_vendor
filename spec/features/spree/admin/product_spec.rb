@@ -73,6 +73,14 @@ RSpec.feature 'Admin Products', :js do
         expect(page).to have_text 'Testing edit'
       end
 
+      scenario 'can update product master price' do
+        fill_in 'product_price', with: 123
+        click_button 'Update'
+        expect(page).to have_text 'successfully updated!'
+        vendor_product.reload
+        expect(vendor_product.price).to eq 123
+      end
+
       scenario 'shows validation error with blank name' do
         fill_in 'product_name', with: ''
         click_button 'Update'
