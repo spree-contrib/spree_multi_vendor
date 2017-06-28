@@ -1,4 +1,4 @@
-class AddVendorIdToSpreeModels < ActiveRecord::Migration
+class AddVendorIdToSpreeModels < SpreeExtension::Migration[4.2]
   def change
     table_names = %w[
       option_types
