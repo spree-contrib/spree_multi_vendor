@@ -10,7 +10,6 @@ rescue LoadError
   exit
 end
 
-require 'pry'
 require 'ffaker'
 require 'rspec/rails'
 require 'shoulda/matchers'

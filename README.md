@@ -21,7 +21,7 @@ Contributions welcome! :)
 
 1. Add this extension to your Gemfile with this line:
   ```ruby
-  gem 'spree_multi_vendor', github: 'spree-contrib/spree_multi_vendor'
+  gem 'spree_multi_vendor', github: 'spark-solutions/spree_multi_vendor'
   ```
 
 2. Install the gem using Bundler:
