@@ -1,10 +1,7 @@
 sudo: required
-dist: trusty
+dist: precise
 
 language: ruby
-cache:
-  directories:
-    - vendor/bundle
 
 env:
   - DB=postgres
