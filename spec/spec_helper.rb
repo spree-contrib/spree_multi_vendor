@@ -12,11 +12,25 @@ end
 
 require 'pry'
 require 'ffaker'
+require 'factory_bot'
+require 'selenium/webdriver'
 require 'rspec/rails'
 require 'shoulda/matchers'
 
 include Warden::Test::Helpers
 Warden.test_mode!
+
+capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(
+  'chromeOptions' => {
+    'args' => ['--headless', '--disable-gpu']
+  }
+)
+
+Capybara.register_driver :chrome do |app|
+  Capybara::Selenium::Driver.new(app, browser: :chrome, desired_capabilities: capabilities)
+end
+
+Capybara.javascript_driver = :chrome
 
 RSpec.configure do |config|
   config.mock_with :rspec
