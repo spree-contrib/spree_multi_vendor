@@ -16,7 +16,7 @@ RSpec.configure do |config|
 
   config.before :each do
     reset_spree_preferences do |config|
-      config.default_country_id = FactoryGirl.create(:country).id
+      config.default_country_id = FactoryBot.create(:country).id
     end
   end
 end

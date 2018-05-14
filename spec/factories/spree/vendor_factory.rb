@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :vendor, class: Spree::Vendor do
     name 'Test vendor'
 
