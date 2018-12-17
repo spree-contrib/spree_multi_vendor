@@ -3,18 +3,18 @@
 [![Build Status](https://travis-ci.org/spree-contrib/spree_multi_vendor.svg?branch=master)](https://travis-ci.org/spree-contrib/spree_multi_vendor)
 
 This is a lightweight spree multi vendor marketplace extension. It's a great starting
-point if your building a marketplace on top of Spree.
+point if you're building a marketplace on top of Spree.
 
 ## Features
 
 You can create and manage Vendors who can manage on their own:
 
-* Products
-* Option Types
-* Properties
-* Stock Locations
-* Shipping Methods
-* Vendor profile
+- [X] Products
+- [X] Option Types
+- [X] Properties
+- [X] Stock Locations
+- [X] Shipping Methods
+- [X] Vendor profile
 
 ## TODO
 
