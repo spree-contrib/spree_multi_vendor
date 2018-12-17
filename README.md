@@ -1,19 +1,24 @@
 # Spree Multi Vendor
 
-This is a spree multi vendor marketplace extension.
+[![Build Status](https://travis-ci.org/spree-contrib/spree_multi_vendor.svg?branch=master)](https://travis-ci.org/spree-contrib/spree_multi_vendor)
 
-# What it has?
-Vendorized management of:
+This is a lightweight spree multi vendor marketplace extension. It's a great starting
+point if your building a marketplace on top of Spree.
+
+## Features
+
+You can create and manage Vendors who can manage on their own:
 
 * Products
 * Option Types
 * Properties
 * Stock Locations
 * Shipping Methods
-* Vendor info
+* Vendor profile
 
-# What it doesn't have (yet)?
-* Vendorized Orders management
+## TODO
+
+ - [ ] Vendors can manage Orders
 
 Contributions welcome! :)
 
@@ -54,7 +59,6 @@ Simply add this require statement to your spec_helper:
 require 'spree_multi_vendor/factories'
 ```
 
-
 ## Contributing
 
 If you'd like to contribute, please take a look at the
@@ -63,7 +67,7 @@ pull request.
 
 ## License
 
-Spree Multi Vendor is copyright © 2017
+Spree Multi Vendor is copyright © 2017-2018
 [Spark Solutions Sp. z o.o.][spark]. It is free software,
 and may be redistributed under the terms specified in the
 [LICENCE](LICENSE) file.
@@ -71,6 +75,7 @@ and may be redistributed under the terms specified in the
 [LICENSE]: https://github.com/spark-solutions/spree_braintree_vzero/blob/master/LICENSE
 
 ## About Spark Solutions
+
 [![Spark Solutions](http://sparksolutions.co/wp-content/uploads/2015/01/logo-ss-tr-221x100.png)][spark]
 
 Spree Vendors is maintained by [Spark Solutions Sp. z o.o.](http://sparksolutions.co?utm_source=github)

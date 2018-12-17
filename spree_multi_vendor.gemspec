@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.version     = SpreeMultiVendor.version
   s.summary     = 'Spree multi vendor marketplace extension'
   s.description = 'Spree multi vendor marketplace extension'
-  s.required_ruby_version = '>= 2.2.2'
+  s.required_ruby_version = '>= 2.3.3'
 
   s.author    = 'Spark Solutions'
   s.email     = 'we@sparksolutions.co'
@@ -22,7 +22,9 @@ Gem::Specification.new do |s|
   s.require_path = 'lib'
   s.requirements << 'none'
 
-  s.add_dependency 'spree_core', '>= 3.1.0', '< 4.0'
+  spree_version = '>= 3.2.0', '< 4.0'
+  s.add_dependency 'spree_core', spree_version
+  s.add_dependency 'spree_backend', spree_version
   s.add_dependency 'spree_extension'
 
   s.add_development_dependency 'appraisal'
@@ -32,11 +34,12 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'database_cleaner'
   s.add_development_dependency 'factory_bot'
   s.add_development_dependency 'ffaker'
-  s.add_development_dependency 'mysql2', '~> 0.3.18'
+  s.add_development_dependency 'mysql2', '~> 0.5.1'
   s.add_development_dependency 'pg' , '~> 0.18'
   s.add_development_dependency 'poltergeist'
-  s.add_development_dependency 'puma'
   s.add_development_dependency 'pry'
+  s.add_development_dependency 'puma'
+  s.add_development_dependency 'rails-controller-testing'
   s.add_development_dependency 'rspec-rails'
   s.add_development_dependency 'sass-rails'
   s.add_development_dependency 'selenium-webdriver'
