@@ -19,6 +19,7 @@ You can create and manage Vendors who can manage on their own:
 ## TODO
 
  - [ ] Vendors can manage Orders
+ - [ ] UI for Super Admin to assign Users to Vendors
 
 Contributions welcome! :)
 
