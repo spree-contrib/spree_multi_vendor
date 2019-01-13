@@ -15,6 +15,8 @@ module Spree
     end
 
     has_many :users, through: :vendor_users
+    has_many :line_items, through: :variants
+    has_many :orders, through: :line_items
 
     after_create :create_stock_location
 
