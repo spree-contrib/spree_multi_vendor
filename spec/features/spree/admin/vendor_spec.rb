@@ -56,7 +56,7 @@ RSpec.feature 'Admin Vendors', :js do
   context 'edit' do
     background do
       within_row(1) { click_icon :edit }
-      expect(current_path).to eq spree.edit_admin_vendor_path(1)
+      expect(current_path).to eq spree.edit_admin_vendor_path('my-vendor')
     end
 
     scenario 'can update an existing vendor' do
