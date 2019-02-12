@@ -25,23 +25,29 @@ Contributions welcome! :)
 ## Installation
 
 1. Add this extension to your Gemfile with this line:
-  ```ruby
-  gem 'spree_multi_vendor', github: 'spree-contrib/spree_multi_vendor'
-  ```
+    ```ruby
+    gem 'spree_multi_vendor', github: 'spree-contrib/spree_multi_vendor'
+    ```
 
 2. Install the gem using Bundler:
-  ```ruby
-  bundle install
-  ```
+    ```ruby
+    bundle install
+    ```
 
 3. Copy & run migrations
-  ```ruby
-  bundle exec rails g spree_multi_vendor:install
-  ```
+    ```ruby
+    bundle exec rails g spree_multi_vendor:install
+    ```
 
 4. Restart your server
 
-  If your server was running, restart it so that it can find the assets properly.
+    If your server was running, restart it so that it can find the assets properly.
+
+5. Optionally you can also create sample Vendor by running:
+
+   ```bash
+   bundle exec rake spree_multi_vendor:sample:create
+   ```
 
 ## Testing
 
