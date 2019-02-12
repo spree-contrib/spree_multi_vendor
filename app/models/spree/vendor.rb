@@ -1,8 +1,12 @@
 module Spree
   class Vendor < Spree::Base
+    extend FriendlyId
+
     acts_as_paranoid
+    friendly_id :name, use: :slugged
 
     validates :name, presence: true, uniqueness: { case_sensitive: false }
+    validates :slug, uniqueness: true
 
     with_options dependent: :destroy do
       has_many :option_types
