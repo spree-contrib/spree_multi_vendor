@@ -14,6 +14,7 @@ RSpec.feature 'Admin Vendors', :js do
       within_row(1) do
         expect(column_text(1)).to eq 'My vendor'
         expect(column_text(2)).to eq 'pending'
+        expect(column_text(3)).to eq 'About us...'
       end
     end
   end
@@ -24,6 +25,7 @@ RSpec.feature 'Admin Vendors', :js do
       expect(current_path).to eq spree.new_admin_vendor_path
 
       fill_in 'vendor_name', with: 'Test'
+      fill_in 'vendor_about_us', with: 'About...'
       select 'Blocked'
 
       click_button 'Create'
@@ -61,15 +63,23 @@ RSpec.feature 'Admin Vendors', :js do
 
     scenario 'can update an existing vendor' do
       fill_in 'vendor_name', with: 'Testing edit'
+      fill_in 'vendor_about_us', with: 'Testing about us'
       click_button 'Update'
       expect(page).to have_text 'successfully updated!'
       expect(page).to have_text 'Testing edit'
+      expect(page).to have_text 'Testing about us'
     end
 
     scenario 'shows validation error with blank name' do
       fill_in 'vendor_name', with: ''
       click_button 'Update'
       expect(page).to have_text 'name can\'t be blank'
+    end
+
+    scenario 'does not show validation error with blank about_us' do
+      fill_in 'vendor_about_us', with: ''
+      click_button 'Update'
+      expect(page).not_to have_text 'about_us can\'t be blank'
     end
 
     scenario 'shows validation error with repeated name' do

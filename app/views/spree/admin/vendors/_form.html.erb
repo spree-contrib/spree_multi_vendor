@@ -4,6 +4,10 @@
     <%= f.label :name %>
     <%= f.text_field :name, class: 'form-control' %>
   <% end %>
+  <%= f.field_container :about_us do %>
+    <%= f.label :about_us %>
+    <%= f.text_area :about_us, class: 'form-control' %>
+  <% end %>
   <%= f.field_container :state do %>
     <%= f.label :state %>
     <%= f.select :state,

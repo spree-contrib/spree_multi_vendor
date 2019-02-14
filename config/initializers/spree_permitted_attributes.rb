@@ -4,6 +4,6 @@ module Spree
 
     mattr_reader *ATTRIBUTES
 
-    @@vendor_attributes = [:name]
+    @@vendor_attributes = [:name, :about_us]
   end
 end
