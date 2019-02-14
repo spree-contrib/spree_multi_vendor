@@ -44,6 +44,9 @@
           <%= I18n.t(:about_us, scope: 'activerecord.attributes.spree/vendor') %>
         </th>
         <th>
+          <%= I18n.t(:contact_us, scope: 'activerecord.attributes.spree/vendor') %>
+        </th>
+        <th>
           <%= sort_link @search, :created_at, I18n.t(:created_at, scope: 'activerecord.attributes.spree/vendor') %>
         </th>
         <th class="actions"></th>
@@ -61,6 +64,9 @@
           </td>
           <td>
             <%= vendor.about_us&.truncate(20) %>
+          </td>
+          <td>
+            <%= vendor.contact_us&.truncate(20) %>
           </td>
           <td>
             <%= pretty_time(vendor.created_at) %>
