@@ -2,8 +2,7 @@
 
 [![Build Status](https://travis-ci.org/spree-contrib/spree_multi_vendor.svg?branch=master)](https://travis-ci.org/spree-contrib/spree_multi_vendor)
 
-This is a lightweight spree multi vendor marketplace extension. It's a great starting
-point if you're building a marketplace on top of Spree.
+This is a lightweight [spree multi vendor marketplace](https://spreecommerce.org/use-cases/multi-vendor-marketplace/) extension. It's a great starting point if you're building a marketplace on top of [Spree](https://spreecommerce.org).
 
 ## Features
 
@@ -16,10 +15,13 @@ You can create and manage Vendors who can manage on their own:
 - [X] Shipping Methods
 - [X] Vendor profile
 
+Also:
+- [X] Super Admins can assign Users to Vendors
+- [X] You can modify which permissions and models/resources Vendors can manage quite easily
+
 ## TODO
 
  - [ ] Vendors can manage Orders
- - [ ] UI for Super Admin to assign Users to Vendors
 
 Contributions welcome! :)
 
