@@ -20,6 +20,7 @@ module Spree
 
       def load_vendor
         @vendor = current_spree_vendor
+        raise ActiveRecord::RecordNotFound unless @vendor
       end
 
       def vendor_params
