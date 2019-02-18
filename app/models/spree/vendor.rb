@@ -7,8 +7,14 @@ module Spree
 
     validates :name, presence: true, uniqueness: { case_sensitive: false }
     validates :slug, uniqueness: true
+    if Spree.version.to_f >= 3.6
+      validates_associated :image
+    end
 
     with_options dependent: :destroy do
+      if Spree.version.to_f >= 3.6
+        has_one :image, as: :viewable, dependent: :destroy, class_name: 'Spree::VendorImage'
+      end
       has_many :option_types
       has_many :products
       has_many :properties

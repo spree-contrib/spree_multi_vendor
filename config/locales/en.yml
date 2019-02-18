@@ -8,6 +8,7 @@ en:
       spree/vendor:
         about_us: About us
         contact_us: Contact us
+        image: Image
         name: name
         state: state
         created_at: created at

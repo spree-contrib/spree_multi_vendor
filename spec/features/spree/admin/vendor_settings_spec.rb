@@ -37,5 +37,14 @@ RSpec.feature 'Admin Vendor Settings', :js do
       click_button 'Update'
       expect(page).not_to have_text 'contact_us can\'t be blank'
     end
+
+    if Spree.version.to_f >= 3.6
+      scenario 'can update an existing vendor image' do
+        create(:vendor, name: 'New vendor')
+        page.attach_file("vendor_image", Spree::Core::Engine.root + 'spec/fixtures' + 'thinking-cat.jpg')
+        click_button 'Update'
+        expect(page).to have_css("img[src*='thinking-cat.jpg']")
+      end
+    end
   end
 end
