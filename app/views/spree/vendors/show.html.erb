@@ -1,0 +1,24 @@
+<% content_for :sidebar do %>
+  <div></div>
+<% end %>
+
+<div>
+  <div class="col-md-12">
+    <h2><%= link_to @vendor.name, spree.vendor_url(@vendor) %></h2>
+  </div>
+  <% if Spree.version.to_f >= 3.6 %>
+    <div class="col-md-5 vendor-image">
+      <%= image_tag main_app.url_for(@vendor.image.url(:big)) if @vendor.image %>
+    </div>
+    <div class="col-md-7">
+  <% else %>
+    <div class="col-md-12">
+  <% end %>
+    <div class="vendor-about">
+      <%= @vendor.about_us %>
+    </div>
+    <div class="vendor-contact">
+      <%= @vendor.contact_us %>
+    </div>
+  </div>
+</div>
