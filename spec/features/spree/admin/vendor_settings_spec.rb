@@ -38,4 +38,15 @@ RSpec.feature 'Admin Vendor Settings', :js do
       expect(page).not_to have_text 'contact_us can\'t be blank'
     end
   end
+
+  context 'no vendor present' do
+    before do
+      vendor.destroy!
+    end
+
+    it 'renders page without errors' do
+      visit spree.admin_vendor_settings_path
+      expect(page).to have_content Spree::Store.default.name
+    end
+  end
 end
