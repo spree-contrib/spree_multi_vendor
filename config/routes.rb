@@ -5,5 +5,6 @@ Spree::Core::Engine.routes.draw do
     patch 'vendor_settings' => 'vendor_settings#update'
   end
 
+  get 'vendors/:id/t/*taxon_id', to: 'vendors#show'
   resources :vendors, only: [:show]
 end

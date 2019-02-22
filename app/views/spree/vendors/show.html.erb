@@ -21,4 +21,9 @@
       <%= @vendor.contact_us %>
     </div>
   </div>
+  <div class="col-md-12 vendor-products">
+    <% cache(cache_key_for_products) do %>
+      <%= render partial: 'spree/shared/products', locals: { products: @products, taxon: @taxon } %>
+    <% end %>
+  </div>
 </div>

@@ -4,6 +4,9 @@ RSpec.feature 'Vendors', :js do
 
   background do
     @vendor = create(:vendor)
+    5.times do
+      create(:product, vendor: @vendor)
+    end
   end
 
   context 'show' do
@@ -15,6 +18,12 @@ RSpec.feature 'Vendors', :js do
       expect(page).to have_text @vendor.name
       expect(page).to have_text @vendor.about_us
       expect(page).to have_text @vendor.contact_us
+    end
+    scenario "displays vendor's products" do
+      @vendor.products.each do |product|
+        expect(page).to have_text product.name
+        expect(page).to have_text product.price
+      end
     end
   end
 end
