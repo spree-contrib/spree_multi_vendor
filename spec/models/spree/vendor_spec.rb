@@ -10,6 +10,9 @@ describe Spree::Vendor do
     it { is_expected.to have_many(:variants) }
     it { is_expected.to have_many(:vendor_users) }
     it { is_expected.to have_many(:users).through(:vendor_users) }
+    if Spree.version.to_f >= 3.6
+      it { is_expected.to have_one(:image) }
+    end
   end
 
   describe 'validations' do

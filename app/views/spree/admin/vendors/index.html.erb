@@ -46,6 +46,11 @@
         <th>
           <%= I18n.t(:contact_us, scope: 'activerecord.attributes.spree/vendor') %>
         </th>
+        <% if Spree.version.to_f >= 3.6 %>
+          <th>
+            <%= I18n.t(:image, scope: 'activerecord.attributes.spree/vendor') %>
+          </th>
+        <% end %>
         <th>
           <%= sort_link @search, :created_at, I18n.t(:created_at, scope: 'activerecord.attributes.spree/vendor') %>
         </th>
@@ -68,6 +73,11 @@
           <td>
             <%= vendor.contact_us&.truncate(20) %>
           </td>
+          <% if Spree.version.to_f >= 3.6 %>
+            <td>
+              <%= image_tag main_app.url_for(vendor.image.url(:mini)) if vendor.image %>
+            </td>
+          <% end %>
           <td>
             <%= pretty_time(vendor.created_at) %>
           </td>
