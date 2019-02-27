@@ -19,6 +19,56 @@ RSpec.feature 'Admin Products', :js do
       end
     end
 
+    context 'create product' do
+      scenario 'creates new product with vendor id unassigned' do
+        visit spree.admin_products_path
+        click_link 'New Product'
+        expect(current_path).to eq spree.new_admin_product_path
+
+        fill_in 'product_name', with: 'Vendor product'
+        fill_in 'product_price', with: 15
+        select Spree::ShippingCategory.last.name
+
+        click_button 'Create'
+
+        expect(page).to have_text 'successfully created!'
+        expect(current_path).to eq spree.edit_admin_product_path(Spree::Product.last)
+        expect(Spree::Product.last.vendor_id).to eq nil
+      end
+    end
+
+    context 'edit product' do
+      before(:each) do
+        visit spree.edit_admin_product_path(product)
+        expect(current_path).to eq spree.edit_admin_product_path(product)
+      end
+
+      scenario 'can update an existing product' do
+        fill_in 'product_name', with: 'Testing edit'
+        click_button 'Update'
+        expect(page).to have_text 'successfully updated!'
+        expect(page).to have_text 'Testing edit'
+      end
+
+      scenario 'can update product master price' do
+        fill_in 'product_price', with: 123
+        click_button 'Update'
+        expect(page).to have_text 'successfully updated!'
+        product.reload
+        expect(product.price).to eq 123
+      end
+
+      scenario 'can update product vendor' do
+        expect(product.vendor).to eq nil
+
+        select vendor.name
+        click_button 'Update'
+        expect(page).to have_text 'successfully updated!'
+        product.reload
+        expect(product.vendor).to eq vendor
+      end
+    end
+
     context 'create variant' do
       scenario 'creates new variant with vendor id assigned' do
         visit spree.admin_product_variants_path(vendor_product)
