@@ -16,6 +16,7 @@ en:
     back_to_vendors_list: Back To Vendors List
     edit_vendor: Edit Vendor
     new_vendor: New Vendor
+    vendor: Vendor
     vendor_name: Vendor Name
     vendor_states:
       active: Active
