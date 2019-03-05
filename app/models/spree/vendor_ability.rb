@@ -99,7 +99,6 @@ class Spree::VendorAbility
   end
 
   def apply_variant_permissions
-    cannot :display, Spree::Variant
     can :manage, Spree::Variant, vendor_id: @vendor_ids
     can :create, Spree::Variant
   end
