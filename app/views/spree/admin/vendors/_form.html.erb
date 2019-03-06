@@ -25,4 +25,8 @@
       <%= image_tag main_app.url_for(@vendor.image.url(:small)) if @vendor.image %>
     <% end %>
   <% end %>
+  <%= f.field_container :commission_rate do %>
+    <%= f.label :commission_rate %>
+    <%= f.number_field :commission_rate, step: '0.01', class: 'form-control' %>
+  <% end %>
 </div>
