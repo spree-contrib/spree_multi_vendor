@@ -14,7 +14,9 @@ RSpec.feature 'Admin Vendor Settings', :js do
       fill_in 'vendor_name', with: 'Testing edit'
       fill_in 'vendor_about_us', with: 'Testing about us edit'
       fill_in 'vendor_contact_us', with: 'Testing contact us edit'
-      click_button 'Update'
+      expect {
+        click_button 'Update'
+      }.to change { vendor.reload.slug }.from('test-vendor').to('testing-edit')
       expect(page).to have_text 'Testing edit'
       expect(page).to have_text 'Testing about us edit'
       expect(page).to have_text 'Testing contact us edit'
