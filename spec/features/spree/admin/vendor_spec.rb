@@ -12,12 +12,13 @@ RSpec.feature 'Admin Vendors', :js do
   context 'index' do
     scenario 'displays existing vendors' do
       within_row(1) do
-        expect(column_text(1)).to eq 'My vendor'
-        expect(column_text(2)).to eq 'pending'
-        expect(column_text(3)).to eq 'About us...'
-        expect(column_text(4)).to eq 'Contact us...'
+        expect(column_text(1)).to eq ''
+        expect(column_text(2)).to eq 'My vendor'
+        expect(column_text(3)).to eq 'pending'
+        expect(column_text(4)).to eq 'About us...'
+        expect(column_text(5)).to eq 'Contact us...'
         if Spree.version.to_f >= 3.6
-          expect(column_text(5)).to eq ''
+          expect(column_text(6)).to eq ''
         end
       end
     end
