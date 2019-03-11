@@ -38,6 +38,8 @@ module Spree
       end
     end
 
+    scope :active, -> { where(state: 'active') }
+
     self.whitelisted_ransackable_attributes = %w[name state]
 
     private
