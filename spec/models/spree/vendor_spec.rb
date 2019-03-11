@@ -34,5 +34,9 @@ describe Spree::Vendor do
       expect(vendor.stock_locations.first).to eq stock_location
       expect(stock_location.country).to eq Spree::Country.default
     end
+
+    it 'should act as list' do
+      expect(vendor).to respond_to(:set_list_position)
+    end
   end
 end

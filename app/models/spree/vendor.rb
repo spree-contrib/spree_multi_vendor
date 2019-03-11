@@ -3,6 +3,7 @@ module Spree
     extend FriendlyId
 
     acts_as_paranoid
+    acts_as_list column: :priority
     friendly_id :name, use: :slugged
 
     validates :name, presence: true, uniqueness: { case_sensitive: false }

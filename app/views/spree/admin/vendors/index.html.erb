@@ -31,9 +31,12 @@
 <% end %>
 
 <% if @vendors.any? %>
-  <table class="table">
+  <table class="table sortable" data-hook="vendors_table" data-sortable-link="<%= update_positions_admin_vendors_url %>">
     <thead>
       <tr data-hook="vendors_header">
+        <th>
+          <%= I18n.t(:priority, scope: 'activerecord.attributes.spree/vendor') %>
+        </th>
         <th>
           <%= sort_link @search, :name, I18n.t(:name, scope: 'activerecord.attributes.spree/vendor') %>
         </th>
@@ -59,7 +62,10 @@
     </thead>
     <tbody>
       <% @vendors.each do |vendor| %>
-        <tr>
+        <tr id="<%= spree_dom_id vendor %>" data-hook="vendors_row">
+          <td class="move-handle text-center">
+            <span class="icon icon-move handle"></span>
+          </td>
           <td>
             <%= vendor.name %>
           </td>
