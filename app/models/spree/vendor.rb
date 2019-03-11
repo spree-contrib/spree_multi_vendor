@@ -4,7 +4,7 @@ module Spree
 
     acts_as_paranoid
     acts_as_list column: :priority
-    friendly_id :name, use: :slugged
+    friendly_id :name, use: %i[slugged history]
 
     validates :name, presence: true, uniqueness: { case_sensitive: false }
     validates :slug, uniqueness: true
@@ -45,6 +45,10 @@ module Spree
 
     def create_stock_location
       stock_locations.where(name: name, country: Spree::Country.default).first_or_create!
+    end
+
+    def should_generate_new_friendly_id?
+      slug.blank? || name_changed?
     end
   end
 end
