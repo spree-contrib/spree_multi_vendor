@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 RSpec.feature 'Admin Products', :js do
-  let(:vendor) { create(:vendor) }
+  let(:vendor) { create(:active_vendor) }
   let!(:user) { create(:user, vendors: [vendor]) }
   let!(:admin) { create(:admin_user) }
   let!(:option_type) { create(:option_type, name: 'Testing option', vendor_id: vendor.id) }

@@ -5,7 +5,7 @@ RSpec.feature 'Admin Vendors', :js do
 
   background do
     login_as(admin, scope: :spree_user)
-    create(:vendor, name: 'My vendor')
+    create(:active_vendor) if Spree::Vendor.find_by(name: 'Active vendor').nil?
     visit spree.admin_vendors_path
   end
 
@@ -13,8 +13,8 @@ RSpec.feature 'Admin Vendors', :js do
     scenario 'displays existing vendors' do
       within_row(1) do
         expect(column_text(1)).to eq ''
-        expect(column_text(2)).to eq 'My vendor'
-        expect(column_text(3)).to eq 'pending'
+        expect(column_text(2)).to eq 'Active vendor'
+        expect(column_text(3)).to eq 'active'
         expect(column_text(4)).to eq 'About us...'
         expect(column_text(5)).to eq 'Contact us...'
         if Spree.version.to_f >= 3.6
@@ -61,7 +61,7 @@ RSpec.feature 'Admin Vendors', :js do
       click_link 'New Vendor'
       expect(current_path).to eq spree.new_admin_vendor_path
 
-      fill_in 'vendor_name', with: 'My vendor'
+      fill_in 'vendor_name', with: 'Active vendor'
       click_button 'Create'
 
       expect(page).to have_text 'name has already been taken'
@@ -71,7 +71,7 @@ RSpec.feature 'Admin Vendors', :js do
   context 'edit' do
     background do
       within_row(1) { click_icon :edit }
-      expect(current_path).to eq spree.edit_admin_vendor_path('my-vendor')
+      expect(current_path).to eq spree.edit_admin_vendor_path('active-vendor')
     end
 
     scenario 'can update an existing vendor' do
