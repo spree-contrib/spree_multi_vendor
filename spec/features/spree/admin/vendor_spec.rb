@@ -12,12 +12,13 @@ RSpec.feature 'Admin Vendors', :js do
   context 'index' do
     scenario 'displays existing vendors' do
       within_row(1) do
-        expect(column_text(1)).to eq 'My vendor'
-        expect(column_text(2)).to eq 'pending'
-        expect(column_text(3)).to eq 'About us...'
-        expect(column_text(4)).to eq 'Contact us...'
+        expect(column_text(1)).to eq ''
+        expect(column_text(2)).to eq 'My vendor'
+        expect(column_text(3)).to eq 'pending'
+        expect(column_text(4)).to eq 'About us...'
+        expect(column_text(5)).to eq 'Contact us...'
         if Spree.version.to_f >= 3.6
-          expect(column_text(5)).to eq ''
+          expect(column_text(6)).to eq ''
         end
       end
     end
@@ -31,6 +32,7 @@ RSpec.feature 'Admin Vendors', :js do
       fill_in 'vendor_name', with: 'Test'
       fill_in 'vendor_about_us', with: 'About...'
       fill_in 'vendor_contact_us', with: 'Contact...'
+      expect(find_field('vendor_commission_rate').value).to eq '5.0'
       if Spree.version.to_f >= 3.6
         page.attach_file("vendor_image", Spree::Core::Engine.root + 'spec/fixtures' + 'thinking-cat.jpg')
       end
@@ -76,6 +78,7 @@ RSpec.feature 'Admin Vendors', :js do
       fill_in 'vendor_name', with: 'Testing edit'
       fill_in 'vendor_about_us', with: 'Testing about us'
       fill_in 'vendor_contact_us', with: 'Testing contact us'
+      fill_in 'vendor_commission_rate', with: '5.5'
       click_button 'Update'
       expect(page).to have_text 'successfully updated!'
       expect(page).to have_text 'Testing edit'
