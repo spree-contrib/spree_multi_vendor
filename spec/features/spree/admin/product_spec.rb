@@ -35,6 +35,22 @@ RSpec.feature 'Admin Products', :js do
         expect(current_path).to eq spree.edit_admin_product_path(Spree::Product.last)
         expect(Spree::Product.last.vendor_id).to eq nil
       end
+      scenario 'creates new product with assigned vendor' do
+        visit spree.admin_products_path
+        click_link 'New Product'
+        expect(current_path).to eq spree.new_admin_product_path
+
+        fill_in 'product_name', with: 'Vendor product'
+        fill_in 'product_price', with: 15
+        select Spree::ShippingCategory.last.name
+        select Spree::Vendor.last.name
+
+        click_button 'Create'
+
+        expect(page).to have_text 'successfully created!'
+        expect(current_path).to eq spree.edit_admin_product_path(Spree::Product.last)
+        expect(Spree::Product.last.vendor_id).to eq Spree::Vendor.last.id
+      end
     end
 
     context 'edit product' do
