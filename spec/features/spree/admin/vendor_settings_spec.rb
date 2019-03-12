@@ -1,8 +1,10 @@
 require 'spec_helper'
 
 RSpec.feature 'Admin Vendor Settings', :js do
-  let(:vendor) { create(:vendor) }
+  let(:vendor) { create(:active_vendor) }
+  let(:blocked_vendor) { create(:blocked_vendor)}
   let!(:user) { create(:user, vendors: [vendor]) }
+  let!(:user_with_blocked_vendor) { create(:user, vendors: [blocked_vendor]) }
 
   context 'edit' do
     background do
@@ -16,7 +18,7 @@ RSpec.feature 'Admin Vendor Settings', :js do
       fill_in 'vendor_contact_us', with: 'Testing contact us edit'
       expect {
         click_button 'Update'
-      }.to change { vendor.reload.slug }.from('test-vendor').to('testing-edit')
+      }.to change { vendor.reload.slug }.from('active-vendor').to('testing-edit')
       expect(page).to have_text 'Testing edit'
       expect(page).to have_text 'Testing about us edit'
       expect(page).to have_text 'Testing contact us edit'
@@ -58,6 +60,17 @@ RSpec.feature 'Admin Vendor Settings', :js do
     it 'renders page without errors' do
       visit spree.admin_vendor_settings_path
       expect(page).to have_content Spree::Store.default.name
+    end
+  end
+
+  context 'blocked vendor present' do
+    background do
+      login_as(user_with_blocked_vendor, scope: :spree_user)
+    end
+
+    it 'renders forbidden page' do
+      visit spree.admin_vendor_settings_path
+      expect(current_path).to eq spree.forbidden_path
     end
   end
 end

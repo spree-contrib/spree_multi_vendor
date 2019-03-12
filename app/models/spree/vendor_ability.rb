@@ -2,7 +2,7 @@ class Spree::VendorAbility
   include CanCan::Ability
 
   def initialize(user)
-    @vendor_ids = user.vendors.pluck(:id)
+    @vendor_ids = user.vendors.active.ids
 
     if @vendor_ids.any?
       apply_classifications_permissions
