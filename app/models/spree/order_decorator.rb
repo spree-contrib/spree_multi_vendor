@@ -1,5 +1,14 @@
 module SpreeMultiVendor
   module OrderDecorator
+    def self.prepended(base)
+      base.has_many :commissions
+    end
+
+    def finalize!
+      super
+      Spree::Orders::CommissionsGenerator.new(self).call
+    end
+
     def display_vendor_subtotal(vendor)
       Spree::Money.new(vendor_subtotal(vendor), { currency: currency })
     end
