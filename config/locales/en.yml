@@ -18,6 +18,11 @@ en:
     edit_vendor: Edit Vendor
     new_vendor: New Vendor
     only_alphanumeric_chars: should contain only letters and digits
+    order_mailer:
+      vendor_notification_email:
+        dear_vendor: Dear Vendor,
+        subject: Vendor notification
+        thanks: Thanks
     vendor: Vendor
     vendor_name: Vendor Name
     vendor_states:
