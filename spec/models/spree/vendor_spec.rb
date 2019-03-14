@@ -17,6 +17,14 @@ describe Spree::Vendor do
 
   describe 'validations' do
     it { is_expected.to validate_presence_of(:name) }
+    it { is_expected.to allow_value('flower').for(:name) }
+    it { is_expected.to allow_value('flower455').for(:name) }
+    it { is_expected.to allow_value('flower 455').for(:name) }
+    it { is_expected.to allow_value('flower abc').for(:name) }
+    it { is_expected.to allow_value('flower455 abc').for(:name) }
+    it { is_expected.to allow_value('flower 455 abc').for(:name) }
+    it { is_expected.not_to allow_value('flower^&%$#').for(:name) }
+    it { is_expected.not_to allow_value('flower^&%$# memo').for(:name) }
   end
 
   describe 'initial state' do
