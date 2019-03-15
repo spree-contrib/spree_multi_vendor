@@ -4,11 +4,12 @@ describe Spree::Order do
   describe 'associations' do
     it { is_expected.to have_many(:commissions) }
   end
-  describe 'finalize! with spree_multi_vendor' do
+  describe 'complete with spree_multi_vendor' do
     it 'generates commission records' do
-      order = create(:completed_order_with_totals, line_items: 6.times.map { create(:line_item) } )
-      vendor1 = create(:vendor, name: "Vendor_1")
-      vendor2 = create(:vendor, name: "Vendor_2")
+      order = create(:order_with_line_items, state: 'payment', line_items: 6.times.map { create(:line_item) } )
+      allow(order).to receive_messages payment_required?: false
+      vendor1 = create(:vendor, name: "Vendor 1")
+      vendor2 = create(:vendor, name: "Vendor 2")
 
       order.line_items.each_with_index do |li, idx|
         product = li.variant.product
@@ -17,9 +18,9 @@ describe Spree::Order do
       end
 
       expect {
-        order.finalize!
+        order.next!
         order.reload
-      }.to change { Spree::Order::Commission.count }.by(2)
+      }.to change { Spree::OrderCommission.count }.by(2)
       .and change { vendor1.commissions.count }.by(1)
       .and change { vendor2.commissions.count }.by(1)
 

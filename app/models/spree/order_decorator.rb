@@ -1,12 +1,12 @@
 module SpreeMultiVendor
   module OrderDecorator
     def self.prepended(base)
-      base.has_many :commissions
+      base.has_many :commissions, class_name: 'Spree::OrderCommission'
+      base.state_machine.after_transition to: :complete, do: :generate_order_commissions
     end
 
-    def finalize!
-      super
-      Spree::Orders::CommissionsGenerator.new(self).call
+    def generate_order_commissions
+      Spree::Orders::GenerateCommissions.call(self)
     end
 
     def display_vendor_subtotal(vendor)
