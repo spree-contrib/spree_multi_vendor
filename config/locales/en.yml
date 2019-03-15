@@ -17,6 +17,7 @@ en:
     back_to_vendors_list: Back To Vendors List
     edit_vendor: Edit Vendor
     new_vendor: New Vendor
+    only_alphanumeric_chars: should contain only letters and digits
     vendor: Vendor
     vendor_name: Vendor Name
     vendor_states:
