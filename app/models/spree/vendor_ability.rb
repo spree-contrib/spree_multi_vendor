@@ -22,6 +22,7 @@ class Spree::VendorAbility
       apply_variant_permissions
       apply_vendor_permissions
       apply_vendor_settings_permissions
+      apply_state_changes_permissions
     end
   end
 
@@ -109,5 +110,11 @@ class Spree::VendorAbility
 
   def apply_vendor_settings_permissions
     can :manage, :vendor_settings
+  end
+
+  def apply_state_changes_permissions
+    can [:admin, :index], Spree::StateChange do |state_change|
+      (@vendor_ids & state_change.user.vendor_ids).any?
+    end
   end
 end
