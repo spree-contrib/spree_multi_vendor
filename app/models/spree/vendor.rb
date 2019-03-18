@@ -20,6 +20,7 @@ module Spree
       if Spree.version.to_f >= 3.6
         has_one :image, as: :viewable, dependent: :destroy, class_name: 'Spree::VendorImage'
       end
+      has_many :commissions, class_name: 'Spree::OrderCommission'
       has_many :option_types
       has_many :products
       has_many :properties
