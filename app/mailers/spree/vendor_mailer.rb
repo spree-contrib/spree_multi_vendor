@@ -1,5 +1,5 @@
 module Spree
-  class VendorMailer < BaseMailer
+  class VendorMailer < ::Spree::BaseMailer
     def vendor_notification_email(order_id, vendor_id)
       @order = Spree::Order.find(order_id)
       @vendor = Spree::Vendor.find(vendor_id)
