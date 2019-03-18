@@ -34,7 +34,7 @@ class Spree::VendorAbility
 
   def apply_order_permissions
     cannot :create, Spree::Order
-    can [:admin, :index, :edit, :update], Spree::Order, line_items: { product: { vendor_id: @vendor_ids } }
+    can [:admin, :index, :edit, :update, :cart], Spree::Order, line_items: { product: { vendor_id: @vendor_ids } }
   end
 
   def apply_image_permissions
