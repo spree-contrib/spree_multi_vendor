@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe Spree::Vendor do
   describe 'associations' do
+    it { is_expected.to have_many(:commissions) }
     it { is_expected.to have_many(:option_types) }
     it { is_expected.to have_many(:products) }
     it { is_expected.to have_many(:properties) }

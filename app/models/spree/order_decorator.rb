@@ -1,7 +1,13 @@
 module SpreeMultiVendor
   module OrderDecorator
     def self.prepended(base)
+      base.has_many :commissions, class_name: 'Spree::OrderCommission'
+      base.state_machine.after_transition to: :complete, do: :generate_order_commissions
       base.state_machine.after_transition to: :complete, do: :send_notification_mails_to_vendors
+    end
+
+    def generate_order_commissions
+      Spree::Orders::GenerateCommissions.call(self)
     end
 
     def display_vendor_subtotal(vendor)
@@ -21,9 +27,9 @@ module SpreeMultiVendor
     end
 
     def send_notification_mails_to_vendors
-      @vendors = line_items.map { |line_item| line_item.product.vendor }
-      @vendors.each do |vendor|
-        SpreeMultiVendor::VendorMailer.vendor_notification_email(id, vendor.id).deliver_later
+      vendor_ids = line_items.map { |line_item| line_item.product.vendor_id }
+      vendor_ids.each do |vendor_id|
+        SpreeMultiVendor::VendorMailer.vendor_notification_email(id, vendor_id).deliver_later
       end
     end
   end
