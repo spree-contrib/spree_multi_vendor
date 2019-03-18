@@ -9,7 +9,7 @@ module SpreeMultiVendor
 
   module VERSION
     MAJOR = 0
-    MINOR = 8
+    MINOR = 9
     TINY  = 0
     PRE   = nil
 
