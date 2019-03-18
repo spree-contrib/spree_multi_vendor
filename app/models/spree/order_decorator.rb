@@ -3,6 +3,7 @@ module SpreeMultiVendor
     def self.prepended(base)
       base.has_many :commissions, class_name: 'Spree::OrderCommission'
       base.state_machine.after_transition to: :complete, do: :generate_order_commissions
+      base.state_machine.after_transition to: :complete, do: :send_notification_mails_to_vendors
     end
 
     def generate_order_commissions
@@ -23,6 +24,13 @@ module SpreeMultiVendor
 
     def vendor_total(vendor)
       total - line_items.not_for_vendor(vendor).sum(:pre_tax_amount)
+    end
+
+    def send_notification_mails_to_vendors
+      vendor_ids = line_items.map { |line_item| line_item.product.vendor_id }
+      vendor_ids.each do |vendor_id|
+        Spree::VendorMailer.vendor_notification_email(id, vendor_id).deliver_later
+      end
     end
   end
 end
