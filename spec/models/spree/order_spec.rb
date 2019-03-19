@@ -11,7 +11,7 @@ describe Spree::Order do
       vendor1 = create(:vendor, name: "Vendor 1")
       vendor2 = create(:vendor, name: "Vendor 2")
 
-      order.line_items.each_with_index do |li, idx|
+      order.line_items[0..-2].each_with_index do |li, idx|
         product = li.variant.product
         product.vendor = idx.odd? ? vendor1 : vendor2
         product.save
@@ -25,6 +25,7 @@ describe Spree::Order do
       .and change { vendor2.commissions.count }.by(1)
 
       order.line_items.includes(product: :vendor).group_by{|li| li.product.vendor}.each do |vendor, line_items|
+        next unless vendor
         expect(vendor.commissions.sum(:amount))
             .to eq (vendor.commission_rate * line_items.pluck(:pre_tax_amount).sum.to_f / 100)
       end
