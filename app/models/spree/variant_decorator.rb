@@ -1,5 +1,6 @@
 Spree::Variant.class_eval do
   before_create :assign_vendor_id
+  scope :for_vendor_user, ->(user) { includes(:product).where('spree_products.vendor_id in (?)', user.vendors.ids).references(:product) }
 
   private
 
