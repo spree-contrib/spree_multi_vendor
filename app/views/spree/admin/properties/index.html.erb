@@ -54,7 +54,7 @@
         <th><%= Spree.t(:name) %></th>
         <th><%= Spree.t(:presentation) %></th>
         <% if current_spree_user.respond_to?(:has_spree_role?) && current_spree_user.has_spree_role?(:admin) %>
-          <th><%= Spree.t(:vendor_name) %>
+          <th><%= Spree.t(:vendor_name) %></th>
         <% end %>
         <th class="actions"></th>
       </tr>
@@ -65,7 +65,7 @@
           <td><%= property.name %></td>
           <td><%= property.presentation %></td>
           <% if current_spree_user.respond_to?(:has_spree_role?) && current_spree_user.has_spree_role?(:admin) %>
-            <td><%= property.vendor.try(:name) %>
+            <td><%= property.vendor.try(:name) %></td>
           <% end %>
           <td class="actions actions-2 text-right">
             <%= link_to_edit(property, no_text: true) %>
