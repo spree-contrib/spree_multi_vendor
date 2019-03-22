@@ -25,7 +25,7 @@
         <tr id="<%= spree_dom_id shipping_method %>" data-hook="admin_shipping_methods_index_rows">
           <td><%= shipping_method.admin_name + ' / ' if shipping_method.admin_name.present? %><%= shipping_method.name %></td>
           <td><%= shipping_method.zones.collect(&:name).join(", ") if shipping_method.zones %></td>
-          <td><%= shipping_method.calculator.description %></td>
+          <td><%= shipping_method&.calculator&.description %></td>
           <td class="text-center"><%= shipping_method.display_on.blank? ? Spree.t(:both) : Spree.t(shipping_method.display_on) %></td>
           <% if current_spree_user.respond_to?(:has_spree_role?) && current_spree_user.has_spree_role?(:admin) %>
             <td><%= shipping_method.vendor.try(:name) %>
