@@ -32,6 +32,12 @@
         <%= f.text_area :contact_us, class: 'form-control' %>
       <% end %>
     </div>
+    <div class="form-group">
+      <%= f.field_container :notification_email do %>
+        <%= f.label :notification_email %>
+        <%= f.email_field :notification_email, class: 'form-control' %>
+      <% end %>
+    </div>
     <div class="form-actions" data-hook="buttons">
       <%= button Spree.t('actions.update'), 'save' %>
       <span class="or"><%= Spree.t(:or) %></span>

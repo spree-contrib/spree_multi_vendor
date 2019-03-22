@@ -29,4 +29,8 @@
     <%= f.label :commission_rate %>
     <%= f.number_field :commission_rate, step: '0.01', class: 'form-control' %>
   <% end %>
+  <%= f.field_container :notification_email do%>
+    <%= f.label :notification_email %>
+    <%= f.email_field :notification_email, class: 'form-control' %>
+  <% end %>
 </div>
