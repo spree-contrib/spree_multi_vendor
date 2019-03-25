@@ -5,5 +5,7 @@ module Spree
 
     validates :order, :vendor, presence: true
     validates :vendor_id, uniqueness: { scope: :order_id }
+
+    scope :for_vendor, ->(vendor) { where(vendor_id: vendor.id) }
   end
 end
