@@ -29,3 +29,5 @@ en:
       active: Active
       blocked: Blocked
       pending: Pending
+    admin:
+      commission: Commission
