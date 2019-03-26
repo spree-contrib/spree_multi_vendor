@@ -48,4 +48,15 @@ describe Spree::Vendor do
       expect(vendor).to respond_to(:set_list_position)
     end
   end
+
+  describe 'after_update' do
+    let!(:vendor) { create(:vendor) }
+
+    it 'updates stock_location names when vendor name changed' do
+      old_name = vendor.name
+      new_name = 'new vendor name'
+      vendor.name = new_name
+      expect { vendor.save! }.to change { vendor.stock_locations.pluck(:name).uniq }.from([old_name]).to([new_name])
+    end
+  end
 end
