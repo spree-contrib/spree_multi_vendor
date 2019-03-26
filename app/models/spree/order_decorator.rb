@@ -10,6 +10,10 @@ module SpreeMultiVendor
       Spree::Orders::GenerateCommissions.call(self)
     end
 
+    def display_vendor_ship_total(vendor)
+      Spree::Money.new(vendor_ship_total(vendor), { currency: currency })
+    end
+
     def display_vendor_subtotal(vendor)
       Spree::Money.new(vendor_subtotal(vendor), { currency: currency })
     end
@@ -18,12 +22,16 @@ module SpreeMultiVendor
       Spree::Money.new(vendor_total(vendor), { currency: currency })
     end
 
+    def vendor_ship_total(vendor)
+      shipments.for_vendor(vendor).sum(:pre_tax_amount)
+    end
+
     def vendor_subtotal(vendor)
       line_items.for_vendor(vendor).sum(:pre_tax_amount)
     end
 
     def vendor_total(vendor)
-      total - line_items.not_for_vendor(vendor).sum(:pre_tax_amount)
+      total - line_items.not_for_vendor(vendor).sum(:pre_tax_amount) - shipments.not_for_vendor(vendor).sum(:pre_tax_amount)
     end
 
     def display_order_commission
