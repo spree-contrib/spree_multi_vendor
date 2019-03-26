@@ -33,6 +33,7 @@ module Spree
     has_many :users, through: :vendor_users
 
     after_create :create_stock_location
+    after_update :update_stock_location_names
 
     state_machine :state, initial: :pending do
       event :activate do
@@ -56,6 +57,12 @@ module Spree
 
     def should_generate_new_friendly_id?
       slug.blank? || name_changed?
+    end
+
+    def update_stock_location_names
+      if (Spree.version.to_f < 3.5 && self.name_changed?) || (Spree.version.to_f >= 3.5 && saved_changes&.include?(:name))
+        stock_locations.update_all({ name: name })
+      end
     end
   end
 end
