@@ -16,6 +16,8 @@ module Spree
       validates_associated :image
     end
 
+    validates :notification_email, email: true, allow_blank: true
+
     with_options dependent: :destroy do
       if Spree.version.to_f >= 3.6
         has_one :image, as: :viewable, dependent: :destroy, class_name: 'Spree::VendorImage'
@@ -48,6 +50,10 @@ module Spree
     scope :active, -> { where(state: 'active') }
 
     self.whitelisted_ransackable_attributes = %w[name state]
+
+    def update_notification_email(email)
+      update(notification_email: email)
+    end
 
     private
 

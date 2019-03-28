@@ -2,8 +2,8 @@ require 'spec_helper'
 
 describe Spree::VendorMailer, type: :mailer do
   let(:store) { create(:store)}
-  let(:vendor) { Spree::Vendor.new(id: 1, name: 'Test vendor', state: 'active', contact_us: 'test-vendor@example.com') }
-  let(:other_vendor) { Spree::Vendor.new(id: 2, name: 'Other vendor', state: 'active', contact_us: 'other-vendor@example.com') }
+  let(:vendor) { Spree::Vendor.new(id: 1, name: 'Test vendor', state: 'active', notification_email: 'test-vendor@example.com') }
+  let(:other_vendor) { Spree::Vendor.new(id: 2, name: 'Other vendor', state: 'active', notification_email: 'other-vendor@example.com') }
   let(:order) { create(:completed_order_with_totals, line_items_count: 5) }
 
   context 'vendor notification email' do
