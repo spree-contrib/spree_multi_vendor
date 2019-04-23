@@ -4,6 +4,8 @@
 
 This is a [spree multi vendor marketplace](https://spreecommerce.org/use-cases/multi-vendor-marketplace/) extension. It's a great starting point if you're building a marketplace on top of [Spree](https://spreecommerce.org). Our goal was flexibility to allow you to tweak it to your needs. 
 
+Check out this extension [multi vendor marketplace demo](https://spreecommerce.org/launch-a-multi-vendor-marketplace-within-a-few-weeks-with-spree-commerce/) and launch your marketplace within weeks, not months.
+
 Developed and maintained by:
 
 [![Spark Solutions](http://sparksolutions.co/wp-content/uploads/2015/01/logo-ss-tr-221x100.png)][spark]
