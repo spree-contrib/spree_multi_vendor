@@ -1,6 +1,8 @@
-Spree::Variant.class_eval do
-  before_create :assign_vendor_id
-  scope :for_vendor_user, ->(user) { includes(:product).where('spree_products.vendor_id in (?)', user.vendors.ids).references(:product) }
+module Spree::VariantDecorator
+  def self.prepended(base)
+    base.before_create :assign_vendor_id
+    base.scope :for_vendor_user, ->(user) { includes(:product).where('spree_products.vendor_id in (?)', user.vendors.ids).references(:product) }
+  end
 
   private
 
@@ -14,3 +16,5 @@ Spree::Variant.class_eval do
     end
   end
 end
+
+Spree::Variant.prepend Spree::VariantDecorator

@@ -1,4 +1,4 @@
-Spree::Admin::UsersController.class_eval do
+module Spree::Admin::UsersControllerDecorator
   private
 
   def user_params
@@ -9,3 +9,5 @@ Spree::Admin::UsersController.class_eval do
                                   bill_address_attributes: permitted_address_attributes])
   end
 end
+
+Spree::Admin::UsersController.prepend Spree::Admin::UsersControllerDecorator

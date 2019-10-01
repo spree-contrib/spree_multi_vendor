@@ -1,5 +1,5 @@
-SpreeMultiVendor.vendorized_models.each do |model|
-  model.class_eval do
-    include Spree::VendorConcern
+module Spree::ModelsDecorator
+  SpreeMultiVendor.vendorized_models.each do |model|
+    model.include Spree::VendorConcern
   end
 end

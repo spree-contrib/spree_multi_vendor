@@ -1,4 +1,4 @@
-Spree::ProductProperty.class_eval do
+module Spree::ProductPropertyDecorator
   def property_name=(name)
     if name.present?
       # don't use `find_by :name` to workaround globalize/globalize#423 bug
@@ -8,3 +8,5 @@ Spree::ProductProperty.class_eval do
     end
   end
 end
+
+Spree::ProductProperty.prepend Spree::ProductPropertyDecorator

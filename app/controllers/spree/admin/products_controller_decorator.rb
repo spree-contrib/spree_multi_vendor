@@ -1,6 +1,8 @@
-Spree::Admin::ProductsController.class_eval do
-  before_action :set_vendor_id, only: [:create, :update]
-  before_action :load_vendors, only: [:new, :edit]
+module Spree::Admin::ProductsControllerDecorator
+  def self.prepended(base)
+    base.before_action :set_vendor_id, only: [:create, :update]
+    base.before_action :load_vendors, only: [:new, :edit]
+  end
 
   def stock
     @variants = @product.variants.includes(*variant_stock_includes)
@@ -18,3 +20,5 @@ Spree::Admin::ProductsController.class_eval do
     @vendors = Spree::Vendor.order(Arel.sql('LOWER(name)'))
   end
 end
+
+Spree::Admin::ProductsController.prepend Spree::Admin::ProductsControllerDecorator

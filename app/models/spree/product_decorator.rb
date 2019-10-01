@@ -1,7 +1,9 @@
-Spree::Product.class_eval do
-  after_destroy :touch_vendor
+module Spree::ProductDecorator
+  def self.prepended(base)
+    base.after_destroy :touch_vendor
+  end
 
-  self.whitelisted_ransackable_associations += %w[vendor]
+  Spree::Product.whitelisted_ransackable_associations += %w[vendor]
 
   private
 
@@ -9,3 +11,5 @@ Spree::Product.class_eval do
     vendor&.touch
   end
 end
+
+Spree::Product.prepend Spree::ProductDecorator
