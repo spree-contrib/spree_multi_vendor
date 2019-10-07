@@ -6,6 +6,7 @@ before_script:
 
 addons:
   chrome: stable
+  postgresql: 9.4
 
 language: ruby
 
