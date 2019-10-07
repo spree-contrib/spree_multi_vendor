@@ -47,7 +47,7 @@ class Spree::VendorAbility
   end
 
   def apply_option_type_permissions
-    cannot :display, Spree::OptionType
+    cannot :read, Spree::OptionType
     can :manage, Spree::OptionType, vendor_id: @vendor_ids
     can :create, Spree::OptionType
   end
@@ -61,19 +61,19 @@ class Spree::VendorAbility
   end
 
   def apply_product_permissions
-    cannot :display, Spree::Product
+    cannot :read, Spree::Product
     can :manage, Spree::Product, vendor_id: @vendor_ids
     can :create, Spree::Product
   end
 
   def apply_properties_permissions
-    cannot :display, Spree::Property
+    cannot :read, Spree::Property
     can :manage, Spree::Property, vendor_id: @vendor_ids
     can :create, Spree::Property
   end
 
   def apply_product_properties_permissions
-    cannot :display, Spree::ProductProperty
+    cannot :read, Spree::ProductProperty
     can :manage, Spree::ProductProperty, property: { vendor_id: @vendor_ids }
   end
 
