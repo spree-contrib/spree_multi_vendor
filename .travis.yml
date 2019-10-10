@@ -25,8 +25,8 @@ script:
   - bundle exec rake spec
 
 rvm:
-  - 2.5.3
-  - 2.4.5
+  - 2.5.1
+  - 2.4.4
   - 2.3.8
 
 matrix:
