@@ -37,6 +37,10 @@ RSpec.feature 'Admin Shipping Methods', :js do
         fill_in 'shipping_method_name', with: 'Vendor shipping method'
         check Spree::ShippingCategory.last.name
 
+        if Spree.version.to_f >= 4.0
+          page.select 'Both', from: 'Display'
+        end
+
         click_button 'Create'
 
         expect(page).to have_text 'successfully created!'

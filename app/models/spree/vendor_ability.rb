@@ -47,7 +47,7 @@ class Spree::VendorAbility
   end
 
   def apply_option_type_permissions
-    cannot :display, Spree::OptionType
+    cannot_display_model(Spree::OptionType)
     can :manage, Spree::OptionType, vendor_id: @vendor_ids
     can :create, Spree::OptionType
   end
@@ -61,19 +61,19 @@ class Spree::VendorAbility
   end
 
   def apply_product_permissions
-    cannot :display, Spree::Product
+    cannot_display_model(Spree::Product)
     can :manage, Spree::Product, vendor_id: @vendor_ids
     can :create, Spree::Product
   end
 
   def apply_properties_permissions
-    cannot :display, Spree::Property
+    cannot_display_model(Spree::Property)
     can :manage, Spree::Property, vendor_id: @vendor_ids
     can :create, Spree::Property
   end
 
   def apply_product_properties_permissions
-    cannot :display, Spree::ProductProperty
+    cannot_display_model(Spree::ProductProperty)
     can :manage, Spree::ProductProperty, property: { vendor_id: @vendor_ids }
   end
 
@@ -121,5 +121,9 @@ class Spree::VendorAbility
     can [:admin, :index], Spree::StateChange do |state_change|
       (@vendor_ids & state_change.user.vendor_ids).any?
     end
+  end
+
+  def cannot_display_model(model)
+    Spree.version.to_f < 4.0 ? (cannot :display, model) : (cannot :read, model)
   end
 end

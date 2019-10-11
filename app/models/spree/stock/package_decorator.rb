@@ -1,4 +1,4 @@
-Spree::Stock::Package.class_eval do
+module Spree::Stock::PackageDecorator
   def shipping_methods
     if (vendor = stock_location.vendor)
       vendor.shipping_methods.to_a
@@ -7,3 +7,5 @@ Spree::Stock::Package.class_eval do
     end
   end
 end
+
+Spree::Stock::Package.prepend Spree::Stock::PackageDecorator
