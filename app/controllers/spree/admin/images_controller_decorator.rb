@@ -86,7 +86,6 @@ module Spree
       end
 
       def create
-
         invoke_callbacks(:create, :before)
         @object.attributes = permitted_resource_params
         if @object.save
@@ -150,6 +149,7 @@ module Spree
 
       def load_edit_data_products
         @product = Product.friendly.includes(*variant_edit_includes).find(params[:product_id])
+        @taxons = Spree::Taxonomy.includes(root: :children).find_by(name: 'Image').taxons.where(name: "product").first.children
         @variants = @product.variants.map do |variant|
           [variant.sku_and_options_text, variant.id]
         end
@@ -158,7 +158,8 @@ module Spree
 
       def load_edit_data_vendors
         @vendors = Vendor.friendly.find(params[:vendor_id])
-        @taxons = Spree::Taxonomy.includes(root: :children).find_by(name: 'Image_Category').taxons.select{|s|s.children.empty?}
+        # @taxons = Spree::Taxonomy.includes(root: :children).find_by(name: 'Image_Category').taxons.select{|s|s.children.empty?}
+         @taxons = Spree::Taxonomy.includes(root: :children).find_by(name: 'Image').taxons.where(name: "vendor").first.children
 
       end
 
@@ -166,7 +167,8 @@ module Spree
         if params[:vendor_id].present?
           @image.viewable_type = 'Spree::Vendor'
           @image.viewable_id = Spree::Vendor.friendly.find(params[:vendor_id]).id
-          @taxons = Spree::Taxonomy.includes(root: :children).find_by(name: 'Image_Category').taxons.select{|s|s.children.empty?}
+          # @taxons = Spree::Taxonomy.includes(root: :children).find_by(name: 'Image_Category').taxons.select{|s|s.children.empty?}
+          @taxons = Spree::Taxonomy.includes(root: :children).find_by(name: 'Image').taxons.where(name: "vendor").first.children
           # render "new_vendor"
         else
           @image.viewable_type = 'Spree::Variant'
