@@ -26,24 +26,28 @@ module Spree
           if params[:vendor_id].present?
             @vendor  = Spree::Vendor.friendly.find(params[:vendor_id])
             redirect_vendor_image
-          end
-          respond_with(@object) do |format|
-            format.html do
-              flash[:success] = flash_message_for(@object, :successfully_updated)
-              redirect_to location_after_save
+          else
+            respond_with(@object) do |format|
+              format.html do
+                flash[:success] = flash_message_for(@object, :successfully_updated)
+                redirect_to location_after_save
+              end
+              format.js { render layout: false }
             end
-            format.js { render layout: false }
           end
+
         else
           invoke_callbacks(:update, :fails)
           if params[:vendor_id].present?
             @vendor  = Spree::Vendor.friendly.find(params[:vendor_id])
             redirect_vendor_image
+          else
+            respond_with(@object) do |format|
+              format.html { render action: :edit }
+              format.js { render layout: false }
+            end
           end
-          respond_with(@object) do |format|
-            format.html { render action: :edit }
-            format.js { render layout: false }
-          end
+
         end
       end
 
@@ -112,9 +116,6 @@ module Spree
 
       def redirect_vendor_image
           render "vendor_index"
-          # debugger
-          # redirect_to spree.admin_vendor_images_url(@vendor)
-          # return
       end
 
       private
@@ -158,10 +159,6 @@ module Spree
       def load_edit_data_vendors
         @vendors = Vendor.friendly.find(params[:vendor_id])
         @taxons = Spree::Taxonomy.includes(root: :children).find_by(name: 'Image_Category').taxons.select{|s|s.children.empty?}
-        # debugger
-        # if @vendors.present?
-        #   @vendors.insert(0, [Spree.t(:all), @vendors.id])
-        # end
 
       end
 
