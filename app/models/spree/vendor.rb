@@ -15,7 +15,6 @@ module Spree
     if Spree.version.to_f >= 3.6
       validates_associated :image
     end
-
     validates :notification_email, email: true, allow_blank: true
 
     with_options dependent: :destroy do
@@ -30,6 +29,7 @@ module Spree
       has_many :stock_locations
       has_many :variants
       has_many :vendor_users
+      has_many :images, -> { order(:position) }, as: :viewable, dependent: :destroy, class_name: 'Spree::Image'
     end
 
     has_many :users, through: :vendor_users
