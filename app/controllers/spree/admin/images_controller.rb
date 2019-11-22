@@ -62,6 +62,13 @@ module Spree
               format.js { render :js => "window.location.href='"+request.referer+"'" }
             end
             return
+          elsif params[:auction_id].present?
+            @auction  = Spree::Auction.find(params[:auction_id])
+            respond_with(@auction) do |format|
+              format.html {render :js => "window.location.href='"+request.referer+"'" }
+              format.js { render :js => "window.location.href='"+request.referer+"'" }
+            end
+            return
           else
             invoke_callbacks(:destroy, :after)
             flash[:success] = flash_message_for(@object, :successfully_removed)
@@ -72,6 +79,13 @@ module Spree
             @vendor  = Spree::Vendor.friendly.find(params[:vendor_id])
             # redirect_vendor_image
             respond_with(@vendor) do |format|
+              format.html {render :js => "window.location.href='"+request.referer+"'" }
+              format.js { render :js => "window.location.href='"+request.referer+"'" }
+            end
+            return
+          elsif params[:auction_id].present?
+            @auction  = Spree::Auction.find(params[:auction_id])
+            respond_with(@auction) do |format|
               format.html {render :js => "window.location.href='"+request.referer+"'" }
               format.js { render :js => "window.location.href='"+request.referer+"'" }
             end
@@ -131,6 +145,9 @@ module Spree
         if params[:vendor_id].present?
           @vendor = Vendor.friendly.find(params[:vendor_id])
           render "vendor_index"
+        elsif params[:auction_id].present?
+           @auction  = Auction.find(params[:auction_id])
+           render "auction_index"
         else
           @product = Product.friendly.includes(*variant_index_includes).find(params[:product_id])
         end
@@ -142,6 +159,11 @@ module Spree
           if params[:action] == "new"
             render "spree/admin/images/new_vendor"
           end
+        elsif params[:auction_id].present?
+          load_edit_data_auctions
+          if params[:action] == "new"
+            render "spree/admin/images/new_auction"
+          end
         else
           load_edit_data_products
         end
@@ -149,7 +171,8 @@ module Spree
 
       def load_edit_data_products
         @product = Product.friendly.includes(*variant_edit_includes).find(params[:product_id])
-        @taxons = Spree::Taxonomy.includes(root: :children).find_by(name: 'Image').taxons.where(name: "product").first.children
+        root_taxon  = get_root_taxon
+        @taxons =  root_taxon.present? ? root_taxon.taxons.where(name: "product").first.children : nil
         @variants = @product.variants.map do |variant|
           [variant.sku_and_options_text, variant.id]
         end
@@ -159,8 +182,18 @@ module Spree
       def load_edit_data_vendors
         @vendors = Vendor.friendly.find(params[:vendor_id])
         # @taxons = Spree::Taxonomy.includes(root: :children).find_by(name: 'Image_Category').taxons.select{|s|s.children.empty?}
-         @taxons = Spree::Taxonomy.includes(root: :children).find_by(name: 'Image').taxons.where(name: "vendor").first.children
+        root_taxon  = get_root_taxon
+        @taxons =  root_taxon.present? ? root_taxon.taxons.where(name: "vendor").first.children : nil
+      end
 
+      def load_edit_data_auctions
+          @auctions = Auction.find(params[:auction_id])
+          root_taxon  = get_root_taxon
+          @taxons =  root_taxon.present? ? root_taxon.taxons.where(name: "auction").first.children : nil
+      end
+
+      def get_root_taxon
+         Spree::Taxonomy.includes(root: :children).find_by(name: 'Image')
       end
 
       def set_viewable
@@ -170,6 +203,10 @@ module Spree
           # @taxons = Spree::Taxonomy.includes(root: :children).find_by(name: 'Image_Category').taxons.select{|s|s.children.empty?}
           @taxons = Spree::Taxonomy.includes(root: :children).find_by(name: 'Image').taxons.where(name: "vendor").first.children
           # render "new_vendor"
+        elsif params[:auction_id].present?
+          @image.viewable_type = 'Spree::Auction'
+          @image.viewable_id = Spree::Auction.find(params[:auction_id]).id
+
         else
           @image.viewable_type = 'Spree::Variant'
           @image.viewable_id = params[:image][:viewable_id]
