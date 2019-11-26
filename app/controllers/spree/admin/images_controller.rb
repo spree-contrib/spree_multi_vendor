@@ -13,7 +13,7 @@ module Spree
           render 'edit_vendor'
         elsif params[:auction_id].present?
           @auction = Spree::Auction.find(params[:auction_id])
-          render "auction_index"
+          render "edit_auction"
         else
           respond_with(@object) do |format|
             format.html { render layout: !request.xhr? }
