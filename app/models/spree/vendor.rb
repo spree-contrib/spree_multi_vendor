@@ -31,7 +31,7 @@ module Spree
       has_many :vendor_users
       has_many :images, -> { order(:position) }, as: :viewable, dependent: :destroy, class_name: 'Spree::Image'
       has_many :vendor_calenders
-      has_many :calender, through: :vendor_calenders
+      has_many :calenders, through: :vendor_calenders
     end
 
     has_many :users, through: :vendor_users
