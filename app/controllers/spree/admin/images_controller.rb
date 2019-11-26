@@ -26,6 +26,9 @@ module Spree
           if params[:vendor_id].present?
             @vendor  = Spree::Vendor.friendly.find(params[:vendor_id])
             redirect_vendor_image
+          elsif params[:auction_id].present?
+            @auction = Spree::Auction.find(params[:auction_id])
+            render "auction_index"
           else
             respond_with(@object) do |format|
               format.html do
@@ -41,6 +44,8 @@ module Spree
           if params[:vendor_id].present?
             @vendor  = Spree::Vendor.friendly.find(params[:vendor_id])
             redirect_vendor_image
+          elsif params[:auction_id].present?
+            render "auction_index"
           else
             respond_with(@object) do |format|
               format.html { render action: :edit }
@@ -106,6 +111,9 @@ module Spree
           if params[:vendor_id].present?
             @vendor  = Spree::Vendor.friendly.find(params[:vendor_id])
             redirect_vendor_image
+          elsif params[:auction_id].present?
+              @auction = Spree::Auction.find(params[:auction_id])
+              render "auction_index"
           else
             invoke_callbacks(:create, :after)
             flash[:success] = flash_message_for(@object, :successfully_created)
@@ -118,6 +126,8 @@ module Spree
         else
           if params[:vendor_id].present?
             redirect_vendor_image
+          elsif params[:auction_id].present?
+             render "auction_index"
           end
           invoke_callbacks(:create, :fails)
           respond_with(@object) do |format|
