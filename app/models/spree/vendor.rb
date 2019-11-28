@@ -16,6 +16,7 @@ module Spree
       validates_associated :image
     end
     validates :notification_email, email: true, allow_blank: true
+    has_many :auctions, class_name: 'Spree::Auction'
 
     with_options dependent: :destroy do
       if Spree.version.to_f >= 3.6
