@@ -34,7 +34,8 @@ module Spree
       has_many :vendor_calenders
       has_many :calenders, through: :vendor_calenders
     end
-
+    
+    scope :from_collection, -> (vendors_arr) {where("spree_vendors.id IN (?)", vendors_arr)}
     has_many :users, through: :vendor_users
 
     after_create :create_stock_location
