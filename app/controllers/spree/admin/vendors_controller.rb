@@ -6,7 +6,27 @@ module Spree
         if permitted_resource_params[:image] && Spree.version.to_f >= 3.6
           @vendor.build_image(attachment: permitted_resource_params.delete(:image))
         end
-        super
+        invoke_callbacks(:create, :before)
+        @object.attributes = permitted_resource_params
+        if @object.save
+          invoke_callbacks(:create, :after)
+          flash[:success] = flash_message_for(@object, :successfully_created)
+          respond_with(@object) do |format|
+            if params[:controller].include?('spree/dropit_admin/calenders')
+              format.html { redirect_to dropit_admin_dashboards_path }
+              format.js { render layout: false }
+            else
+              format.html { redirect_to location_after_save }
+              format.js { render layout: false }
+            end
+          end
+        else
+          invoke_callbacks(:create, :fails)
+          respond_with(@object) do |format|
+            format.html { render action: :new }
+            format.js { render layout: false }
+          end
+        end
       end
 
       def update
