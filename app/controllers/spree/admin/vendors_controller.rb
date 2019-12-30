@@ -12,7 +12,7 @@ module Spree
           invoke_callbacks(:create, :after)
           flash[:success] = flash_message_for(@object, :successfully_created)
           respond_with(@object) do |format|
-            if params[:controller].include?('spree/dropit_admin/calenders')
+            if spree_current_user.has_spree_role? :dropit_admin
               format.html { redirect_to dropit_admin_dashboards_path }
               format.js { render layout: false }
             else
