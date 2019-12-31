@@ -23,7 +23,8 @@ module Spree
         else
           invoke_callbacks(:create, :fails)
           respond_with(@object) do |format|
-            format.html { render action: :new }
+            format.html { redirect_to spree.new_dropit_admin_vendor_path } if spree_current_user.has_spree_role? :dropit_admin
+            format.html { render action: :new } if spree_current_user.has_spree_role? :admin
             format.js { render layout: false }
           end
         end
