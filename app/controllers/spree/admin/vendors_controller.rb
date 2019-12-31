@@ -13,7 +13,7 @@ module Spree
           flash[:success] = flash_message_for(@object, :successfully_created)
           respond_with(@object) do |format|
             if spree_current_user.has_spree_role? :dropit_admin
-              format.html { redirect_to dropit_admin_dashboards_path }
+              format.html { redirect_to dropit_admin_mainpage_path }
               format.js { render layout: false }
             else
               format.html { redirect_to location_after_save }
