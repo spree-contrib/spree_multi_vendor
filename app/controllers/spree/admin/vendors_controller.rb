@@ -67,6 +67,28 @@ module Spree
           format.js { render plain: 'Ok' }
         end
       end
+      
+      def destroy
+        invoke_callbacks(:destroy, :before)
+        if @object.destroy
+          invoke_callbacks(:destroy, :after)
+          flash[:success] = flash_message_for(@object, :successfully_removed)
+        else
+          invoke_callbacks(:destroy, :fails)
+          flash[:error] = @object.errors.full_messages.join(', ')
+        end
+
+        respond_with(@object) do |format|
+          if spree_current_user.has_spree_role? :dropit_admin
+            format.html { redirect_to dropit_admin_mainpage_path }
+            format.js { render layout: false }
+          else
+            format.html { redirect_to location_after_destroy }
+            format.js   { render_js_for_destroy }
+          end
+        end
+
+      end
 
       private
 
