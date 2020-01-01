@@ -34,7 +34,27 @@ module Spree
         if permitted_resource_params[:image] && Spree.version.to_f >= 3.6
           @vendor.create_image(attachment: permitted_resource_params.delete(:image))
         end
-        super
+
+        invoke_callbacks(:update, :before)
+        if @object.update(permitted_resource_params)
+          invoke_callbacks(:update, :after)
+          respond_with(@object) do |format|
+            if spree_current_user.has_spree_role? :dropit_admin
+              format.html { redirect_to dropit_admin_mainpage_path }
+              format.js { render layout: false }
+            else
+              format.html { redirect_to location_after_save }
+              format.js { render layout: false }
+            end
+          end
+        else
+          invoke_callbacks(:update, :fails)
+          respond_with(@object) do |format|
+            format.html { redirect_to spree.new_dropit_admin_vendor_path } if spree_current_user.has_spree_role? :dropit_admin
+            format.html { render action: :new } if spree_current_user.has_spree_role? :admin
+            format.js { render layout: false }
+          end
+        end
       end
 
       def update_positions
