@@ -6,12 +6,14 @@ module Spree
         if permitted_resource_params[:image] && Spree.version.to_f >= 3.6
           @vendor.build_image(attachment: permitted_resource_params.delete(:image))
         end
+        super
       end
 
       def update
         if permitted_resource_params[:image] && Spree.version.to_f >= 3.6
           @vendor.create_image(attachment: permitted_resource_params.delete(:image))
         end
+        super
       end
 
       def update_positions
