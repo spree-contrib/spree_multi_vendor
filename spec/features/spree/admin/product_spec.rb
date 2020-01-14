@@ -43,7 +43,8 @@ RSpec.feature 'Admin Products', :js do
         fill_in 'product_name', with: 'Vendor product'
         fill_in 'product_price', with: 15
         select Spree::ShippingCategory.last.name
-        select Spree::Vendor.last.name
+        find('div#s2id_product_vendor_id').click
+        find('div.select2-result-label', text: 'Active vendor').click
 
         click_button 'Create'
 
@@ -77,7 +78,8 @@ RSpec.feature 'Admin Products', :js do
       scenario 'can update product vendor' do
         expect(product.vendor).to eq nil
 
-        select vendor.name
+        find('div#s2id_product_vendor_id').click
+        find('div.select2-result-label', text: "#{vendor.name}").click
         click_button 'Update'
         expect(page).to have_text 'successfully updated!'
         product.reload
@@ -89,7 +91,8 @@ RSpec.feature 'Admin Products', :js do
       scenario 'creates new variant with vendor id assigned' do
         visit spree.admin_product_variants_path(vendor_product)
         click_link 'New Variant'
-        select 'S'
+        find('div#s2id_variant_option_value_ids').click
+        find('div.select2-result-label', text: 'S').click
         click_button 'Create'
         expect(page).to have_text 'successfully created!'
         expect(Spree::Variant.last.vendor_id).to eq vendor.id
@@ -168,7 +171,8 @@ RSpec.feature 'Admin Products', :js do
       scenario 'can create new variant' do
         visit spree.admin_product_variants_path(vendor_product)
         click_link 'New Variant'
-        select 'S'
+        find('div#s2id_variant_option_value_ids').click
+        find('div.select2-result-label', text: 'S').click
         click_button 'Create'
         expect(page).to have_text 'successfully created!'
         expect(Spree::Variant.last.option_values).to include option_value

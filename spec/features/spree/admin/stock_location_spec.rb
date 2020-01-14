@@ -41,7 +41,12 @@ RSpec.feature 'Admin Stock Locations', :js do
         expect(current_path).to eq spree.new_admin_stock_location_stock_movement_path(active_vendor.stock_locations.first)
 
         fill_in 'stock_movement_quantity', with: 5
-        fill_in 'stock_movement_stock_item_id', with: 1
+        if Spree.version.to_f < 4.0
+          fill_in 'stock_movement_stock_item_id', with: 1
+        else
+          find('div#s2id_stock_movement_stock_item_id').click
+          find('div.variant-autocomplete-item', text: 'SKU').click
+        end
 
         click_button 'Create'
 
