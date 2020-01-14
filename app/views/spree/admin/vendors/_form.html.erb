@@ -16,7 +16,7 @@
     <%= f.label :state %>
     <%= f.select :state,
       options_for_select(Spree::Vendor.state_machines[:state].states.collect { |s| [Spree.t("vendor_states.#{s.name}"), s.value] }, selected: @vendor.state),
-      {}, class: 'select2' %>
+      {}, class: 'select2', required: :required %>
   <% end %>
   <% if Spree.version.to_f >= 3.6 %>
     <%= f.field_container :image do %>

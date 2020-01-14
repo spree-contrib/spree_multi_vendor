@@ -38,7 +38,8 @@ RSpec.feature 'Admin Shipping Methods', :js do
         check Spree::ShippingCategory.last.name
 
         if Spree.version.to_f >= 4.0
-          page.select 'Both', from: 'Display'
+          find('div#s2id_shipping_method_display_on').click
+          find('div.select2-result-label', text: 'Both').click
         end
 
         click_button 'Create'
