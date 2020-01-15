@@ -44,8 +44,7 @@ RSpec.feature 'Admin Stock Locations', :js do
         if Spree.version.to_f < 4.0
           fill_in 'stock_movement_stock_item_id', with: 1
         else
-          find('div#s2id_stock_movement_stock_item_id').click
-          find('div.variant-autocomplete-item', text: 'SKU').click
+          select2('SKU', from: 'Stock Item')
         end
 
         click_button 'Create'
