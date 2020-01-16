@@ -16,6 +16,7 @@ require 'factory_bot'
 require 'selenium/webdriver'
 require 'rspec/rails'
 require 'shoulda/matchers'
+require 'capybara-select-2'
 
 include Warden::Test::Helpers
 Warden.test_mode!
@@ -29,6 +30,7 @@ RSpec.configure do |config|
 
   config.infer_spec_type_from_file_location!
   config.raise_errors_for_deprecations!
+  config.include CapybaraSelect2
 
   config.expect_with :rspec do |expectations|
     expectations.syntax = :expect

@@ -43,7 +43,7 @@ RSpec.feature 'Admin Products', :js do
         fill_in 'product_name', with: 'Vendor product'
         fill_in 'product_price', with: 15
         select Spree::ShippingCategory.last.name
-        select Spree::Vendor.last.name
+        select2 'Active vendor', from: 'Vendor'
 
         click_button 'Create'
 
@@ -76,8 +76,7 @@ RSpec.feature 'Admin Products', :js do
 
       scenario 'can update product vendor' do
         expect(product.vendor).to eq nil
-
-        select vendor.name
+        select2 "#{vendor.name}", from: 'Vendor'
         click_button 'Update'
         expect(page).to have_text 'successfully updated!'
         product.reload
@@ -89,7 +88,7 @@ RSpec.feature 'Admin Products', :js do
       scenario 'creates new variant with vendor id assigned' do
         visit spree.admin_product_variants_path(vendor_product)
         click_link 'New Variant'
-        select 'S'
+        select2 'S', from: 'Size'
         click_button 'Create'
         expect(page).to have_text 'successfully created!'
         expect(Spree::Variant.last.vendor_id).to eq vendor.id
@@ -168,7 +167,7 @@ RSpec.feature 'Admin Products', :js do
       scenario 'can create new variant' do
         visit spree.admin_product_variants_path(vendor_product)
         click_link 'New Variant'
-        select 'S'
+        select2 'S', from: 'Size'
         click_button 'Create'
         expect(page).to have_text 'successfully created!'
         expect(Spree::Variant.last.option_values).to include option_value
