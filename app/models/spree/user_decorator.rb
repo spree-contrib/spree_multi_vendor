@@ -5,4 +5,4 @@ module Spree::UserDecorator
   end
 end
 
-Spree::User.prepend Spree::UserDecorator
+Spree.user_class.prepend Spree::UserDecorator
