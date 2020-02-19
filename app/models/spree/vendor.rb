@@ -8,8 +8,7 @@ module Spree
 
     validates :name,
       presence: true,
-      uniqueness: { case_sensitive: false },
-      format: { with: /\A[A-Za-z0-9\ ]+\z/, message: Spree.t('only_alphanumeric_chars') }
+      uniqueness: { case_sensitive: false }
 
     validates :slug, uniqueness: true
     if Spree.version.to_f >= 3.6
