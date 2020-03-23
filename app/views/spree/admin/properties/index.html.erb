@@ -28,7 +28,7 @@
         </div>
       </div>
 
-      <% if current_spree_user.respond_to?(:has_spree_role?) && current_spree_user.has_spree_role?(:admin) %>
+      <% if current_spree_user.respond_to?(:has_spree_role?) && current_spree_user.has_spree_role?(:admin) && Spree::Property.method_defined?(:vendor) %>
         <div class="row">
           <div class="col-md-6">
             <div class="form-group">
@@ -53,7 +53,7 @@
       <tr data-hook="listing_properties_header">
         <th><%= Spree.t(:name) %></th>
         <th><%= Spree.t(:presentation) %></th>
-        <% if current_spree_user.respond_to?(:has_spree_role?) && current_spree_user.has_spree_role?(:admin) %>
+        <% if current_spree_user.respond_to?(:has_spree_role?) && current_spree_user.has_spree_role?(:admin) && Spree::Property.method_defined?(:vendor) %>
           <th><%= Spree.t(:vendor_name) %></th>
         <% end %>
         <th class="actions"></th>
@@ -64,7 +64,7 @@
         <tr id="<%= spree_dom_id property %>" data-hook="listing_properties_row">
           <td><%= property.name %></td>
           <td><%= property.presentation %></td>
-          <% if current_spree_user.respond_to?(:has_spree_role?) && current_spree_user.has_spree_role?(:admin) %>
+          <% if current_spree_user.respond_to?(:has_spree_role?) && current_spree_user.has_spree_role?(:admin) && Spree::Property.method_defined?(:vendor) %>
             <td><%= property.vendor.try(:name) %></td>
           <% end %>
           <td class="actions actions-2 text-right">
