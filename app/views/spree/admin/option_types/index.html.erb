@@ -17,7 +17,7 @@
       <th class="no-border"></th>
       <th><%= Spree.t(:name) %></th>
       <th><%= Spree.t(:presentation) %></th>
-      <% if current_spree_user.respond_to?(:has_spree_role?) && current_spree_user.has_spree_role?(:admin) %>
+      <% if current_spree_user.respond_to?(:has_spree_role?) && current_spree_user.has_spree_role?(:admin) && Spree::OptionType.method_defined?(:vendor) %>
        <th><%= Spree.t(:vendor_name) %>
       <% end %>
       <th class="actions"></th>
@@ -31,7 +31,7 @@
         </td>
         <td><%= option_type.name %></td>
         <td class="presentation"><%= option_type.presentation %></td>
-        <% if current_spree_user.respond_to?(:has_spree_role?) && current_spree_user.has_spree_role?(:admin) %>
+        <% if current_spree_user.respond_to?(:has_spree_role?) && current_spree_user.has_spree_role?(:admin) && Spree::OptionType.method_defined?(:vendor) %>
           <td><%= option_type.vendor.try(:name) %>
         <% end %>
         <td class="actions actions-2 text-right">
