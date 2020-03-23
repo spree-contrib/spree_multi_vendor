@@ -14,7 +14,7 @@
         <th><%= Spree.t(:zone) %></th>
         <th><%= Spree.t(:calculator) %></th>
         <th class="text-center"><%= Spree.t(:display) %></th>
-        <% if current_spree_user.respond_to?(:has_spree_role?) && current_spree_user.has_spree_role?(:admin) %>
+        <% if current_spree_user.respond_to?(:has_spree_role?) && current_spree_user.has_spree_role?(:admin) && Spree::Shipment.method_defined?(:vendor) %>
           <th><%= Spree.t(:vendor_name) %>
         <% end %>
         <th data-hook="admin_shipping_methods_index_header_actions" class="actions"></th>
@@ -27,7 +27,7 @@
           <td><%= shipping_method.zones.collect(&:name).join(", ") if shipping_method.zones %></td>
           <td><%= shipping_method.calculator.description %></td>
           <td class="text-center"><%= shipping_method.display_on.blank? ? Spree.t(:both) : Spree.t(shipping_method.display_on) %></td>
-          <% if current_spree_user.respond_to?(:has_spree_role?) && current_spree_user.has_spree_role?(:admin) %>
+          <% if current_spree_user.respond_to?(:has_spree_role?) && current_spree_user.has_spree_role?(:admin) && Spree::Shipment.method_defined?(:vendor) %>
             <td><%= shipping_method.vendor.try(:name) %>
           <% end %>
           <td data-hook="admin_shipping_methods_index_row_actions" class="actions actions-2 text-right">
