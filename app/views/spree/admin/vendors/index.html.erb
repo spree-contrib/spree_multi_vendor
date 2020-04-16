@@ -91,6 +91,7 @@
           </td>
           <td class="actions actions-2 text-right">
             <%= link_to_edit vendor, no_text: true, class: 'edit' if can?(:edit, vendor) %>
+            <%= link_to_delete vendor, no_text: true %>
           </td>
         </tr>
       <% end %>

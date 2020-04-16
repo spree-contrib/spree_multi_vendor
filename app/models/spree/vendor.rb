@@ -14,8 +14,8 @@ module Spree
     if Spree.version.to_f >= 3.6
       validates_associated :image
     end
-
     validates :notification_email, email: true, allow_blank: true
+    has_many :auctions, class_name: 'Spree::Auction'
 
     with_options dependent: :destroy do
       if Spree.version.to_f >= 3.6
@@ -29,7 +29,13 @@ module Spree
       has_many :stock_locations
       has_many :variants
       has_many :vendor_users
+      has_many :images, -> { order(:position) }, as: :viewable, dependent: :destroy, class_name: 'Spree::Image'
+      has_many :vendor_calenders
+      has_many :calenders, through: :vendor_calenders
     end
+    
+    scope :from_collection, -> (vendors_arr) {where("spree_vendors.id IN (?)", vendors_arr)}
+    scope :available_vendors, -> {pluck(:id, :name)}
 
     has_many :users, through: :vendor_users
 
