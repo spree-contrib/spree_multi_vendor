@@ -8,4 +8,4 @@ module Spree::VendorDecorator
   end
 end
 
-::Spree::Vendor.prepend(Spree::VendorDecorator)
+::Spree::Vendor.prepend(Spree::VendorDecorator) if defined? (SpreeGlobalize)
