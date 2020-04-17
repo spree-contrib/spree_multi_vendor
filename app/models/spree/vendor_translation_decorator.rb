@@ -1,6 +1,8 @@
 module Spree::VendorDecorator
     def self.prepended(base)
-      base.translates :name, :about_us, :contact_us, :slug, fallbacks_for_empty_translations: true
+      if defined? (SpreeGlobalize)
+        base.translates :name, :about_us, :contact_us, :slug, fallbacks_for_empty_translations: true
+      end
     end
 
     Spree::Vendor.include SpreeGlobalize::Translatable
