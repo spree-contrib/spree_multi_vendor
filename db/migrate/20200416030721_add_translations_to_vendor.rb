@@ -3,8 +3,8 @@
 
 class AddTranslationsToVendor < ActiveRecord::Migration[6.0]
   def up
+    params = {name: :string, about_us: :text, contact_us: :text, slug: :string}
     if defined?(SpreeGlobalize)
-      params = {vendor_id: :string, name: :string, about_us: :text, contact_us: :text, slug: :string}
       Spree::Vendor.create_translation_table!(params, {migrate_data: true})
     end
   end
