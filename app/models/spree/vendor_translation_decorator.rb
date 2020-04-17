@@ -5,7 +5,7 @@ module Spree::VendorDecorator
       end
     end
 
-    Spree::Vendor.include SpreeGlobalize::Translatable
+    Spree::Vendor.include SpreeGlobalize::Translatable if defined?(SpreeGlobalize)
   end
 end
 
