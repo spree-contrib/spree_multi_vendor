@@ -33,7 +33,7 @@ module Spree
 
     if defined? (SpreeGlobalize)
       # Spree Globalize optional
-      translates :name, :about_us, :contact_us, :slug,
+      translates :vendor_id, :name, :about_us, :contact_us, :slug,
                  fallbacks_for_empty_translations: true
 
       include SpreeGlobalize::Translatable
