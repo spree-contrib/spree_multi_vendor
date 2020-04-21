@@ -3,7 +3,7 @@
 # Based on issue https://github.com/spree-contrib/spree_multi_vendor/issues/104
 # This is a patch for Spree globalize to be friendly with the gem
 
-class AddTranslationsToVendor < ActiveRecord::Migration[6.0]
+class AddTranslationsToVendor < ActiveRecord::Migration[4.2]
   def up
     params = { name: :string, about_us: :text, contact_us: :text, slug: :string }
     if defined?(SpreeGlobalize)
