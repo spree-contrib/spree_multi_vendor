@@ -1,13 +1,13 @@
+# frozen_string_literal: true
+
 # Based on issue https://github.com/spree-contrib/spree_multi_vendor/issues/104
 # This is a patch for Spree globalize to be friendly with the gem
 
 class AddTranslationsToVendor < ActiveRecord::Migration[6.0]
   def up
-    params = {name: :string, about_us: :text, contact_us: :text, slug: :string}
+    params = { name: :string, about_us: :text, contact_us: :text, slug: :string }
     if defined?(SpreeGlobalize)
-      unless table_exists?(:spree_vendor_translations)
-        Spree::Vendor.create_translation_table!(params, {migrate_data: true})
-      end
+      Spree::Vendor.create_translation_table!(params, { migrate_data: true })
     end
   end
 
