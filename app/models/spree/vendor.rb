@@ -54,17 +54,13 @@ module Spree
       update(notification_email: email)
     end
 
-    def self.prepended(base)
-      if defined? SpreeGlobalize
-        base.translates :name,
-                        :about_us,
-                        :contact_us,
-                        :slug, fallbacks_for_empty_translations: true
-      end
-    end
-
-    if defined? SpreeGlobalize
-      Spree::Vendor.include SpreeGlobalize::Translatable
+    # Spree Globalize support
+    # https://github.com/spree-contrib/spree_multi_vendor/issues/104
+    if defined?(SpreeGlobalize)
+      translates :name,
+                 :about_us,
+                 :contact_us,
+                 :slug, fallbacks_for_empty_translations: true
     end
 
     private
