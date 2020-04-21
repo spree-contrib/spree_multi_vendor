@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   class Vendor < Spree::Base
     extend FriendlyId
@@ -7,13 +9,11 @@ module Spree
     friendly_id :name, use: %i[slugged history]
 
     validates :name,
-      presence: true,
-      uniqueness: { case_sensitive: false }
+              presence: true,
+              uniqueness: { case_sensitive: false }
 
     validates :slug, uniqueness: true
-    if Spree.version.to_f >= 3.6
-      validates_associated :image
-    end
+    validates_associated :image if Spree.version.to_f >= 3.6
 
     validates :notification_email, email: true, allow_blank: true
 
@@ -54,6 +54,15 @@ module Spree
       update(notification_email: email)
     end
 
+    # Spree Globalize support
+    # https://github.com/spree-contrib/spree_multi_vendor/issues/104
+    if defined?(SpreeGlobalize)
+      translates :name,
+                 :about_us,
+                 :contact_us,
+                 :slug, fallbacks_for_empty_translations: true
+    end
+
     private
 
     def create_stock_location
@@ -65,7 +74,7 @@ module Spree
     end
 
     def update_stock_location_names
-      if (Spree.version.to_f < 3.5 && self.name_changed?) || (Spree.version.to_f >= 3.5 && saved_changes&.include?(:name))
+      if (Spree.version.to_f < 3.5 && name_changed?) || (Spree.version.to_f >= 3.5 && saved_changes&.include?(:name))
         stock_locations.update_all({ name: name })
       end
     end
