@@ -57,6 +57,7 @@ module Spree
     # Spree Globalize support
     # https://github.com/spree-contrib/spree_multi_vendor/issues/104
     if defined?(SpreeGlobalize)
+      attr_accessor :translations_attributes
       translates :name,
                  :about_us,
                  :contact_us,
