@@ -91,6 +91,12 @@
           </td>
           <td class="actions actions-2 text-right">
             <%= link_to_edit vendor, no_text: true, class: 'edit' if can?(:edit, vendor) %>
+            <!-- Add translation icon support -->
+            <%= link_to_with_icon 'translate',
+                                  nil,
+                                  spree.admin_translations_path('vendor', vendor.id),
+                                  title: Spree.t(:'i18n.translations'),
+                                  class: 'btn btn-sm btn-primary' if defined? (SpreeGlobalize)%>
           </td>
         </tr>
       <% end %>

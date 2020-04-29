@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module Spree
   class Vendor < Spree::Base
     extend FriendlyId
@@ -57,6 +55,7 @@ module Spree
     # Spree Globalize support
     # https://github.com/spree-contrib/spree_multi_vendor/issues/104
     if defined?(SpreeGlobalize)
+      attr_accessor :translations_attributes
       translates :name,
                  :about_us,
                  :contact_us,
@@ -74,7 +73,7 @@ module Spree
     end
 
     def update_stock_location_names
-      if (Spree.version.to_f < 3.5 && name_changed?) || (Spree.version.to_f >= 3.5 && saved_changes&.include?(:name))
+      if (Spree.version.to_f < 3.5 && self.name_changed?) || (Spree.version.to_f >= 3.5 && saved_changes&.include?(:name))
         stock_locations.update_all({ name: name })
       end
     end

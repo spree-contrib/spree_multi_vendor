@@ -13,6 +13,7 @@ module Spree
         if permitted_resource_params[:image] && Spree.version.to_f >= 3.6
           @vendor.create_image(attachment: permitted_resource_params.delete(:image))
         end
+        format_translations if defined? SpreeGlobalize
         super
       end
 
@@ -39,8 +40,19 @@ module Spree
         @search = vendors.ransack(params[:q])
 
         @collection = @search.result.
-                      page(params[:page]).
-                      per(params[:per_page])
+            page(params[:page]).
+            per(params[:per_page])
+      end
+
+      def format_translations
+        params[:vendor][:translations_attributes].each do |_, data|
+          translation = @vendor.translations.find_or_create_by(locale: data[:locale])
+          translation.name = data[:name]
+          translation.about_us = data[:about_us]
+          translation.contact_us = data[:contact_us]
+          translation.slug = data[:slug]
+          translation.save!
+        end
       end
     end
   end
