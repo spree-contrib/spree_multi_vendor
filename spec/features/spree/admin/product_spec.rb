@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 RSpec.feature 'Admin Products', :js do
-  let(:vendor) { create(:vendor) }
+  let(:vendor) { create(:active_vendor) }
   let!(:user) { create(:user, vendors: [vendor]) }
   let!(:admin) { create(:admin_user) }
   let!(:option_type) { create(:option_type, name: 'Testing option', vendor_id: vendor.id) }
@@ -10,11 +10,88 @@ RSpec.feature 'Admin Products', :js do
   let!(:vendor_product) { create(:product, vendor: vendor, sku: 'Test2', option_types: [option_type]) }
 
   context 'for user with admin role' do
+    before { login_as(admin, scope: :spree_user) }
+
     context 'index' do
       scenario 'displays all products' do
-        login_as(admin, scope: :spree_user)
         visit spree.admin_products_path
         expect(page).to have_selector('tr', count: 3)
+      end
+    end
+
+    context 'create product' do
+      scenario 'creates new product with vendor id unassigned' do
+        visit spree.admin_products_path
+        click_link 'New Product'
+        expect(current_path).to eq spree.new_admin_product_path
+
+        fill_in 'product_name', with: 'Vendor product'
+        fill_in 'product_price', with: 15
+        select Spree::ShippingCategory.last.name
+
+        click_button 'Create'
+
+        expect(page).to have_text 'successfully created!'
+        expect(current_path).to eq spree.edit_admin_product_path(Spree::Product.last)
+        expect(Spree::Product.last.vendor_id).to eq nil
+      end
+      scenario 'creates new product with assigned vendor' do
+        visit spree.admin_products_path
+        click_link 'New Product'
+        expect(current_path).to eq spree.new_admin_product_path
+
+        fill_in 'product_name', with: 'Vendor product'
+        fill_in 'product_price', with: 15
+        select Spree::ShippingCategory.last.name
+        select2 'Active vendor', from: 'Vendor'
+
+        click_button 'Create'
+
+        expect(page).to have_text 'successfully created!'
+        expect(current_path).to eq spree.edit_admin_product_path(Spree::Product.last)
+        expect(Spree::Product.last.vendor_id).to eq Spree::Vendor.last.id
+      end
+    end
+
+    context 'edit product' do
+      before(:each) do
+        visit spree.edit_admin_product_path(product)
+        expect(current_path).to eq spree.edit_admin_product_path(product)
+      end
+
+      scenario 'can update an existing product' do
+        fill_in 'product_name', with: 'Testing edit'
+        click_button 'Update'
+        expect(page).to have_text 'successfully updated!'
+        expect(page).to have_text 'Testing edit'
+      end
+
+      scenario 'can update product master price' do
+        fill_in 'product_price', with: 123
+        click_button 'Update'
+        expect(page).to have_text 'successfully updated!'
+        product.reload
+        expect(product.price).to eq 123
+      end
+
+      scenario 'can update product vendor' do
+        expect(product.vendor).to eq nil
+        select2 "#{vendor.name}", from: 'Vendor'
+        click_button 'Update'
+        expect(page).to have_text 'successfully updated!'
+        product.reload
+        expect(product.vendor).to eq vendor
+      end
+    end
+
+    context 'create variant' do
+      scenario 'creates new variant with vendor id assigned' do
+        visit spree.admin_product_variants_path(vendor_product)
+        click_link 'New Variant'
+        select2 'S', from: 'Size'
+        click_button 'Create'
+        expect(page).to have_text 'successfully created!'
+        expect(Spree::Variant.last.vendor_id).to eq vendor.id
       end
     end
   end
@@ -38,7 +115,7 @@ RSpec.feature 'Admin Products', :js do
 
         fill_in 'product_name', with: 'Vendor product'
         fill_in 'product_price', with: 15
-        select 'ShippingCategory #3'
+        select Spree::ShippingCategory.last.name
 
         click_button 'Create'
 
@@ -59,6 +136,14 @@ RSpec.feature 'Admin Products', :js do
         click_button 'Update'
         expect(page).to have_text 'successfully updated!'
         expect(page).to have_text 'Testing edit'
+      end
+
+      scenario 'can update product master price' do
+        fill_in 'product_price', with: 123
+        click_button 'Update'
+        expect(page).to have_text 'successfully updated!'
+        vendor_product.reload
+        expect(vendor_product.price).to eq 123
       end
 
       scenario 'shows validation error with blank name' do
@@ -82,7 +167,7 @@ RSpec.feature 'Admin Products', :js do
       scenario 'can create new variant' do
         visit spree.admin_product_variants_path(vendor_product)
         click_link 'New Variant'
-        select 'S'
+        select2 'S', from: 'Size'
         click_button 'Create'
         expect(page).to have_text 'successfully created!'
         expect(Spree::Variant.last.option_values).to include option_value

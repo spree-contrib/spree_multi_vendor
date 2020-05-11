@@ -4,10 +4,33 @@
     <%= f.label :name %>
     <%= f.text_field :name, class: 'form-control' %>
   <% end %>
+  <%= f.field_container :about_us do %>
+    <%= f.label :about_us %>
+    <%= f.text_area :about_us, class: 'form-control' %>
+  <% end %>
+  <%= f.field_container :contact_us do %>
+    <%= f.label :contact_us %>
+    <%= f.text_area :contact_us, class: 'form-control' %>
+  <% end %>
   <%= f.field_container :state do %>
     <%= f.label :state %>
     <%= f.select :state,
       options_for_select(Spree::Vendor.state_machines[:state].states.collect { |s| [Spree.t("vendor_states.#{s.name}"), s.value] }, selected: @vendor.state),
-      {}, class: 'select2' %>
+      {}, class: 'select2', required: :required %>
+  <% end %>
+  <% if Spree.version.to_f >= 3.6 %>
+    <%= f.field_container :image do %>
+      <%= f.label :image %>
+      <%= f.file_field :image %>
+      <%= image_tag main_app.url_for(@vendor.image.url(:small)) if @vendor.image %>
+    <% end %>
+  <% end %>
+  <%= f.field_container :commission_rate do %>
+    <%= f.label :commission_rate %>
+    <%= f.number_field :commission_rate, step: '0.01', class: 'form-control' %>
+  <% end %>
+  <%= f.field_container :notification_email do%>
+    <%= f.label :notification_email %>
+    <%= f.email_field :notification_email, class: 'form-control' %>
   <% end %>
 </div>

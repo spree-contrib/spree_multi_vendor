@@ -1,11 +1,11 @@
 require 'spec_helper'
 
 RSpec.feature 'Admin Shipping Methods', :js do
-  let(:vendor) { create(:vendor) }
-  let!(:user) { create(:user, vendors: [vendor]) }
+  let(:active_vendor) { create(:active_vendor) }
+  let!(:user) { create(:user, vendors: [active_vendor]) }
   let!(:admin) { create(:admin_user) }
   let!(:shipping_method) { create(:shipping_method, name: 'Test') }
-  let!(:vendor_shipping_method) { create(:shipping_method, name: 'Test', vendor: vendor) }
+  let!(:vendor_shipping_method) { create(:shipping_method, name: 'Test', vendor: active_vendor) }
 
   context 'for user with admin role' do
     context 'index' do
@@ -37,18 +37,22 @@ RSpec.feature 'Admin Shipping Methods', :js do
         fill_in 'shipping_method_name', with: 'Vendor shipping method'
         check Spree::ShippingCategory.last.name
 
+        if Spree.version.to_f >= 4.0
+          select2 'Both', from: 'Display'
+        end
+
         click_button 'Create'
 
         expect(page).to have_text 'successfully created!'
         expect(current_path).to eq spree.edit_admin_shipping_method_path(Spree::ShippingMethod.last)
-        expect(Spree::ShippingMethod.last.vendor_id).to eq vendor.id
+        expect(Spree::ShippingMethod.last.vendor_id).to eq active_vendor.id
       end
     end
 
     context 'edit' do
       before(:each) do
         within_row(1) { click_icon :edit }
-        expect(current_path).to eq spree.edit_admin_shipping_method_path(vendor.shipping_methods.first)
+        expect(current_path).to eq spree.edit_admin_shipping_method_path(active_vendor.shipping_methods.first)
       end
 
       scenario 'can update an existing shipping method' do

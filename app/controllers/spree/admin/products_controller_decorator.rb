@@ -1,5 +1,8 @@
-Spree::Admin::ProductsController.class_eval do
-  before_action :set_vendor_id, only: [:create, :update]
+module Spree::Admin::ProductsControllerDecorator
+  def self.prepended(base)
+    base.before_action :set_vendor_id, only: [:create, :update]
+    base.before_action :load_vendors, only: [:new, :edit]
+  end
 
   def stock
     @variants = @product.variants.includes(*variant_stock_includes)
@@ -10,4 +13,12 @@ Spree::Admin::ProductsController.class_eval do
       redirect_to admin_stock_locations_path
     end
   end
+
+  private
+
+  def load_vendors
+    @vendors = Spree::Vendor.order(Arel.sql('LOWER(name)'))
+  end
 end
+
+Spree::Admin::ProductsController.prepend Spree::Admin::ProductsControllerDecorator

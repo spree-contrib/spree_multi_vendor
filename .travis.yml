@@ -1,6 +1,13 @@
 sudo: required
 dist: trusty
 
+before_script:
+ - export DISPLAY=:99.0 && sh -e /etc/init.d/xvfb start && sleep 3
+
+addons:
+  chrome: stable
+  postgresql: 9.4
+
 language: ruby
 
 env:
@@ -8,8 +15,8 @@ env:
   - DB=mysql
 
 gemfile:
-  - gemfiles/spree_3_1.gemfile
-  - gemfiles/spree_3_2.gemfile
+  - gemfiles/spree_3_7.gemfile
+  - gemfiles/spree_4_0.gemfile
   - gemfiles/spree_master.gemfile
 
 script:
@@ -17,12 +24,24 @@ script:
   - bundle exec rake spec
 
 rvm:
-  - 2.3.1
-  - 2.2.5
+  - 2.5.1
+  - 2.4.4
 
-addons:
-  apt:
-    packages:
-    - mysql-server-5.6
-    - mysql-client-core-5.6
-    - mysql-client-5.6
+matrix:
+  allow_failures:
+    - gemfile: gemfiles/spree_master.gemfile
+  exclude:
+    - rvm: 2.4.4
+      gemfile: gemfiles/spree_4_0.gemfile
+    - rvm: 2.4.4
+      gemfile: gemfiles/spree_master.gemfile
+    - rvm: 2.5.1
+      gemfile: gemfiles/spree_3_5.gemfile
+
+before_install:
+  - mysql -u root -e "GRANT ALL ON *.* TO 'travis'@'%';"
+  - wget http://chromedriver.storage.googleapis.com/2.38/chromedriver_linux64.zip
+  - unzip chromedriver_linux64.zip
+  - sudo apt-get install libnss3
+  - sudo cp chromedriver /usr/local/bin/
+  - sudo chmod +x /usr/local/bin/chromedriver

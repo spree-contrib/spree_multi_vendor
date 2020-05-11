@@ -1,9 +1,9 @@
 require 'spec_helper'
 
 RSpec.feature 'Admin Stock Locations', :js do
-  let(:vendor) { create(:vendor) }
-  let!(:product) { create(:product, vendor_id: vendor.id, name: 'Test') }
-  let!(:user) { create(:user, vendors: [vendor]) }
+  let(:active_vendor) { create(:active_vendor) }
+  let!(:product) { create(:product, vendor_id: active_vendor.id, name: 'Test') }
+  let!(:user) { create(:user, vendors: [active_vendor]) }
   let!(:admin) { create(:admin_user) }
   let!(:stock_location) { create(:stock_location, name: 'Test') }
 
@@ -32,16 +32,20 @@ RSpec.feature 'Admin Stock Locations', :js do
     context 'stock movements' do
       scenario 'displays stock movements for vendor stock location' do
         click_on 'Stock Movements'
-        expect(page).to have_text 'Stock Movements for Test vendor'
+        expect(page).to have_text 'Stock Movements for Active vendor'
       end
 
       scenario 'can create a new stock movement for vendor stock location' do
         click_on 'Stock Movements'
         click_on 'New Stock Movement'
-        expect(current_path).to eq spree.new_admin_stock_location_stock_movement_path(vendor.stock_locations.first)
+        expect(current_path).to eq spree.new_admin_stock_location_stock_movement_path(active_vendor.stock_locations.first)
 
         fill_in 'stock_movement_quantity', with: 5
-        fill_in 'stock_movement_stock_item_id', with: 1
+        if Spree.version.to_f < 4.0
+          fill_in 'stock_movement_stock_item_id', with: 1
+        else
+          select2('SKU', from: 'Stock Item')
+        end
 
         click_button 'Create'
 
@@ -61,14 +65,14 @@ RSpec.feature 'Admin Stock Locations', :js do
 
         expect(page).to have_text 'successfully created!'
         expect(current_path).to eq spree.admin_stock_locations_path
-        expect(Spree::StockLocation.last.vendor_id).to eq vendor.id
+        expect(Spree::StockLocation.last.vendor_id).to eq active_vendor.id
       end
     end
 
     context 'edit' do
       before(:each) do
         within_row(1) { click_icon :edit }
-        expect(current_path).to eq spree.edit_admin_stock_location_path(vendor.stock_locations.first)
+        expect(current_path).to eq spree.edit_admin_stock_location_path(active_vendor.stock_locations.first)
       end
 
       scenario 'can update an existing stock location' do

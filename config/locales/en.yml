@@ -6,14 +6,28 @@ en:
         other: Vendors
     attributes:
       spree/vendor:
+        about_us: About us
+        contact_us: Contact us
+        image: Image
         name: name
         state: state
         created_at: created at
+        priority: priority
   spree:
     back_to_vendors_list: Back To Vendors List
     edit_vendor: Edit Vendor
     new_vendor: New Vendor
+    only_alphanumeric_chars: should contain only letters and digits
+    order_mailer:
+      vendor_notification_email:
+        dear_vendor: Dear Vendor,
+        subject: Vendor notification
+        thanks: Thanks
+    vendor: Vendor
+    vendor_name: Vendor Name
     vendor_states:
       active: Active
       blocked: Blocked
       pending: Pending
+    admin:
+      commission: Commission

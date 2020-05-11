@@ -8,10 +8,10 @@ module SpreeMultiVendor
   end
 
   module VERSION
-    MAJOR = 0
-    MINOR = 0
-    TINY  = 1
-    PRE   = 'alpha'.freeze
+    MAJOR = 1
+    MINOR = 5
+    TINY  = 2
+    PRE   = nil
 
     STRING = [MAJOR, MINOR, TINY, PRE].compact.join('.')
   end

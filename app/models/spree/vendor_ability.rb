@@ -2,7 +2,7 @@ class Spree::VendorAbility
   include CanCan::Ability
 
   def initialize(user)
-    @vendor_ids = user.vendors.pluck(:id)
+    @vendor_ids = user.vendors.active.ids
 
     if @vendor_ids.any?
       apply_classifications_permissions
@@ -14,6 +14,7 @@ class Spree::VendorAbility
       apply_product_permissions
       apply_product_properties_permissions
       apply_properties_permissions
+      apply_shipment_permissions
       apply_shipping_methods_permissions
       apply_stock_permissions
       apply_stock_item_permissions
@@ -22,6 +23,7 @@ class Spree::VendorAbility
       apply_variant_permissions
       apply_vendor_permissions
       apply_vendor_settings_permissions
+      apply_state_changes_permissions
     end
   end
 
@@ -32,9 +34,8 @@ class Spree::VendorAbility
   end
 
   def apply_order_permissions
-    can [:manage, :modify], Spree::Order do |order|
-      order.joins(line_items: :variant).where(vendor_id: @vendor_ids)
-    end
+    cannot :create, Spree::Order
+    can [:admin, :index, :edit, :update, :cart], Spree::Order, line_items: { product: { vendor_id: @vendor_ids } }
   end
 
   def apply_image_permissions
@@ -46,7 +47,7 @@ class Spree::VendorAbility
   end
 
   def apply_option_type_permissions
-    cannot :display, Spree::OptionType
+    cannot_display_model(Spree::OptionType)
     can :manage, Spree::OptionType, vendor_id: @vendor_ids
     can :create, Spree::OptionType
   end
@@ -60,20 +61,24 @@ class Spree::VendorAbility
   end
 
   def apply_product_permissions
-    cannot :display, Spree::Product
+    cannot_display_model(Spree::Product)
     can :manage, Spree::Product, vendor_id: @vendor_ids
     can :create, Spree::Product
   end
 
   def apply_properties_permissions
-    cannot :display, Spree::Property
+    cannot_display_model(Spree::Property)
     can :manage, Spree::Property, vendor_id: @vendor_ids
     can :create, Spree::Property
   end
 
   def apply_product_properties_permissions
-    cannot :display, Spree::ProductProperty
+    cannot_display_model(Spree::ProductProperty)
     can :manage, Spree::ProductProperty, property: { vendor_id: @vendor_ids }
+  end
+
+  def apply_shipment_permissions
+    can :update, Spree::Shipment, inventory_units: { line_item: { product: { vendor_id: @vendor_ids } } }
   end
 
   def apply_shipping_methods_permissions
@@ -100,7 +105,6 @@ class Spree::VendorAbility
   end
 
   def apply_variant_permissions
-    cannot :display, Spree::Variant
     can :manage, Spree::Variant, vendor_id: @vendor_ids
     can :create, Spree::Variant
   end
@@ -111,5 +115,15 @@ class Spree::VendorAbility
 
   def apply_vendor_settings_permissions
     can :manage, :vendor_settings
+  end
+
+  def apply_state_changes_permissions
+    can [:admin, :index], Spree::StateChange do |state_change|
+      (@vendor_ids & state_change.user.vendor_ids).any?
+    end
+  end
+
+  def cannot_display_model(model)
+    Spree.version.to_f < 4.0 ? (cannot :display, model) : (cannot :read, model)
   end
 end

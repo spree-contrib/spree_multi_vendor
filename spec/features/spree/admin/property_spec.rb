@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 RSpec.feature 'Admin Property', :js do
-  let(:vendor) { create(:vendor) }
+  let(:vendor) { create(:active_vendor) }
   let!(:user) { create(:user, vendors: [vendor]) }
   let!(:admin) { create(:admin_user) }
   let!(:property) { create(:property, name: 'Test1') }
