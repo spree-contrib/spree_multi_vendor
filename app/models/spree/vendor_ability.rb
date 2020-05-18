@@ -4,7 +4,7 @@ class Spree::VendorAbility
   def initialize(user)
     @vendor_ids = user.vendors.active.ids
 
-apply_prototypes_permissions
+    if @vendor_ids.any?
       apply_classifications_permissions
       apply_order_permissions
       apply_image_permissions
