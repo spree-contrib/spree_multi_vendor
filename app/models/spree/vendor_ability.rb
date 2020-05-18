@@ -4,7 +4,7 @@ class Spree::VendorAbility
   def initialize(user)
     @vendor_ids = user.vendors.active.ids
 
-    if @vendor_ids.any?
+apply_prototypes_permissions
       apply_classifications_permissions
       apply_order_permissions
       apply_image_permissions
@@ -14,6 +14,7 @@ class Spree::VendorAbility
       apply_product_permissions
       apply_product_properties_permissions
       apply_properties_permissions
+      apply_prototypes_permissions
       apply_shipment_permissions
       apply_shipping_methods_permissions
       apply_stock_permissions
@@ -75,6 +76,10 @@ class Spree::VendorAbility
   def apply_product_properties_permissions
     cannot_display_model(Spree::ProductProperty)
     can :manage, Spree::ProductProperty, property: { vendor_id: @vendor_ids }
+  end
+
+  def apply_prototypes_permissions
+    can :read, Spree::Prototype
   end
 
   def apply_shipment_permissions
