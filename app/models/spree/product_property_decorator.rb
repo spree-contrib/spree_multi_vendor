@@ -1,5 +1,7 @@
 module Spree::ProductPropertyDecorator
   def property_name=(name)
+    return super unless Spree::Property.method_defined?(:vendor)
+
     if name.present?
       # don't use `find_by :name` to workaround globalize/globalize#423 bug
       self.property = Spree::Property
