@@ -4,6 +4,11 @@ module SpreeMultiVendor
 
       class_option :auto_run_migrations, type: :boolean, default: false
 
+      def add_javascripts
+        append_file 'vendor/assets/javascripts/spree/frontend/all.js', "//= require spree/frontend/spree_multi_vendor\n"
+        append_file 'vendor/assets/javascripts/spree/backend/all.js', "//= require spree/backend/spree_multi_vendor\n"
+      end
+
       def add_migrations
         run 'bundle exec rake railties:install:migrations FROM=spree_multi_vendor'
       end
