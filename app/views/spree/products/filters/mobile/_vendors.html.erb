@@ -1,0 +1,22 @@
+<% unless params[:controller] == 'spree/vendors' %>
+  <div class="card plp-overlay-card">
+    <div class="card-header text-uppercase <%= 'collapsed' if params[:vendors].blank? %> plp-overlay-card-header" id="filtersVendor" data-toggle="collapse" data-target="#collapseFilterVendor" aria-expanded="true" aria-controls="collapseFilterVendor" role="heading" aria-level="3">
+      <%= Spree.t('plp.vendor') %>
+      <%= icon(name: 'arrow-right',
+              classes: 'spree-icon-arrow spree-icon-arrow-right mt-1 float-right arrow plp-overlay-card-header-arrow',
+              width: 16,
+              height: 16) %>
+    </div>
+    <div id="collapseFilterVendor" class="collapse <%= 'show' unless params[:vendors].blank? %>" aria-labelledby="filtersVendor" data-parent="#filters-accordion">
+      <div class="card-body pt-1">
+        <% Spree::Vendor.active.find_each do |vendor| %>
+          <%= link_to permitted_params.merge({ vendors: vendor.id }), class: "d-block" do %>
+            <div class="d-inline-block py-1 px-2 m-1 text-uppercase plp-filters-card-item <%= 'plp-filters-card-item--selected' if params[:vendors].to_s.split(',').include?(vendor.id.to_s) %>">
+              <%= vendor.name %>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>

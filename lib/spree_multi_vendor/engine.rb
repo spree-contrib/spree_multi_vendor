@@ -18,6 +18,8 @@ module SpreeMultiVendor
         end
       end
 
+      Spree::Frontend::Config[:products_filters] = %w(keywords price sort_by vendors)
+      Spree::Frontend::Config[:additional_filters_partials] = %w(vendors)
       Spree::Config.searcher_class = Spree::Search::MultiVendor
       ApplicationController.send :include, SpreeMultiVendor::MultiVendorHelpers
     end
