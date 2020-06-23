@@ -6,32 +6,58 @@
   <%= button_link_to Spree.t(:new_vendor), new_object_url, { class: "btn-success", icon: 'add', id: 'admin_new_vendor' } %>
 <% end if can?(:create, Spree::Vendor) %>
 
-<% content_for :table_filter do %>
-  <div data-hook="admin_vendors_index_search">
-    <%= search_form_for [:admin, @search] do |f| %>
-      <div class="row">
-        <div class="col-md-6">
-          <div class="form-group">
-            <%= label_tag :q_name_cont, Spree.t(:name) %>
-            <%= f.text_field :name_cont, tabindex: 1, class: "form-control js-quick-search-target" %>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="form-group">
-            <%= label_tag :q_state_eq, Spree.t(:state) %>
-            <%= f.select :state_eq, Spree::Vendor.state_machines[:state].states.collect { |s| [Spree.t("vendor_states.#{s.name}"), s.value] }, { include_blank: true }, class: 'select2 js-filterable' %>
-          </div>
+<div class="filter-wrap row">
+  <div class="col-12">
+    <div class="input-group index-filter-button">
+      <span class="input-group-btn">
+        <button class="btn" type="button">
+          <%= Spree.t(:filter) %>
+        </button>
+      </span>
+      <%= form_tag request.fullpath, id: "quick-search", class: 'flex-grow-1' do %>
+        <%= text_field_tag :quick_search, nil, class: "form-control js-quick-search", placeholder: Spree.t(:quick_search) %>
+      <% end %>
+    </div>
+    <div id="table-filter" data-hook class="card bg-light filter-well">
+      <div class="card-body">
+        <div data-hook="admin_vendors_index_search">
+          <%= search_form_for [:admin, @search] do |f| %>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <%= label_tag :q_name_cont, Spree.t(:name) %>
+                  <%= f.text_field :name_cont, tabindex: 1, class: "form-control js-quick-search-target" %>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <%= label_tag :q_state_eq, Spree.t(:state) %>
+                  <%= f.select :state_eq, Spree::Vendor.state_machines[:state].states.collect { |s| [Spree.t("vendor_states.#{s.name}"), s.value] }, { include_blank: true }, class: 'select2 js-filterable' %>
+                </div>
+              </div>
+            </div>
+            <div data-hook="admin_vendors_index_search_buttons" class="form-actions">
+              <%= button Spree.t(:filter_results), 'search' %>
+            </div>
+          <% end %>
         </div>
       </div>
-      <div data-hook="admin_vendors_index_search_buttons" class="form-actions">
-        <%= button Spree.t(:filter_results), 'search' %>
-      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-12">
+    <% selected = params[:q][:state_eq].present? %>
+    <%= link_to Spree.t(:all), admin_vendors_path, class: "btn #{selected ? 'btn-outline-secondary' : 'btn-secondary'}" %>
+    <% Spree::Vendor.state_machines[:state].states.collect.each do |state| %>
+      <%= link_to Spree.t("vendor_states.#{state.name}"), params.permit(:per_page, {:q => [:name_cont]}).merge({ 'q[state_eq]': state.value }), class: "btn #{selected && params[:q][:state_eq] == state.value ? 'btn-secondary' : 'btn-outline-secondary'}" %>
     <% end %>
   </div>
-<% end %>
+</div>
 
 <%= render partial: 'spree/admin/shared/index_table_options', locals: { collection: @collection } %>
-
+    
 <% if @vendors.any? %>
   <table class="table sortable" data-hook="vendors_table" data-sortable-link="<%= update_positions_admin_vendors_url %>">
     <thead>
