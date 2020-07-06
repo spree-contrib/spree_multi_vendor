@@ -45,6 +45,7 @@ module Spree
       end
 
       def format_translations
+        return if params[:vendor][:translations_attributes].blank?
         params[:vendor][:translations_attributes].each do |_, data|
           translation = @vendor.translations.find_or_create_by(locale: data[:locale])
           translation.name = data[:name]
