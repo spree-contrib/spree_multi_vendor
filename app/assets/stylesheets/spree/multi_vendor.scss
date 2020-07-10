@@ -1,0 +1,12 @@
+.homepage {
+  &-vendors-logo {
+    white-space: nowrap;
+    &-vendor {
+      height: 30px;
+      vertical-align: middle;
+      img {
+        max-height: 100%;
+      }
+    }
+  }
+}
