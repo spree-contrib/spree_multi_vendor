@@ -46,7 +46,7 @@ module Spree::OrderDecorator
   end
 
   def send_notification_mails_to_vendors
-    vendor_ids = line_items.map { |line_item| line_item.product.vendor_id }
+    vendor_ids = line_items.map { |line_item| line_item.product.vendor_id }.uniq
     vendor_ids.each do |vendor_id|
       Spree::VendorMailer.vendor_notification_email(id, vendor_id).deliver_later
     end
