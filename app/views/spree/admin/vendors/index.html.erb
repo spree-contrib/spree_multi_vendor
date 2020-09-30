@@ -18,8 +18,8 @@
         </div>
         <div class="col-md-6">
           <div class="form-group">
-            <%= label_tag :q_state_eq, Spree.t(:state) %>
-            <%= f.select :state_eq, Spree::Vendor.state_machines[:state].states.collect { |s| [Spree.t("vendor_states.#{s.name}"), s.value] }, { include_blank: true }, class: 'select2 js-filterable' %>
+            <%= label_tag :q_state_in, Spree.t(:state) %>
+            <%= f.select :state_in, Spree::Vendor.state_machines[:state].states.collect { |s| [Spree.t("vendor_states.#{s.name}"), s.value] }, { include_blank: true }, class: 'select2 js-filterable', multiple: true %>
           </div>
         </div>
       </div>
