@@ -9,6 +9,11 @@ FactoryBot.define do
       state { :active }
     end
 
+    factory :pending_vendor do
+      name { 'Pending vendor' }
+      state { :pending }
+    end
+
     factory :blocked_vendor do
       name { 'Blocked vendor' }
       state { :blocked }
