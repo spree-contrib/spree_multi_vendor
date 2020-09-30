@@ -30,6 +30,7 @@
   </div>
 <% end %>
 
+<%= render partial: 'filter_buttons' %>
 <%= render partial: 'spree/admin/shared/index_table_options', locals: { collection: @collection } %>
 
 <% if @vendors.any? %>
