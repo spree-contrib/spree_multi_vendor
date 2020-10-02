@@ -92,6 +92,16 @@ module Spree::OrderDecorator
   def vendor_ids
     line_items.map { |line_item| line_item.product.vendor_id }.uniq
   end
+
+  def vendor_totals
+    vendors = line_items.map { |line_item| line_item.product.vendor }.uniq
+
+    return if vendors.blank?
+
+    vendors.map do |vendor|
+      Spree::VendorOrderTotals.new(vendor: vendor, order: self)
+    end
+  end
 end
 
 Spree::Order.prepend Spree::OrderDecorator
