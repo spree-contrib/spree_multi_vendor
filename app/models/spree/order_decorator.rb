@@ -9,18 +9,6 @@ module Spree::OrderDecorator
     Spree::Orders::GenerateCommissions.call(self)
   end
 
-  def display_vendor_ship_total(vendor)
-    Spree::Money.new(vendor_ship_total(vendor), { currency: currency })
-  end
-
-  def display_vendor_subtotal(vendor)
-    Spree::Money.new(vendor_subtotal(vendor), { currency: currency })
-  end
-
-  def display_vendor_total(vendor)
-    Spree::Money.new(vendor_total(vendor), { currency: currency })
-  end
-
   def vendor_line_items(vendor)
     line_items.for_vendor(vendor)
   end
@@ -33,20 +21,40 @@ module Spree::OrderDecorator
     vendor_shipments(vendor).sum(&:final_price)
   end
 
+  def display_vendor_ship_total(vendor)
+    Spree::Money.new(vendor_ship_total(vendor), { currency: currency })
+  end
+
   def vendor_subtotal(vendor)
     vendor_line_items(vendor).sum(:pre_tax_amount)
+  end
+
+  def display_vendor_subtotal(vendor)
+    Spree::Money.new(vendor_subtotal(vendor), { currency: currency })
   end
 
   def vendor_promo_total(vendor)
     vendor_line_items(vendor).sum(:promo_total)
   end
 
+  def display_vendor_promo_total(vendor)
+    Spree::Money.new(vendor_promo_total(vendor), { currency: currency })
+  end
+
   def vendor_additional_tax_total(vendor)
     vendor_line_items(vendor).sum(:additional_tax_total)
   end
 
+  def display_vendor_additional_tax_total(vendor)
+    Spree::Money.new(vendor_additional_tax_total(vendor), { currency: currency })
+  end
+
   def vendor_included_tax_total(vendor)
     vendor_line_items(vendor).sum(:included_tax_total)
+  end
+
+  def display_vendor_included_tax_total(vendor)
+    Spree::Money.new(vendor_included_tax_total(vendor), { currency: currency })
   end
 
   def vendor_item_count(vendor)
@@ -55,6 +63,10 @@ module Spree::OrderDecorator
 
   def vendor_total(vendor)
     vendor_line_items(vendor).sum(&:total) + vendor_ship_total(vendor)
+  end
+
+  def display_vendor_total(vendor)
+    Spree::Money.new(vendor_total(vendor), { currency: currency })
   end
 
   def display_order_commission

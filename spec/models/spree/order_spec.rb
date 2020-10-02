@@ -60,32 +60,66 @@ describe Spree::Order do
       it { expect(order.vendor_subtotal(vendor)).to eq(300) }
     end
 
+    describe '#display_subtotal' do
+      it { expect(order.display_vendor_subtotal(vendor).to_s).to eq('$300.00') }
+    end
+
     describe '#vendor_ship_total' do
       it { expect(order.vendor_ship_total(vendor)).to eq(20) }
+    end
+
+    describe '#display_vendor_ship_total' do
+      it { expect(order.display_vendor_ship_total(vendor).to_s).to eq('$20.00') }
     end
 
     describe '#vendor_promo_total' do
       it { expect(order.vendor_promo_total(vendor)).to eq(-30) }
     end
 
-    describe '#vendor_additional_tax_total' do
+    describe '#display_vendor_promo_total' do
+      it { expect(order.display_vendor_promo_total(vendor).to_s).to eq('-$30.00') }
+    end
+
+    context 'additional tax' do
       before do
         order.vendor_line_items(vendor).update_all(additional_tax_total: 10)
       end
 
-      it { expect(order.vendor_additional_tax_total(vendor)).to eq(30) }
+      describe '#vendor_additional_tax_total' do
+        it { expect(order.vendor_additional_tax_total(vendor)).to eq(30) }
+      end
+
+      describe '#display_vendor_additional_tax_total' do
+        it { expect(order.display_vendor_additional_tax_total(vendor).to_s).to eq('$30.00') }
+      end
     end
 
-    describe '#vendor_included_tax_total' do
+    context 'included tax' do
       before do
         order.vendor_line_items(vendor).update_all(included_tax_total: 5)
       end
 
-      it { expect(order.vendor_included_tax_total(vendor)).to eq(15) }
+      describe '#vendor_included_tax_total' do
+        it { expect(order.vendor_included_tax_total(vendor)).to eq(15) }
+      end
+
+      describe '#display_vendor_included_tax_total' do
+        it { expect(order.display_vendor_included_tax_total(vendor).to_s).to eq('$15.00') }
+      end
     end
 
     describe '#vendor_total' do
       it { expect(order.vendor_total(vendor)).to eq(290) }
+    end
+
+    describe '#display_vendor_total' do
+      it { expect(order.display_vendor_total(vendor).to_s).to eq('$290.00') }
+
+      context 'respects currency' do
+        before { order.currency = 'GBP' }
+
+        it { expect(order.display_vendor_total(vendor).to_s).to eq('£290.00') }
+      end
     end
 
     describe '#vendor_item_count' do
