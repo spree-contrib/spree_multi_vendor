@@ -1,0 +1,15 @@
+<div class="mb-3">
+  <%= link_to Spree.t(:all), spree.admin_vendors_path, class: 'btn btn-outline-dark' %>
+  <%= search_form_for [:admin, @search], class: 'd-inline-block' do |f| %>
+    <%= f.hidden_field :state_eq, value: 'pending' %>
+    <%= f.submit Spree.t(:pending), class: 'btn btn-outline-dark' %>
+  <% end %>
+  <%= search_form_for [:admin, @search], class: 'd-inline-block' do |f| %>
+    <%= f.hidden_field :state_eq, value: 'active' %>
+    <%= f.submit Spree.t(:active), class: 'btn btn-outline-dark' %>
+  <% end %>
+  <%= search_form_for [:admin, @search], class: 'd-inline-block' do |f| %>
+    <%= f.hidden_field :state_eq, value: 'blocked' %>
+    <%= f.submit Spree.t(:blocked), class: 'btn btn-outline-dark' %>
+  <% end %>
+</div>

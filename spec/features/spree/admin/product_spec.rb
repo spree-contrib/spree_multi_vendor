@@ -27,7 +27,7 @@ RSpec.feature 'Admin Products', :js do
 
         fill_in 'product_name', with: 'Vendor product'
         fill_in 'product_price', with: 15
-        select Spree::ShippingCategory.last.name
+        select2 Spree::ShippingCategory.last.name, from: 'Shipping Categories'
 
         click_button 'Create'
 
@@ -42,7 +42,7 @@ RSpec.feature 'Admin Products', :js do
 
         fill_in 'product_name', with: 'Vendor product'
         fill_in 'product_price', with: 15
-        select Spree::ShippingCategory.last.name
+        select2 Spree::ShippingCategory.last.name, from: 'Shipping Categories'
         select2 'Active vendor', from: 'Vendor'
 
         click_button 'Create'
@@ -115,7 +115,7 @@ RSpec.feature 'Admin Products', :js do
 
         fill_in 'product_name', with: 'Vendor product'
         fill_in 'product_price', with: 15
-        select Spree::ShippingCategory.last.name
+        select2 Spree::ShippingCategory.last.name, from: 'Shipping Categories'
 
         click_button 'Create'
 
