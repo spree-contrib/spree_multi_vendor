@@ -136,7 +136,7 @@ describe Spree::Order do
       it { expect(order.vendor_totals).to be_kind_of(Array) }
       it { expect(order.vendor_totals).not_to be_empty }
       it { expect(order.vendor_totals.first.order).to eq(order) }
-      it { expect(order.vendor_totals.map(&:vendor)).to match_array([vendor, vendor_2]) } # FIXME: this can be buggy
+      it { expect(order.vendor_totals.map(&:vendor)).to match_array([vendor, vendor_2]) }
     end
   end
 end
