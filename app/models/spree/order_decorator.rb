@@ -21,16 +21,40 @@ module Spree::OrderDecorator
     Spree::Money.new(vendor_total(vendor), { currency: currency })
   end
 
+  def vendor_line_items(vendor)
+    line_items.for_vendor(vendor)
+  end
+
+  def vendor_shipments(vendor)
+    shipments.for_vendor(vendor)
+  end
+
   def vendor_ship_total(vendor)
-    shipments.for_vendor(vendor).sum(:pre_tax_amount)
+    vendor_shipments(vendor).sum(&:final_price)
   end
 
   def vendor_subtotal(vendor)
-    line_items.for_vendor(vendor).sum(:pre_tax_amount)
+    vendor_line_items(vendor).sum(:pre_tax_amount)
+  end
+
+  def vendor_promo_total(vendor)
+    vendor_line_items(vendor).sum(:promo_total)
+  end
+
+  def vendor_additional_tax_total(vendor)
+    vendor_line_items(vendor).sum(:additional_tax_total)
+  end
+
+  def vendor_included_tax_total(vendor)
+    vendor_line_items(vendor).sum(:included_tax_total)
+  end
+
+  def vendor_item_count(vendor)
+    vendor_line_items(vendor).sum(:quantity)
   end
 
   def vendor_total(vendor)
-    total - line_items.not_for_vendor(vendor).sum(:pre_tax_amount) - shipments.not_for_vendor(vendor).sum(:pre_tax_amount)
+    vendor_line_items(vendor).sum(&:total) + vendor_ship_total(vendor)
   end
 
   def display_order_commission
@@ -46,10 +70,15 @@ module Spree::OrderDecorator
   end
 
   def send_notification_mails_to_vendors
-    vendor_ids = line_items.map { |line_item| line_item.product.vendor_id }.uniq
     vendor_ids.each do |vendor_id|
       Spree::VendorMailer.vendor_notification_email(id, vendor_id).deliver_later
     end
+  end
+
+  # we're leaving this on purpose so it can be easily modified to fit desired scenario
+  # eg. scenario A - vendorized products, scenario B - vendorized variants of the same product
+  def vendor_ids
+    line_items.map { |line_item| line_item.product.vendor_id }.uniq
   end
 end
 

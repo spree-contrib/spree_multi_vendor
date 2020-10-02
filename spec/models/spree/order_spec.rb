@@ -1,34 +1,101 @@
 require 'spec_helper'
 
 describe Spree::Order do
-  describe 'associations' do
+  let(:vendor) { create(:vendor, name: 'Vendor 1') }
+  let(:vendor_2) { create(:vendor, name: 'Vendor 2') }
+
+  let(:order) { create(:order_with_line_items, state: 'payment', line_items_count: 6, line_items_price: 100, shipment_cost: 50) }
+
+  before do
+    order.line_items.each_with_index do |li, idx|
+      product = li.product
+      product.vendor = idx.odd? ? vendor : vendor_2
+      product.save
+    end
+  end
+
+  context 'associations' do
     it { is_expected.to have_many(:commissions) }
   end
-  describe 'complete with spree_multi_vendor' do
+
+  context 'complete with spree_multi_vendor' do
+    before { allow(order).to receive_messages payment_required?: false }
+
     it 'generates commission records' do
-      order = create(:order_with_line_items, state: 'payment', line_items: 6.times.map { create(:line_item) } )
-      allow(order).to receive_messages payment_required?: false
-      vendor1 = create(:vendor, name: "Vendor 1")
-      vendor2 = create(:vendor, name: "Vendor 2")
-
-      order.line_items[0..-2].each_with_index do |li, idx|
-        product = li.variant.product
-        product.vendor = idx.odd? ? vendor1 : vendor2
-        product.save
-      end
-
-      expect {
+      expect do
         order.next!
         order.reload
-      }.to change { Spree::OrderCommission.count }.by(2)
-      .and change { vendor1.commissions.count }.by(1)
-      .and change { vendor2.commissions.count }.by(1)
+      end.to change { Spree::OrderCommission.count }.by(2).and change { vendor.commissions.count }.by(1)
+                                                          .and change { vendor_2.commissions.count }.by(1)
 
-      order.line_items.includes(product: :vendor).group_by{|li| li.product.vendor}.each do |vendor, line_items|
-        next unless vendor
-        expect(vendor.commissions.sum(:amount))
-            .to eq (vendor.commission_rate * line_items.pluck(:pre_tax_amount).sum.to_f / 100)
+      order.line_items.includes(product: :vendor).group_by { |li| li.product.vendor }.each do |v, line_items|
+        commission_ammount = v.commission_rate * line_items.pluck(:pre_tax_amount).sum.to_f / 100
+
+        expect(v.commissions.sum(:amount)).to eq(commission_ammount)
       end
+    end
+  end
+
+  context 'vendor methods' do
+    let!(:shipment) { create(:shipment, order: order, cost: 20, stock_location: vendor.stock_locations.first) }
+    let!(:promotion) { create(:promotion_with_item_adjustment, adjustment_rate: 10, code: '10off') }
+
+    before do
+      order.coupon_code = '10off'
+      Spree::PromotionHandler::Coupon.new(order).apply
+      order.reload
+    end
+
+    describe '#vendor_line_items' do
+      it { expect(order.vendor_line_items(vendor)).to eq(order.line_items.for_vendor(vendor)) }
+      it { expect(order.vendor_line_items(vendor).count).to eq(3) }
+    end
+
+    describe '#vendor_shipments' do
+      it { expect(order.vendor_shipments(vendor).to_a).to eq([shipment]) }
+      it { expect(order.vendor_shipments(vendor).count).to eq(1) }
+    end
+
+    describe '#vendor_subtotal' do
+      it { expect(order.vendor_subtotal(vendor)).to eq(300) }
+    end
+
+    describe '#vendor_ship_total' do
+      it { expect(order.vendor_ship_total(vendor)).to eq(20) }
+    end
+
+    describe '#vendor_promo_total' do
+      it { expect(order.vendor_promo_total(vendor)).to eq(-30) }
+    end
+
+    describe '#vendor_additional_tax_total' do
+      before do
+        order.vendor_line_items(vendor).update_all(additional_tax_total: 10)
+      end
+
+      it { expect(order.vendor_additional_tax_total(vendor)).to eq(30) }
+    end
+
+    describe '#vendor_included_tax_total' do
+      before do
+        order.vendor_line_items(vendor).update_all(included_tax_total: 5)
+      end
+
+      it { expect(order.vendor_included_tax_total(vendor)).to eq(15) }
+    end
+
+    describe '#vendor_total' do
+      it { expect(order.vendor_total(vendor)).to eq(290) }
+    end
+
+    describe '#vendor_item_count' do
+      before { order.vendor_line_items(vendor).last.update(quantity: 2) }
+
+      it { expect(order.vendor_item_count(vendor)).to eq(4) }
+    end
+
+    describe '#vendor_ids' do
+      it { expect(order.vendor_ids.sort).to eq([vendor.id, vendor_2.id].sort) }
     end
   end
 end
