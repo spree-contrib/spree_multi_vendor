@@ -21,40 +21,28 @@ module Spree::OrderDecorator
     vendor_shipments(vendor).sum(&:final_price)
   end
 
-  def display_vendor_ship_total(vendor)
-    Spree::Money.new(vendor_ship_total(vendor), { currency: currency })
-  end
-
   def vendor_subtotal(vendor)
-    vendor_line_items(vendor).sum(:pre_tax_amount)
-  end
-
-  def display_vendor_subtotal(vendor)
-    Spree::Money.new(vendor_subtotal(vendor), { currency: currency })
+    vendor_line_items(vendor).sum(&:total)
   end
 
   def vendor_promo_total(vendor)
     vendor_line_items(vendor).sum(:promo_total)
   end
 
-  def display_vendor_promo_total(vendor)
-    Spree::Money.new(vendor_promo_total(vendor), { currency: currency })
-  end
-
   def vendor_additional_tax_total(vendor)
     vendor_line_items(vendor).sum(:additional_tax_total)
-  end
-
-  def display_vendor_additional_tax_total(vendor)
-    Spree::Money.new(vendor_additional_tax_total(vendor), { currency: currency })
   end
 
   def vendor_included_tax_total(vendor)
     vendor_line_items(vendor).sum(:included_tax_total)
   end
 
-  def display_vendor_included_tax_total(vendor)
-    Spree::Money.new(vendor_included_tax_total(vendor), { currency: currency })
+  def vendor_pre_tax_item_amount(vendor)
+    vendor_line_items(vendor).sum(:pre_tax_amount)
+  end
+
+  def vendor_pre_tax_total(vendor)
+    vendor_line_items(vendor).sum(:pre_tax_amount) + vendor_shipments(vendor).sum(:pre_tax_amount)
   end
 
   def vendor_item_count(vendor)
@@ -65,20 +53,24 @@ module Spree::OrderDecorator
     vendor_line_items(vendor).sum(&:total) + vendor_ship_total(vendor)
   end
 
-  def display_vendor_total(vendor)
-    Spree::Money.new(vendor_total(vendor), { currency: currency })
-  end
-
   def display_order_commission
     Spree::Money.new(commissions.sum(:amount), { currency: currency })
   end
 
-  def display_vendor_commission(vendor)
-    Spree::Money.new(vendor_commission(vendor), { currency: currency })
-  end
-
   def vendor_commission(vendor)
     commissions.for_vendor(vendor).sum(:amount)
+  end
+
+  # money methods
+  METHOD_NAMES = %w[
+    total ship_total subtotal included_tax_total additional_tax_total promo_total
+    pre_tax_item_amount pre_tax_total commission
+  ].freeze
+
+  METHOD_NAMES.each do |method_name|
+    define_method("display_vendor_#{method_name}") do |vendor|
+      Spree::Money.new(send("vendor_#{method_name}", vendor), { currency: currency })
+    end
   end
 
   def send_notification_mails_to_vendors
