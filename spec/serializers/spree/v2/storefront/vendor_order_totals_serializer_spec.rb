@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Spree::V2::Storefront::VendorOrderTotalsSerializer do
   let(:vendor) { create(:vendor, name: 'Test', about_us: 'Hello World') }
   let(:order) { create(:completed_order_with_totals, line_items_count: 6, line_items_price: 100, shipment_cost: 50) }
-  let!(:shipment) { create(:shipment, order: order, cost: 20, stock_location: vendor.stock_locations.first) }
+  let!(:shipment) { create(:shipment, order: order, cost: 20, pre_tax_amount: 20, stock_location: vendor.stock_locations.first) }
   let!(:promotion) { create(:promotion_with_item_adjustment, adjustment_rate: 10, code: '10off') }
 
   let(:vendor_order_totals) { Spree::VendorOrderTotals.new(order: order, vendor: vendor) }
@@ -38,7 +38,11 @@ describe Spree::V2::Storefront::VendorOrderTotalsSerializer do
             display_promo_total: Spree::Money.new(60),
             total: BigDecimal(620),
             display_total: Spree::Money.new(620),
-            item_count: 6
+            item_count: 6,
+            pre_tax_item_amount: BigDecimal(600),
+            display_pre_tax_item_amount: Spree::Money.new(600),
+            pre_tax_total: BigDecimal(620),
+            display_pre_tax_total: Spree::Money.new(620)
           }
         }
       }

@@ -37,7 +37,7 @@ describe Spree::Order do
   end
 
   context 'vendor methods' do
-    let!(:shipment) { create(:shipment, order: order, cost: 20, stock_location: vendor.stock_locations.first) }
+    let!(:shipment) { create(:shipment, order: order, cost: 20, pre_tax_amount: 20, stock_location: vendor.stock_locations.first) }
     let!(:promotion) { create(:promotion_with_item_adjustment, adjustment_rate: 10, code: '10off') }
 
     before do
@@ -57,11 +57,27 @@ describe Spree::Order do
     end
 
     describe '#vendor_subtotal' do
-      it { expect(order.vendor_subtotal(vendor)).to eq(300) }
+      it { expect(order.vendor_subtotal(vendor)).to eq(270) }
     end
 
     describe '#display_subtotal' do
-      it { expect(order.display_vendor_subtotal(vendor).to_s).to eq('$300.00') }
+      it { expect(order.display_vendor_subtotal(vendor).to_s).to eq('$270.00') }
+    end
+
+    describe '#vendor_pre_tax_item_amount' do
+      it { expect(order.vendor_pre_tax_item_amount(vendor)).to eq(300) }
+    end
+
+    describe '#displayvendor_pre_tax_item_amount' do
+      it { expect(order.display_vendor_pre_tax_item_amount(vendor).to_s).to eq('$300.00') }
+    end
+
+    describe '#vendor_pre_tax_total' do
+      it { expect(order.vendor_pre_tax_total(vendor)).to eq(320) }
+    end
+
+    describe '#displayvendor_pre_tax_total' do
+      it { expect(order.display_vendor_pre_tax_total(vendor).to_s).to eq('$320.00') }
     end
 
     describe '#vendor_ship_total' do
