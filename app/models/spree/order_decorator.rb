@@ -26,15 +26,15 @@ module Spree::OrderDecorator
   end
 
   def vendor_promo_total(vendor)
-    vendor_line_items(vendor).sum(:promo_total)
+    vendor_line_items(vendor).sum(:promo_total) + vendor_shipments(vendor).sum(:promo_total)
   end
 
   def vendor_additional_tax_total(vendor)
-    vendor_line_items(vendor).sum(:additional_tax_total)
+    vendor_line_items(vendor).sum(:additional_tax_total) + vendor_shipments(vendor).sum(:additional_tax_total)
   end
 
   def vendor_included_tax_total(vendor)
-    vendor_line_items(vendor).sum(:included_tax_total)
+    vendor_line_items(vendor).sum(:included_tax_total) + vendor_shipments(vendor).sum(:included_tax_total)
   end
 
   def vendor_pre_tax_item_amount(vendor)
