@@ -10,6 +10,7 @@ module Spree
                    :display_included_tax_total, :additional_tax_total,
                    :display_additional_tax_total, :item_count,
                    :pre_tax_item_amount, :display_pre_tax_item_amount,
+                   :pre_tax_ship_amount, :display_pre_tax_ship_amount,
                    :pre_tax_total, :display_pre_tax_total
       end
     end

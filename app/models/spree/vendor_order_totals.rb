@@ -4,7 +4,7 @@ module Spree
 
     METHOD_NAMES = %w[
       total ship_total subtotal included_tax_total additional_tax_total promo_total
-      pre_tax_item_amount pre_tax_total
+      pre_tax_item_amount pre_tax_ship_amount pre_tax_total
     ].freeze
 
     attr_accessor :vendor, :order

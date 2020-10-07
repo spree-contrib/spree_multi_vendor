@@ -41,6 +41,10 @@ module Spree::OrderDecorator
     vendor_line_items(vendor).sum(:pre_tax_amount)
   end
 
+  def vendor_pre_tax_ship_amount(vendor)
+    vendor_shipments(vendor).sum(:pre_tax_amount)
+  end
+
   def vendor_pre_tax_total(vendor)
     vendor_line_items(vendor).sum(:pre_tax_amount) + vendor_shipments(vendor).sum(:pre_tax_amount)
   end
@@ -64,7 +68,7 @@ module Spree::OrderDecorator
   # money methods
   METHOD_NAMES = %w[
     total ship_total subtotal included_tax_total additional_tax_total promo_total
-    pre_tax_item_amount pre_tax_total commission
+    pre_tax_item_amount pre_tax_ship_amount pre_tax_total commission
   ].freeze
 
   METHOD_NAMES.each do |method_name|

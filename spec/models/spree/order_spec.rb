@@ -80,12 +80,26 @@ describe Spree::Order do
       it { expect(order.display_vendor_pre_tax_total(vendor).to_s).to eq('$320.00') }
     end
 
-    describe '#vendor_ship_total' do
-      it { expect(order.vendor_ship_total(vendor)).to eq(20) }
-    end
+    context 'ship total' do
+      before do
+        order.vendor_shipments(vendor).update_all(adjustment_total: 5)
+      end
 
-    describe '#display_vendor_ship_total' do
-      it { expect(order.display_vendor_ship_total(vendor).to_s).to eq('$20.00') }
+      describe '#vendor_ship_total' do
+        it { expect(order.vendor_ship_total(vendor)).to eq(25) }
+      end
+
+      describe '#display_vendor_ship_total' do
+        it { expect(order.display_vendor_ship_total(vendor).to_s).to eq('$25.00') }
+      end
+
+      describe '#vendor_pre_tax_ship_amount' do
+        it { expect(order.vendor_pre_tax_ship_amount(vendor)).to eq(20) }
+      end
+
+      describe '#display_vendor_pre_tax_ship_amount' do
+        it { expect(order.display_vendor_pre_tax_ship_amount(vendor).to_s).to eq('$20.00') }
+      end
     end
 
     describe '#vendor_promo_total' do
