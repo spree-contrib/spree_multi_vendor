@@ -80,12 +80,26 @@ describe Spree::Order do
       it { expect(order.display_vendor_pre_tax_total(vendor).to_s).to eq('$320.00') }
     end
 
-    describe '#vendor_ship_total' do
-      it { expect(order.vendor_ship_total(vendor)).to eq(20) }
-    end
+    context 'ship total' do
+      before do
+        order.vendor_shipments(vendor).update_all(adjustment_total: 5)
+      end
 
-    describe '#display_vendor_ship_total' do
-      it { expect(order.display_vendor_ship_total(vendor).to_s).to eq('$20.00') }
+      describe '#vendor_ship_total' do
+        it { expect(order.vendor_ship_total(vendor)).to eq(25) }
+      end
+
+      describe '#display_vendor_ship_total' do
+        it { expect(order.display_vendor_ship_total(vendor).to_s).to eq('$25.00') }
+      end
+
+      describe '#vendor_pre_tax_ship_amount' do
+        it { expect(order.vendor_pre_tax_ship_amount(vendor)).to eq(20) }
+      end
+
+      describe '#display_vendor_pre_tax_ship_amount' do
+        it { expect(order.display_vendor_pre_tax_ship_amount(vendor).to_s).to eq('$20.00') }
+      end
     end
 
     describe '#vendor_promo_total' do
@@ -99,28 +113,30 @@ describe Spree::Order do
     context 'additional tax' do
       before do
         order.vendor_line_items(vendor).update_all(additional_tax_total: 10)
+        order.vendor_shipments(vendor).update_all(additional_tax_total: 1)
       end
 
       describe '#vendor_additional_tax_total' do
-        it { expect(order.vendor_additional_tax_total(vendor)).to eq(30) }
+        it { expect(order.vendor_additional_tax_total(vendor)).to eq(31) }
       end
 
       describe '#display_vendor_additional_tax_total' do
-        it { expect(order.display_vendor_additional_tax_total(vendor).to_s).to eq('$30.00') }
+        it { expect(order.display_vendor_additional_tax_total(vendor).to_s).to eq('$31.00') }
       end
     end
 
     context 'included tax' do
       before do
         order.vendor_line_items(vendor).update_all(included_tax_total: 5)
+        order.vendor_shipments(vendor).update_all(included_tax_total: 1)
       end
 
       describe '#vendor_included_tax_total' do
-        it { expect(order.vendor_included_tax_total(vendor)).to eq(15) }
+        it { expect(order.vendor_included_tax_total(vendor)).to eq(16) }
       end
 
       describe '#display_vendor_included_tax_total' do
-        it { expect(order.display_vendor_included_tax_total(vendor).to_s).to eq('$15.00') }
+        it { expect(order.display_vendor_included_tax_total(vendor).to_s).to eq('$16.00') }
       end
     end
 
