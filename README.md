@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/spree-contrib/spree_multi_vendor.svg?branch=master)](https://travis-ci.org/spree-contrib/spree_multi_vendor)
 
-This is a [spree multi vendor marketplace](https://spreecommerce.org/use-cases/multi-vendor-marketplace/) extension. It's a great starting point if you're building a marketplace on top of [Spree](https://spreecommerce.org). Our goal was flexibility to allow you to tweak it to your needs. 
+This is a [spree multi vendor marketplace](https://spreecommerce.org/use-cases/multi-vendor-marketplace/) extension. It's a great starting point if you're building a marketplace on top of [Spree](https://spreecommerce.org). Our goal was flexibility to allow you to tweak it to your needs.
 
 Check out this extension [multi vendor marketplace demo](https://spreecommerce.org/launch-a-multi-vendor-marketplace-within-a-few-weeks-with-spree-commerce/) and launch your marketplace within weeks, not months.
 
@@ -68,6 +68,18 @@ Contributions welcome! :)
     ```bash
     bundle exec rails db:migrate
     ```
+
+## Email previews
+
+Spree offers emails preview generator for development purposes.
+To generate them, use command:
+
+`bundle exec rails g spree_multi_vendor:mailers_preview`
+
+After that, start rails server locally and go to:
+`localhost:3000/rails/mailers`
+
+(it requires seeded development database in order to work properly)
 
 ## Testing
 
