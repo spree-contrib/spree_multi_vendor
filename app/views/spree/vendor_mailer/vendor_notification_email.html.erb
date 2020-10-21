@@ -5,6 +5,9 @@
         <%= Spree.t('order_mailer.vendor_notification_email.dear_vendor') %>
       </p>
       <p>
+        <%= Spree.t('order_mailer.vendor_notification_email.order_received') %>
+      </p>
+      <p>
         <%= Spree.t('order_mailer.vendor_notification_email.order_summary', number: @order.number) %>
       </p>
       <table class="container">

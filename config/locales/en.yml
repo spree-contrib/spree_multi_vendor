@@ -22,6 +22,7 @@ en:
     order_mailer:
       vendor_notification_email:
         dear_vendor: Dear Vendor,
+        order_received: You have received a new Order.
         subject: Vendor notification
         thanks: Thanks
     vendor: Vendor
