@@ -22,6 +22,7 @@ es:
       vendor_notification_email:
         dear_vendor: Estimado vendedor,
         order_received: Ha recibido un nuevo pedido.
+        order_summary: "Resumen del número de pedido %{number}"
         subject: Notificación de vendedor
         thanks: Gracias
     vendor: Vendedor

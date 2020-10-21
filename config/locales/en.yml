@@ -23,6 +23,7 @@ en:
       vendor_notification_email:
         dear_vendor: Dear Vendor,
         order_received: You have received a new Order.
+        order_summary: "Summary of Order number %{number}"
         subject: Vendor notification
         thanks: Thanks
     vendor: Vendor
