@@ -164,7 +164,7 @@ describe Spree::Order do
       it { expect(order.vendor_ids).to match_array([vendor.id, vendor_2.id]) }
 
       context 'when a line item does not belong to any vendor' do
-        before { order.vendor_line_items(vendor_2).update_all(vendor_id: nil) }
+        before { order.vendor_line_items(vendor_2).each { |li| li.product.update_columns(vendor_id: nil) } }
         it { expect(order.vendor_ids).to match_array([vendor.id]) }
       end
     end
