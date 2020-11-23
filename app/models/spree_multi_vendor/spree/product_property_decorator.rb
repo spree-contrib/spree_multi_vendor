@@ -1,4 +1,4 @@
-module Spree::ProductPropertyDecorator
+module SpreeMultiVendor::Spree::ProductPropertyDecorator
   def property_name=(name)
     return super unless Spree::Property.method_defined?(:vendor)
 
@@ -11,4 +11,4 @@ module Spree::ProductPropertyDecorator
   end
 end
 
-Spree::ProductProperty.prepend Spree::ProductPropertyDecorator
+Spree::ProductProperty.prepend SpreeMultiVendor::Spree::ProductPropertyDecorator

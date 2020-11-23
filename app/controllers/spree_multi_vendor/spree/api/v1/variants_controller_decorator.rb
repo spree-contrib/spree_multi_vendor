@@ -1,4 +1,4 @@
-module Spree::Api::V1::VariantsControllerDecorator
+module SpreeMultiVendor::Spree::Api::V1::VariantsControllerDecorator
   private
 
   def scope
@@ -19,4 +19,4 @@ module Spree::Api::V1::VariantsControllerDecorator
   end
 end
 
-Spree::Api::V1::VariantsController.prepend Spree::Api::V1::VariantsControllerDecorator
+Spree::Api::V1::VariantsController.prepend SpreeMultiVendor::Spree::Api::V1::VariantsControllerDecorator

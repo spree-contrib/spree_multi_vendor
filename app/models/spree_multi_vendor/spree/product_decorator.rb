@@ -1,4 +1,4 @@
-module Spree::ProductDecorator
+module SpreeMultiVendor::Spree::ProductDecorator
   def self.prepended(base)
     base.after_destroy :touch_vendor
   end
@@ -12,4 +12,4 @@ module Spree::ProductDecorator
   end
 end
 
-Spree::Product.prepend Spree::ProductDecorator
+Spree::Product.prepend SpreeMultiVendor::Spree::ProductDecorator

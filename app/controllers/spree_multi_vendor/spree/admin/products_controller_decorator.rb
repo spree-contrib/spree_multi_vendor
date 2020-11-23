@@ -1,4 +1,4 @@
-module Spree::Admin::ProductsControllerDecorator
+module SpreeMultiVendor::Spree::Admin::ProductsControllerDecorator
   def self.prepended(base)
     base.before_action :set_vendor_id, only: [:create, :update]
     base.before_action :load_vendors, only: [:new, :edit]
@@ -21,4 +21,4 @@ module Spree::Admin::ProductsControllerDecorator
   end
 end
 
-Spree::Admin::ProductsController.prepend Spree::Admin::ProductsControllerDecorator
+Spree::Admin::ProductsController.prepend SpreeMultiVendor::Spree::Admin::ProductsControllerDecorator
