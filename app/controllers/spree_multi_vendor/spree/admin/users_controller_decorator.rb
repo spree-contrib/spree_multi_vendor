@@ -1,4 +1,4 @@
-module Spree::Admin::UsersControllerDecorator
+module SpreeMultiVendor::Spree::Admin::UsersControllerDecorator
   private
 
   def user_params
@@ -10,4 +10,4 @@ module Spree::Admin::UsersControllerDecorator
   end
 end
 
-Spree::Admin::UsersController.prepend Spree::Admin::UsersControllerDecorator
+Spree::Admin::UsersController.prepend SpreeMultiVendor::Spree::Admin::UsersControllerDecorator

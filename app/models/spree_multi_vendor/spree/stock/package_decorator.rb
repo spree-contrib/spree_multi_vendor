@@ -1,4 +1,4 @@
-module Spree::Stock::PackageDecorator
+module SpreeMultiVendor::Spree::Stock::PackageDecorator
   def shipping_methods
     vendor = stock_location.vendor
     
@@ -10,4 +10,4 @@ module Spree::Stock::PackageDecorator
   end
 end
 
-Spree::Stock::Package.prepend Spree::Stock::PackageDecorator
+Spree::Stock::Package.prepend SpreeMultiVendor::Spree::Stock::PackageDecorator

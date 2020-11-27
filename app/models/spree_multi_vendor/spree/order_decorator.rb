@@ -1,4 +1,4 @@
-module Spree::OrderDecorator
+module SpreeMultiVendor::Spree::OrderDecorator
   def self.prepended(base)
     base.has_many :commissions, class_name: 'Spree::OrderCommission'
     base.state_machine.after_transition to: :complete, do: :generate_order_commissions
@@ -100,4 +100,4 @@ module Spree::OrderDecorator
   end
 end
 
-Spree::Order.prepend Spree::OrderDecorator
+Spree::Order.prepend SpreeMultiVendor::Spree::OrderDecorator
