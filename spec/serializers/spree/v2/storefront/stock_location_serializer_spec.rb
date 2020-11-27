@@ -11,7 +11,7 @@ describe Spree::V2::Storefront::StockLocationSerializer do
     expect(subject.serializable_hash).to eq(
       {
         data: {
-          id: "2",
+          id: stock_location.id.to_s,
           type: :stock_location,
           attributes: {
             name: stock_location.name
