@@ -1,0 +1,13 @@
+module Spree
+  module V2
+    module Storefront
+      module StockLocationSerializerDecorator
+        def self.prepended(base)
+          base.belongs_to :vendor, serializer: Spree::V2::Storefront::VendorSerializer
+        end
+      end
+    end
+  end
+end
+
+Spree::V2::Storefront::StockLocationSerializer.prepend(Spree::V2::Storefront::StockLocationSerializerDecorator)
