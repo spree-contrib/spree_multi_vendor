@@ -41,5 +41,4 @@ describe Spree::VendorMailer, type: :mailer do
       expect(notification_email.body.parts.last).not_to have_text(other_vendors_item.product.name)
     end
   end
-
 end
