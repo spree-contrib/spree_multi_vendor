@@ -20,7 +20,9 @@ fr:
     only_alphanumeric_chars: ne doit contenir que des caractères alphanumériques
     order_mailer:
       vendor_notification_email:
-        dear_vendor: Cher vendeur,
+        heading: Cher vendeur,
+        instructions: Vous avez reçu une nouvelle commande.
+        order_summary: "Récapitulatif du numéro de commande %{number}"
         subject: Notification vendeur
         thanks: Merci
     vendor: Vendeur

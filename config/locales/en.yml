@@ -21,9 +21,11 @@ en:
     only_alphanumeric_chars: should contain only letters and digits
     order_mailer:
       vendor_notification_email:
-        dear_vendor: Dear Vendor,
+        heading: Dear Vendor,
+        instructions: You have received a new Order.
+        order_summary: "Summary of Order number %{number}"
         subject: Vendor notification
-        thanks: Thanks
+        thanks: Thank you
     vendor: Vendor
     vendor_name: Vendor Name
     vendor_states:

@@ -20,7 +20,9 @@ es:
     only_alphanumeric_chars: Debería contener solo letras y dígitos
     order_mailer:
       vendor_notification_email:
-        dear_vendor: Estimado vendedor,
+        heading: Estimado vendedor,
+        instructions: Ha recibido un nuevo pedido.
+        order_summary: "Resumen del número de pedido %{number}"
         subject: Notificación de vendedor
         thanks: Gracias
     vendor: Vendedor
