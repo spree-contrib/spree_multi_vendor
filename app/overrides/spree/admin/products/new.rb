@@ -1,6 +1,6 @@
 Deface::Override.new(
     virtual_path: 'spree/admin/products/new',
-    name: 'Enable admin to create products with assigned vendor',
+    name: 'Enable admin to create product with assigned vendor',
     insert_after: 'div[data-hook="new_product_shipping_category"]',
     text: <<-HTML
             <% if current_spree_user.respond_to?(:has_spree_role?) && current_spree_user.has_spree_role?(:admin) %>
