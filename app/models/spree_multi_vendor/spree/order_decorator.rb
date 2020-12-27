@@ -84,7 +84,7 @@ module SpreeMultiVendor::Spree::OrderDecorator
   end
 
   # we're leaving this on purpose so it can be easily modified to fit desired scenario
-  # eg. scenario A - vendorized products, scenario B - vendorized variants of the same product
+  # eg. scenario A - vendorized products, scenario B - vendorized variants of the same products
   def vendor_ids
     @vendor_ids ||= line_items.map { |line_item| line_item.product.vendor_id }.uniq.compact
   end
