@@ -12,6 +12,10 @@ module Spree
       private
 
       def generate_order_commissions(order)
+        if Spree.version >= '4.2'
+          order = order[:order]
+        end
+
         return failure(order) unless order.state == 'complete'
 
         order.line_items.includes(product: :vendor).group_by{ |li| li.product.vendor }.each do |vendor, vendor_line_items|

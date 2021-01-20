@@ -6,7 +6,11 @@ module SpreeMultiVendor::Spree::OrderDecorator
   end
 
   def generate_order_commissions
-    Spree::Orders::GenerateCommissions.call(self)
+    if Spree.version >= '4.2'
+      Spree::Orders::GenerateCommissions.call(order: self)
+    else
+      Spree::Orders::GenerateCommissions.call(self)
+    end
   end
 
   def vendor_line_items(vendor)
