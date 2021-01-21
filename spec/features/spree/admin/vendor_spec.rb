@@ -41,7 +41,7 @@ RSpec.feature 'Admin Vendors', :js do
 
     scenario 'filter by multiple states' do
       click_button 'Filter'
-      fill_in 'State', with: 'active'
+      fill_in 'q_state_in', with: 'active'
 
       within('#select2-drop') do
         first('.select2-result').click

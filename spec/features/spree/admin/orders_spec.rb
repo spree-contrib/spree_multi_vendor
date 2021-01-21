@@ -25,14 +25,12 @@ RSpec.feature 'Admin Orders', :js do
     end
 
     scenario 'vendor can add his product' do
-      click_link 'Choose a variant'
-      find('.select2-input').fill_in with: 'Product'
+      select2 'Product', from: Spree.t(:name_or_sku), search: true
       expect(page).to have_text(stock.stock_items.first.product.name)
     end
 
     scenario 'vendor cannot add other vendors product' do
-      click_link 'Choose a variant'
-      find('.select2-input').fill_in with: 'Product'
+      select2 'Product', from: Spree.t(:name_or_sku), search: true
       expect(page).not_to have_text(stock.stock_items.last.product.name)
     end
   end
