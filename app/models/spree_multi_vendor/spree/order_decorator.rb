@@ -6,7 +6,7 @@ module SpreeMultiVendor::Spree::OrderDecorator
   end
 
   def generate_order_commissions
-    Spree::Orders::GenerateCommissions.call(self)
+    Spree::Orders::GenerateCommissions.call(order: self)
   end
 
   def vendor_line_items(vendor)
@@ -86,15 +86,17 @@ module SpreeMultiVendor::Spree::OrderDecorator
   # we're leaving this on purpose so it can be easily modified to fit desired scenario
   # eg. scenario A - vendorized products, scenario B - vendorized variants of the same product
   def vendor_ids
-    line_items.map { |line_item| line_item.product.vendor_id }.uniq.compact
+    @vendor_ids ||= line_items.map { |line_item| line_item.product.vendor_id }.uniq.compact
+  end
+
+  def vendor_list
+    @vendor_list ||= line_items.map { |line_item| line_item.product.vendor }.uniq
   end
 
   def vendor_totals
-    vendors = line_items.map { |line_item| line_item.product.vendor }.uniq
+    return if vendor_list.none?
 
-    return if vendors.blank?
-
-    vendors.map do |vendor|
+    vendor_list.map do |vendor|
       Spree::VendorOrderTotals.new(vendor: vendor, order: self)
     end
   end
