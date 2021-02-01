@@ -3,6 +3,7 @@ module SpreeMultiVendor::Spree::Admin::BaseControllerDecorator
 
   def self.prepended(base)
     base.helper_method :current_spree_vendor
+    base.helper_method :vendor_state_options
   end
 end
 
