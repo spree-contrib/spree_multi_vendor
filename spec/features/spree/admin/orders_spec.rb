@@ -12,6 +12,8 @@ RSpec.feature 'Admin Orders', :js do
            ])
   end
   let!(:user) { create(:user, vendors: [vendor]) }
+  let(:product) { stock.stock_items.first.product }
+  let(:product_2) { stock.stock_items.last.product }
 
   context 'edit' do
     before do
@@ -25,13 +27,16 @@ RSpec.feature 'Admin Orders', :js do
     end
 
     scenario 'vendor can add his product' do
-      select2 'Product', from: 'Name or SKU'
-      expect(page).to have_text(stock.stock_items.first.product.name)
+      select2_open label: 'Name or SKU'
+      select2_search product.name, from: 'Name or SKU'
+      select2_select product.name, from: 'Name or SKU', match: :first
+      expect(page).to have_text(product.name)
     end
 
     scenario 'vendor cannot add other vendors product' do
-      select2 'Product', from: 'Name or SKU'
-      expect(page).not_to have_text(stock.stock_items.last.product.name)
+      select2_open label: 'Name or SKU'
+      select2_search product.name, from: 'Name or SKU'
+      expect(page).not_to have_text(product.name)
     end
   end
 end
