@@ -6,6 +6,10 @@ module Spree
           current_spree_user.vendors.first
         end
       end
+
+      def vendor_state_options
+        @vendor_state_options ||= Spree::Vendor.state_machines[:state].states.collect { |s| [Spree.t("vendor_states.#{s.name}"), s.value] }
+      end
     end
   end
 end

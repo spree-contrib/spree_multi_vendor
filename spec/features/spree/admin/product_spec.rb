@@ -76,7 +76,7 @@ RSpec.feature 'Admin Products', :js do
 
       scenario 'can update product vendor' do
         expect(product.vendor).to eq nil
-        select2 "#{vendor.name}", from: 'Vendor'
+        select2 vendor.name, from: 'Vendor'
         click_button 'Update'
         expect(page).to have_text 'successfully updated!'
         product.reload
