@@ -42,8 +42,9 @@ class Spree::VendorAbility
   def apply_image_permissions
     can :create, Spree::Image
 
-    can [:manage, :modify], Spree::Image do |image|
-      image.viewable_type == 'Spree::Variant' && @vendor_ids.include?(image.viewable.vendor_id)
+    can [:manage, :modify], Spree::Image, ['viewable_type = ?', 'Spree::Variant'] do |image|
+      vendor_id = image.viewable.try(:vendor_id)
+      vendor_id.present? && @vendor_ids.include?(vendor_id)
     end
   end
 
