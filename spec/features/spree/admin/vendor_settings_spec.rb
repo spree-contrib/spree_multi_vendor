@@ -59,7 +59,7 @@ RSpec.feature 'Admin Vendor Settings', :js do
 
     it 'renders page without errors' do
       visit spree.admin_vendor_settings_path
-      expect(page).to have_current_path('/login')
+      expect(page).to have_current_path('/admin/login')
     end
   end
 
