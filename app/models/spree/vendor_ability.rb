@@ -28,7 +28,7 @@ class Spree::VendorAbility
     end
   end
 
-  private
+  protected
 
   def apply_classifications_permissions
     can :manage, Spree::Classification, product: { vendor_id: @vendor_ids }
@@ -36,7 +36,9 @@ class Spree::VendorAbility
 
   def apply_order_permissions
     cannot :create, Spree::Order
-    can [:admin, :index, :edit, :update, :cart], Spree::Order, line_items: { product: { vendor_id: @vendor_ids } }
+    can [:admin, :index, :edit, :update, :cart], Spree::Order do |order|
+      (order.vendor_ids & @vendor_ids).any?
+    end
   end
 
   def apply_image_permissions
@@ -59,7 +61,12 @@ class Spree::VendorAbility
   end
 
   def apply_product_option_type_permissions
-    can :modify, Spree::ProductOptionType, product: { vendor_id: @vendor_ids }
+    can :display, Spree::OptionType
+    can :display, Spree::OptionValue
+    can :manage,  Spree::ProductOptionType, product: { vendor_id: @vendor_ids }
+    can :create,  Spree::ProductOptionType
+    can :manage,  Spree::OptionValueVariant, variant: { vendor_id: @vendor_ids }
+    can :create,  Spree::OptionValueVariant
   end
 
   def apply_product_permissions
@@ -69,14 +76,12 @@ class Spree::VendorAbility
   end
 
   def apply_properties_permissions
-    cannot_display_model(Spree::Property)
-    can :manage, Spree::Property, vendor_id: @vendor_ids
-    can :create, Spree::Property
+    can :display, Spree::Property
   end
-
+  
   def apply_product_properties_permissions
-    cannot_display_model(Spree::ProductProperty)
-    can :manage, Spree::ProductProperty, property: { vendor_id: @vendor_ids }
+    can :manage,  Spree::ProductProperty, product: { vendor_id: @vendor_ids }
+    can :create,  Spree::ProductProperty
   end
 
   def apply_prototypes_permissions

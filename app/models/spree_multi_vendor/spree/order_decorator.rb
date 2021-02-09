@@ -86,11 +86,11 @@ module SpreeMultiVendor::Spree::OrderDecorator
   # we're leaving this on purpose so it can be easily modified to fit desired scenario
   # eg. scenario A - vendorized products, scenario B - vendorized variants of the same product
   def vendor_ids
-    @vendor_ids ||= line_items.map { |line_item| line_item.product.vendor_id }.uniq.compact
+    @vendor_ids ||= line_items.map(&:vendor_id).uniq.compact
   end
 
   def vendor_list
-    @vendor_list ||= line_items.map { |line_item| line_item.product.vendor }.uniq
+    @vendor_list ||= line_items.map(&:vendor).uniq.compact
   end
 
   def vendor_totals
