@@ -8,10 +8,8 @@ module SpreeMultiVendor
   # TODO: this should be moved into preferences
   def self.vendorized_models
     [
-      ::Spree::OptionType,
       ::Spree::Product,
       ::Spree::Variant,
-      ::Spree::Property,
       ::Spree::ShippingMethod,
       ::Spree::StockLocation
     ]
