@@ -7,11 +7,6 @@ require 'deface'
 module SpreeMultiVendor
   # TODO: this should be moved into preferences
   def self.vendorized_models
-    [
-      ::Spree::Product,
-      ::Spree::Variant,
-      ::Spree::ShippingMethod,
-      ::Spree::StockLocation
-    ]
+    SpreeMultiVendor::Config[:vendorized_models].map(&:classify).map { |class_name| "Spree::#{class_name}".constantize }
   end
 end
