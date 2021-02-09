@@ -19,4 +19,6 @@ describe Spree::Variant do
       }
     end
   end
+
+  it { expect(described_class.whitelisted_ransackable_associations).to include('vendor') }
 end
