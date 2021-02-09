@@ -15,6 +15,7 @@ describe 'API V2 Storefront Cart Spec', type: :request do
 
   describe 'cart#show' do
     let(:params) { {} }
+    let!(:line_item) { create(:line_item, order: order, product: product, variant: product.default_variant) }
 
     shared_examples 'showing the cart' do
       before do
@@ -25,9 +26,23 @@ describe 'API V2 Storefront Cart Spec', type: :request do
       it_behaves_like 'returns valid cart JSON'
     end
 
-    context 'includes vendor data' do
-      let!(:line_item) { create(:line_item, order: order, product: product, variant: product.default_variant) }
+    context 'includes vendor and totals data' do
+      let(:params) { { include: 'vendors,vendor_totals' } }
 
+      it_behaves_like 'showing the cart'
+
+      it 'includes vendor and vendor totals' do
+        get '/api/v2/storefront/cart', headers: headers_bearer, params: params
+
+        expect(json_response['data']).to have_relationships(:vendors, :vendor_totals)
+        expect(json_response[:included][0]).to have_id(vendor.id.to_s)
+        expect(json_response[:included][0]).to have_type('vendor')
+        expect(json_response[:included][1]).to have_id(vendor.id.to_s)
+        expect(json_response[:included][1]).to have_type('vendor_totals')
+      end
+    end
+
+    context 'includes line item vendor data' do
       it_behaves_like 'showing the cart'
 
       it 'via variants' do
