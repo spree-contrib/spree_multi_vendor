@@ -36,8 +36,21 @@ class Spree::VendorAbility
 
   def apply_order_permissions
     cannot :create, Spree::Order
-    can [:admin, :index, :edit, :update, :cart], Spree::Order do |order|
-      (order.vendor_ids & @vendor_ids).any?
+
+    order_scope = if ::Spree::Order.reflect_on_association(:vendor)
+                    { vendor_id: @vendor_ids }
+                  elsif ::Spree::LineItem.reflect_on_association(:vendor)
+                    { line_items: { vendor_id: @vendor_ids } }
+                  elsif ::Spree::Product.reflect_on_association(:vendor)
+                    { line_items: { product: { vendor_id: @vendor_ids } } }
+                  elsif ::Spree::Variant.reflect_on_association(:vendor)
+                    { line_items: { variant: { vendor_id: @vendor_ids } } }
+                  end
+
+    if order_scope.present?
+      can %i[admin index edit update cart], Spree::Order, order_scope
+    else
+      cannot_display_model(Spree::Order)
     end
   end
 
@@ -51,9 +64,8 @@ class Spree::VendorAbility
   end
 
   def apply_option_type_permissions
-    cannot_display_model(Spree::OptionType)
-    can :manage, Spree::OptionType, vendor_id: @vendor_ids
-    can :create, Spree::OptionType
+    can :display, Spree::OptionType
+    can :display, Spree::OptionValue
   end
 
   def apply_price_permissions
@@ -61,8 +73,6 @@ class Spree::VendorAbility
   end
 
   def apply_product_option_type_permissions
-    can :display, Spree::OptionType
-    can :display, Spree::OptionValue
     can :manage,  Spree::ProductOptionType, product: { vendor_id: @vendor_ids }
     can :create,  Spree::ProductOptionType
     can :manage,  Spree::OptionValueVariant, variant: { vendor_id: @vendor_ids }

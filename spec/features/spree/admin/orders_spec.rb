@@ -14,6 +14,18 @@ RSpec.feature 'Admin Orders', :js do
   let(:product) { create(:product_in_stock, vendor: vendor) }
   let(:product_2) { create(:product_in_stock, vendor: vendor_2) }
 
+  context 'index' do
+    background do
+      login_as(user, scope: :spree_user)
+    end
+
+    scenario 'shows orders list' do
+      visit spree.admin_orders_path
+
+      expect(page).not_to have_text(order.number)
+    end
+  end
+
   context 'edit' do
     background do
       login_as(user, scope: :spree_user)
