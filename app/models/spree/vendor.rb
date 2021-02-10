@@ -29,7 +29,7 @@ module Spree
       has_many :vendor_users
     end
 
-    has_many :users, through: :vendor_users
+    has_many :users, through: :vendor_users, class_name: Spree.user_class.to_s
 
     after_create :create_stock_location
     after_update :update_stock_location_names
