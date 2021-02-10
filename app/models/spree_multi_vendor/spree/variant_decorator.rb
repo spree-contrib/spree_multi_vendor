@@ -1,19 +1,34 @@
 module SpreeMultiVendor::Spree::VariantDecorator
   def self.prepended(base)
-    base.before_create :assign_vendor_id
-    base.scope :for_vendor_user, ->(user) { includes(:product).where('spree_products.vendor_id in (?)', user.vendors.ids).references(:product) }
+    base.before_create :assign_vendor
+
+    base.scope :for_vendor_user, ->(user) { where(vendor_id: user.vendor_ids) }
+  end
+
+  def vendor
+    @vendor ||= if self.class.reflect_on_association(:vendor) && self[:vendor_id].present?
+                  product.vendor
+                  ::Spree::Vendor.unscoped.find(self[:vendor_id])
+                elsif Spree::Product.reflect_on_association(:vendor) && product.vendor_id.present?
+                  product.vendor
+                end
   end
 
   def vendor_id
-    self.class.method_defined?(:vendor) ? self[:vendor_id] : product.vendor_id
+    @vendor_id ||= if self.class.reflect_on_association(:vendor) && self[:vendor_id].present?
+                     self[:vendor_id]
+                   elsif Spree::Product.reflect_on_association(:vendor) && product.vendor_id.present?
+                     product.vendor_id
+                   end
   end
 
   private
 
-  def assign_vendor_id
-    return unless self.class.method_defined?(:vendor)
+  def assign_vendor
+    return if !product.class.reflect_on_association(:vendor) || product.vendor.blank?
+    return if !self.class.reflect_on_association(:vendor) || self[:vendor_id].present?
 
-    self.vendor_id = product.vendor_id
+    self.vendor = product.vendor
   end
 
   def create_stock_items

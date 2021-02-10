@@ -1,26 +1,20 @@
 require 'spec_helper'
 
 RSpec.feature 'Admin Orders', :js do
-  let(:stock) { create(:stock_location_with_items) }
   let(:vendor) { create(:active_vendor, name: 'Vendor') }
-  let(:other_vendor) { create(:vendor, name: 'Other vendor') }
+  let(:vendor_2) { create(:active_vendor, name: 'Other vendor') }
   let(:order) do
     create(:order,
            line_items: [
-             create(:line_item, product: stock.stock_items.first.product),
-             create(:line_item, product: stock.stock_items.last.product)
+             create(:line_item, product: product),
+             create(:line_item, product: product_2)
            ])
   end
   let!(:user) { create(:user, vendors: [vendor]) }
-  let(:product) { stock.stock_items.first.product }
-  let(:product_2) { stock.stock_items.last.product }
+  let(:product) { create(:product_in_stock, vendor: vendor) }
+  let(:product_2) { create(:product_in_stock, vendor: vendor_2) }
 
   context 'edit' do
-    before do
-      stock.stock_items.first.product.update(vendor: vendor)
-      stock.stock_items.last.product.update(vendor: other_vendor)
-    end
-
     background do
       login_as(user, scope: :spree_user)
       visit spree.edit_admin_order_path(id: order.number)

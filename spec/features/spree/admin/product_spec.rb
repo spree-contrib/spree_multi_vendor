@@ -4,7 +4,7 @@ RSpec.feature 'Admin Products', :js do
   let(:vendor) { create(:active_vendor) }
   let!(:user) { create(:user, vendors: [vendor]) }
   let!(:admin) { create(:admin_user) }
-  let!(:option_type) { create(:option_type, name: 'Testing option', vendor_id: vendor.id) }
+  let!(:option_type) { create(:option_type, name: 'Testing option') }
   let!(:option_value) { create(:option_value, option_type: option_type) }
   let!(:product) { create(:product, sku: 'Test1') }
   let!(:vendor_product) { create(:product, vendor: vendor, sku: 'Test2', option_types: [option_type]) }
