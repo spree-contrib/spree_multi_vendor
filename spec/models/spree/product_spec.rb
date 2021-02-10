@@ -1,3 +1,5 @@
+require 'timecop'
+
 describe Spree::Product do
   let(:vendor) { create(:vendor) }
   let(:product) { create(:product, vendor: vendor) }
@@ -7,5 +9,11 @@ describe Spree::Product do
     it { expect(described_class.whitelisted_ransackable_associations.count).to be > 1 }
   end
 
-  it { expect { product.touch }.to change { vendor.updated_at } }
+  it 'touches vendor after update' do
+    time = Time.current + 1.hour
+    product
+    Timecop.freeze(time) do
+      expect { product.touch }.to change { vendor.reload.updated_at }
+    end
+  end
 end
