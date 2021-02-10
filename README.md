@@ -12,12 +12,10 @@ Developed and maintained by:
 
 ## Features
 
-You can create and manage Vendors who can manage on their own:
+By default you can create and manage Vendors who can manage on their own:
 
 - [X] Orders
 - [X] Products
-- [X] Option Types
-- [X] Properties
 - [X] Stock Locations
 - [X] Shipping Methods
 - [X] Vendor profile
@@ -32,7 +30,7 @@ Contributions welcome! :)
 
 1. Add this extension to your Gemfile with this line:
     ```ruby
-    gem 'spree_multi_vendor', github: 'spree-contrib/spree_multi_vendor'
+    gem 'spree_multi_vendor'
     ```
 
 2. Install the gem using Bundler:
@@ -67,6 +65,50 @@ Contributions welcome! :)
 
     ```bash
     bundle exec rails db:migrate
+    ```
+
+## Configuration
+
+To change which models should be vendorized, in your Spree initializer (`config/initializers/spree.rb`) add:
+
+```ruby
+SpreeMultiVendor::Config[:vendorized_models] = %w[product variant stock_location shipping_method other_model]
+```
+
+This will lookup for `Spree::OtherModel` class. To add `vendor_id` column to that model run:
+
+```bash
+bundle exec rails g migration AddVendorToSpreeOtherModels vendor:references
+```
+
+## API endpoints
+
+Spree Multi Vendor adds new [API v2](https://api.spreecommerce.org/docs/api-v2/api/docs/v2/storefront/index.yaml) endpoints:
+
+1. `GET` Display Vendor information endpoint
+    
+     ```
+     /api/v2/storefront/vendors/<vendor_slug>
+     ```
+     
+     eg. `/api/v2/storefront/vendors/test-vendor`
+
+     you can also include Vendor image and/or Products in that call:
+
+     `/api/v2/storefront/vendors/test-vendor?include=image,products`
+
+And modfies existing:
+
+1. `GET` Filtering Products by Vendor ID(s):
+
+    ```
+    /api/v2/storefront/products?filter[vendor_ids]=1,2,3
+    ```
+
+2. `GET` Include Vendor information in Cart endpoint:
+
+    ```
+    /api/v2/storefront/cart?include=vendors,vendor_totals
     ```
 
 ## Email previews
@@ -105,7 +147,7 @@ pull request.
 
 ## License
 
-Spree Multi Vendor is copyright © 2017-2018
+Spree Multi Vendor is copyright © 2017-2021
 [Spark Solutions Sp. z o.o.][spark]. It is free software,
 and may be redistributed under the terms specified in the
 [LICENCE](LICENSE) file.
