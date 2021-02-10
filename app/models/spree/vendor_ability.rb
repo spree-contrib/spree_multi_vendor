@@ -48,7 +48,7 @@ class Spree::VendorAbility
                   end
 
     if order_scope.present?
-      can %i[admin index edit update cart], Spree::Order, order_scope
+      can %i[admin index edit update cart], Spree::Order, order_scope.merge(state: 'complete')
     else
       cannot_display_model(Spree::Order)
     end
@@ -81,6 +81,9 @@ class Spree::VendorAbility
 
   def apply_product_permissions
     cannot_display_model(Spree::Product)
+
+    return unless Spree::Product.reflect_on_association(:vendor)
+
     can :manage, Spree::Product, vendor_id: @vendor_ids
     can :create, Spree::Product
   end
@@ -88,7 +91,7 @@ class Spree::VendorAbility
   def apply_properties_permissions
     can :display, Spree::Property
   end
-  
+
   def apply_product_properties_permissions
     can :manage,  Spree::ProductProperty, product: { vendor_id: @vendor_ids }
     can :create,  Spree::ProductProperty
@@ -126,6 +129,7 @@ class Spree::VendorAbility
   end
 
   def apply_variant_permissions
+    cannot_display_model(Spree::Variant)
     can :manage, Spree::Variant, vendor_id: @vendor_ids
     can :create, Spree::Variant
   end
