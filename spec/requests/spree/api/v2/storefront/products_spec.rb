@@ -26,6 +26,8 @@ describe 'API V2 Storefront Products Spec', type: :request do
     end
 
     context 'with specified vendor ids' do
+      before { vendor.products << create(:product) }
+      before { vendor_2.products << create(:product) }
       before { get "/api/v2/storefront/products?filter[vendor_ids]=#{vendor.id}&include=vendor" }
 
       it_behaves_like 'returns 200 HTTP status'
