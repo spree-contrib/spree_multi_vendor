@@ -78,6 +78,50 @@ module Spree
       end
     end
 
+    describe 'products#create' do
+      let(:params) do
+        {
+          product: {
+            name: 'Product',
+            shipping_category_id: shipping_category.id,
+            price: 12.34
+          }
+        }
+      end
+
+      before { post '/api/v1/products', params: params }
+
+      context 'as regular user' do
+        it 'cannot create a new product' do
+          expect(response.status).to eq(401)
+        end
+      end
+
+      context 'as an admin' do
+        sign_in_as_admin!
+
+        it 'can create a new product' do
+          expect(response.status).to eq(201)
+          expect(json_response['name']).to eq(params[:product][:name])
+          expect(json_response['price']).to eq(params[:product][:price].to_s)
+          expect(json_response['shipping_category_id']).to eq(params[:product][:shipping_category_id])
+        end
+      end
+
+      context 'as a vendor' do
+        let!(:current_api_user) do
+          user = create(:user, vendors: [vendor])
+          user
+        end
+
+        it 'can create a new product assigned to vendor' do
+          expect(response.status).to eq(201)
+          product = Spree::Product.find(json_response[:id])
+          expect(product.vendor).to eq(vendor)
+        end
+      end
+    end
+
     describe 'products#update' do
       let(:params) do
         {
