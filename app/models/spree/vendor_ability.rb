@@ -135,7 +135,8 @@ class Spree::VendorAbility
   end
 
   def apply_vendor_permissions
-    can [:admin, :update], Spree::Vendor, id: @vendor_ids
+    can :manage, Spree::Vendor, id: @vendor_ids
+    cannot :create, Spree::Vendor
   end
 
   def apply_vendor_settings_permissions
