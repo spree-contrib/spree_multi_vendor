@@ -102,4 +102,4 @@ module SpreeMultiVendor::Spree::OrderDecorator
   end
 end
 
-Spree::Order.prepend SpreeMultiVendor::Spree::OrderDecorator
+Spree::Order.prepend SpreeMultiVendor::Spree::OrderDecorator unless Spree::Order.included_modules.include?(SpreeMultiVendor::Spree::OrderDecorator)

@@ -34,6 +34,20 @@ describe Spree::Order do
         expect(v.commissions.sum(:amount)).to eq(commission_ammount)
       end
     end
+
+    it 'sends mails only once per vendor' do
+      mail_double_1 = double(:mail_double_1)
+      mail_double_2 = double(:mail_double_1)
+
+      expect(Spree::VendorMailer).to receive(:vendor_notification_email)
+        .with(be_an(Integer), vendor.id) { mail_double_1 }
+      expect(mail_double_1).to receive(:deliver_later)
+      expect(Spree::VendorMailer).to receive(:vendor_notification_email)
+        .with(be_an(Integer), vendor_2.id) { mail_double_2 }
+      expect(mail_double_2).to receive(:deliver_later)
+
+      order.next!
+    end
   end
 
   context 'vendor methods' do
