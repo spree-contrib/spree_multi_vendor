@@ -6,6 +6,8 @@ module SpreeMultiVendor
           base::ATTRIBUTES.push(:vendor_attributes)
 
           base.mattr_reader *base::ATTRIBUTES
+
+          base.user_attributes << :vendor_ids
         end
 
         @@vendor_attributes = [:id, :name, :slug, :state, :about_us, :contact_us]
