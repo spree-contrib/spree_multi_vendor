@@ -16,20 +16,16 @@ module Spree
     validates :notification_email, email: true, allow_blank: true
 
     with_options dependent: :destroy do
-      if Spree.version.to_f >= 3.6
-        has_one :image, as: :viewable, dependent: :destroy, class_name: 'Spree::VendorImage'
-      end
+      has_one :image, as: :viewable, dependent: :destroy, class_name: 'Spree::VendorImage'
       has_many :commissions, class_name: 'Spree::OrderCommission'
-      has_many :option_types
-      has_many :products
-      has_many :properties
-      has_many :shipping_methods
-      has_many :stock_locations
-      has_many :variants
       has_many :vendor_users
+
+      SpreeMultiVendor::Config[:vendorized_models].uniq.compact.each do |model|
+        has_many model.pluralize.to_sym
+      end
     end
 
-    has_many :users, through: :vendor_users
+    has_many :users, through: :vendor_users, class_name: Spree.user_class.to_s
 
     after_create :create_stock_location
     after_update :update_stock_location_names

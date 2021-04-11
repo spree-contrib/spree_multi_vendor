@@ -28,7 +28,7 @@ class Spree::VendorAbility
     end
   end
 
-  private
+  protected
 
   def apply_classifications_permissions
     can :manage, Spree::Classification, product: { vendor_id: @vendor_ids }
@@ -36,21 +36,36 @@ class Spree::VendorAbility
 
   def apply_order_permissions
     cannot :create, Spree::Order
-    can [:admin, :index, :edit, :update, :cart], Spree::Order, line_items: { product: { vendor_id: @vendor_ids } }
+
+    order_scope = if ::Spree::Order.reflect_on_association(:vendor)
+                    { vendor_id: @vendor_ids }
+                  elsif ::Spree::LineItem.reflect_on_association(:vendor)
+                    { line_items: { vendor_id: @vendor_ids } }
+                  elsif ::Spree::Product.reflect_on_association(:vendor)
+                    { line_items: { product: { vendor_id: @vendor_ids } } }
+                  elsif ::Spree::Variant.reflect_on_association(:vendor)
+                    { line_items: { variant: { vendor_id: @vendor_ids } } }
+                  end
+
+    if order_scope.present?
+      can %i[admin index edit update cart], Spree::Order, order_scope.merge(state: 'complete')
+    else
+      cannot_display_model(Spree::Order)
+    end
   end
 
   def apply_image_permissions
     can :create, Spree::Image
 
-    can [:manage, :modify], Spree::Image do |image|
-      image.viewable_type == 'Spree::Variant' && @vendor_ids.include?(image.viewable.vendor_id)
+    can [:manage, :modify], Spree::Image, ['viewable_type = ?', 'Spree::Variant'] do |image|
+      vendor_id = image.viewable.try(:vendor_id)
+      vendor_id.present? && @vendor_ids.include?(vendor_id)
     end
   end
 
   def apply_option_type_permissions
-    cannot_display_model(Spree::OptionType)
-    can :manage, Spree::OptionType, vendor_id: @vendor_ids
-    can :create, Spree::OptionType
+    can :display, Spree::OptionType
+    can :display, Spree::OptionValue
   end
 
   def apply_price_permissions
@@ -58,28 +73,32 @@ class Spree::VendorAbility
   end
 
   def apply_product_option_type_permissions
-    can :modify, Spree::ProductOptionType, product: { vendor_id: @vendor_ids }
+    can :manage,  Spree::ProductOptionType, product: { vendor_id: @vendor_ids }
+    can :create,  Spree::ProductOptionType
+    can :manage,  Spree::OptionValueVariant, variant: { vendor_id: @vendor_ids }
+    can :create,  Spree::OptionValueVariant
   end
 
   def apply_product_permissions
     cannot_display_model(Spree::Product)
+
+    return unless Spree::Product.reflect_on_association(:vendor)
+
     can :manage, Spree::Product, vendor_id: @vendor_ids
     can :create, Spree::Product
   end
 
   def apply_properties_permissions
-    cannot_display_model(Spree::Property)
-    can :manage, Spree::Property, vendor_id: @vendor_ids
-    can :create, Spree::Property
+    can :display, Spree::Property
   end
 
   def apply_product_properties_permissions
-    cannot_display_model(Spree::ProductProperty)
-    can :manage, Spree::ProductProperty, property: { vendor_id: @vendor_ids }
+    can :manage,  Spree::ProductProperty, product: { vendor_id: @vendor_ids }
+    can :create,  Spree::ProductProperty
   end
 
   def apply_prototypes_permissions
-    can :read, Spree::Prototype
+    can [:read, :admin], Spree::Prototype
   end
 
   def apply_shipment_permissions
@@ -110,12 +129,14 @@ class Spree::VendorAbility
   end
 
   def apply_variant_permissions
+    cannot_display_model(Spree::Variant)
     can :manage, Spree::Variant, vendor_id: @vendor_ids
     can :create, Spree::Variant
   end
 
   def apply_vendor_permissions
-    can [:admin, :update], Spree::Vendor, id: @vendor_ids
+    can :manage, Spree::Vendor, id: @vendor_ids
+    cannot :create, Spree::Vendor
   end
 
   def apply_vendor_settings_permissions

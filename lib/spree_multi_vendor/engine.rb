@@ -11,6 +11,10 @@ module SpreeMultiVendor
       g.test_framework :rspec
     end
 
+    initializer 'spree_multi_vendor.environment', before: :load_config_initializers do |_app|
+      SpreeMultiVendor::Config = SpreeMultiVendor::Configuration.new
+    end
+
     def self.activate
       ['app', 'lib'].each do |dir|
         Dir.glob(File.join(File.dirname(__FILE__), "../../#{dir}/**/*_decorator*.rb")) do |c|

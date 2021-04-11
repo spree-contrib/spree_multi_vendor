@@ -15,6 +15,7 @@ en:
         priority: priority
   spree:
     back_to_vendors_list: Back To Vendors List
+    blocked: Blocked
     edit_vendor: Edit Vendor
     new_vendor: New Vendor
     only_alphanumeric_chars: should contain only letters and digits

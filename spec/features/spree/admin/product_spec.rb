@@ -4,7 +4,7 @@ RSpec.feature 'Admin Products', :js do
   let(:vendor) { create(:active_vendor) }
   let!(:user) { create(:user, vendors: [vendor]) }
   let!(:admin) { create(:admin_user) }
-  let!(:option_type) { create(:option_type, name: 'Testing option', vendor_id: vendor.id) }
+  let!(:option_type) { create(:option_type, name: 'Testing option') }
   let!(:option_value) { create(:option_value, option_type: option_type) }
   let!(:product) { create(:product, sku: 'Test1') }
   let!(:vendor_product) { create(:product, vendor: vendor, sku: 'Test2', option_types: [option_type]) }
@@ -27,7 +27,7 @@ RSpec.feature 'Admin Products', :js do
 
         fill_in 'product_name', with: 'Vendor product'
         fill_in 'product_price', with: 15
-        select Spree::ShippingCategory.last.name
+        select2 Spree::ShippingCategory.last.name, from: 'Shipping Categories'
 
         click_button 'Create'
 
@@ -42,7 +42,7 @@ RSpec.feature 'Admin Products', :js do
 
         fill_in 'product_name', with: 'Vendor product'
         fill_in 'product_price', with: 15
-        select Spree::ShippingCategory.last.name
+        select2 Spree::ShippingCategory.last.name, from: 'Shipping Categories'
         select2 'Active vendor', from: 'Vendor'
 
         click_button 'Create'
@@ -76,7 +76,7 @@ RSpec.feature 'Admin Products', :js do
 
       scenario 'can update product vendor' do
         expect(product.vendor).to eq nil
-        select2 "#{vendor.name}", from: 'Vendor'
+        select2 vendor.name, from: 'Vendor'
         click_button 'Update'
         expect(page).to have_text 'successfully updated!'
         product.reload
@@ -115,7 +115,7 @@ RSpec.feature 'Admin Products', :js do
 
         fill_in 'product_name', with: 'Vendor product'
         fill_in 'product_price', with: 15
-        select Spree::ShippingCategory.last.name
+        select2 Spree::ShippingCategory.last.name, from: 'Shipping Categories'
 
         click_button 'Create'
 

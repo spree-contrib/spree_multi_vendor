@@ -3,7 +3,7 @@ module Spree
     class GenerateCommissions
       prepend Spree::ServiceModule::Base
 
-      def call(order)
+      def call(order:)
         ActiveRecord::Base.transaction do
           run :generate_order_commissions
         end
@@ -11,14 +11,19 @@ module Spree
 
       private
 
-      def generate_order_commissions(order)
+      def generate_order_commissions(order:)
         return failure(order) unless order.state == 'complete'
 
-        order.line_items.includes(product: :vendor).group_by{ |li| li.product.vendor }.each do |vendor, vendor_line_items|
-          next unless vendor
-          order.commissions.create(
-              amount: vendor_line_items.pluck(:pre_tax_amount).sum * vendor.commission_rate / 100,
-              vendor_id: vendor.id
+        order.vendor_list.each do |vendor|
+          amount = if vendor.commission_rate.zero?
+                     0.0
+                   else
+                     order.vendor_pre_tax_item_amount(vendor) * vendor.commission_rate / 100
+                   end
+
+          order.commissions.create!(
+            amount: amount,
+            vendor_id: vendor.id
           )
         end
 
