@@ -4,6 +4,8 @@ module Spree
       class VendorOrderTotalsSerializer < BaseSerializer
         set_type :vendor_totals
 
+        cache_options store: nil
+
         attributes :name, :subtotal, :ship_total, :total, :display_subtotal,
                    :display_ship_total, :display_total, :promo_total,
                    :display_promo_total, :included_tax_total,
