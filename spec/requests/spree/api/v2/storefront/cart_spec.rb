@@ -26,7 +26,7 @@ describe 'API V2 Storefront Cart Spec', type: :request do
       it_behaves_like 'returns valid cart JSON'
     end
 
-    context 'includes vendor and totals data' do
+    context 'with one vendor' do
       let(:params) { { include: 'vendors,vendor_totals' } }
 
       it_behaves_like 'showing the cart'
@@ -39,6 +39,24 @@ describe 'API V2 Storefront Cart Spec', type: :request do
         expect(json_response[:included][0]).to have_type('vendor')
         expect(json_response[:included][1]).to have_id(vendor.id.to_s)
         expect(json_response[:included][1]).to have_type('vendor_totals')
+      end
+    end
+
+    context 'with many vendors' do
+      let!(:line_item_2) { create(:line_item, order: order, product: product_2, variant: product_2.default_variant) }
+      let(:params) { { include: 'vendors,vendor_totals' } }
+
+      it_behaves_like 'showing the cart'
+
+      it 'includes many vendors and vendor totals' do
+        get '/api/v2/storefront/cart', headers: headers_bearer, params: params
+
+        [vendor, vendor_2].each do |vendor|
+          expect(json_response['included']).to include(have_type('vendor').and have_id(vendor.id.to_s))
+          expect(json_response['included']).to include(have_type('vendor_totals').and have_id(vendor.id.to_s))
+          expect(json_response['included']).to include(have_type('vendor').and have_attribute(:name).with_value(vendor.name))
+          expect(json_response['included']).to include(have_type('vendor_totals').and have_attribute(:name).with_value(vendor.name))
+        end
       end
     end
 
