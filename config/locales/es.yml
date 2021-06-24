@@ -7,9 +7,11 @@ es:
     attributes:
       spree/vendor:
         about_us: Acerca de
+        commission_rate: Porcentaje Comisión
         contact_us: Contáctanos
         image: Imagen
         name: Nombre
+        notification_email: Email notificación pedido
         state: estado
         created_at: creado en
         priority: prioridad
