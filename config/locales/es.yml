@@ -7,9 +7,11 @@ es:
     attributes:
       spree/vendor:
         about_us: Acerca de
+        commission_rate: Porcentaje Comisión
         contact_us: Contáctanos
         image: Imagen
         name: Nombre
+        notification_email: Email notificación pedido
         state: estado
         created_at: creado en
         priority: prioridad
@@ -21,6 +23,7 @@ es:
     order_mailer:
       vendor_notification_email:
         dear_vendor: Estimado vendedor,
+        order_summary: Resumen del pedido
         subject: Notificación de vendedor
         thanks: Gracias
     vendor: Vendedor
