@@ -14,7 +14,7 @@ Gem::Specification.new do |s|
 
   s.author    = 'Spark Solutions'
   s.email     = 'we@sparksolutions.co'
-  s.homepage  = 'https://sparksolutions.co'
+  s.homepage  = 'https://spreecommerce.org/use-cases/multi-vendor-marketplace-demo/'
   s.license = 'BSD-3-Clause'
 
   s.metadata = {
