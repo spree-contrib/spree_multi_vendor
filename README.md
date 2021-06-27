@@ -1,6 +1,6 @@
 # Spree Multi Vendor
 
-[![Build Status](https://travis-ci.com/spree-contrib/spree_multi_vendor.svg?branch=master)](https://travis-ci.org/spree-contrib/spree_multi_vendor)
+[![Build Status](https://travis-ci.com/spree-contrib/spree_multi_vendor.svg?branch=master)](https://travis-ci.com/spree-contrib/spree_multi_vendor)
 
 This is a [spree multi vendor marketplace](https://spreecommerce.org/use-cases/multi-vendor-marketplace/) extension. It's a great starting point if you're building a marketplace on top of [Spree](https://spreecommerce.org). Our goal was flexibility to allow you to tweak it to your needs.
 
