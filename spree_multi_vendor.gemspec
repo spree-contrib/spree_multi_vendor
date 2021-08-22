@@ -29,11 +29,12 @@ Gem::Specification.new do |s|
   s.require_path = 'lib'
   s.requirements << 'none'
 
-  spree_version = '>= 4.2.0.rc5', '< 5.0'
-  s.add_dependency 'spree_core', spree_version
-  s.add_dependency 'spree_api', spree_version
+  spree_version = '>= 4.3.0.rc1'
+  s.add_dependency 'spree', spree_version
   s.add_dependency 'spree_backend', spree_version
+  s.add_dependency 'spree_emails', spree_version
   s.add_dependency 'spree_extension'
+
   s.add_dependency 'deface', '~> 1.0'
 
   s.add_development_dependency 'shoulda-matchers'

@@ -4,7 +4,7 @@
 
 <%= form_for [:admin, @vendor], url: admin_vendor_settings_url do |f| %>
   <fieldset>
-    <%= render partial: 'spree/shared/error_messages', locals: { target: @vendor } %>
+    <%= render partial: 'spree/admin/shared/error_messages', locals: { target: @vendor } %>
     <div class="form-group">
       <%= f.field_container :name do %>
         <%= f.label :name %>

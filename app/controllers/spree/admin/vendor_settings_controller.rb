@@ -5,7 +5,7 @@ module Spree
       before_action :load_vendor
 
       def update
-        if vendor_params[:image] && Spree.version.to_f >= 3.6
+        if vendor_params[:image]
           @vendor.create_image(attachment: vendor_params[:image])
         end
         if @vendor.update(vendor_params.except(:image))

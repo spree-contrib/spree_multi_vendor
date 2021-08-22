@@ -1,6 +1,6 @@
 module SpreeMultiVendor
   module ProductsFinderDecorator
-    def initialize(scope:, params:, current_currency:)
+    def initialize(scope:, params:, current_currency: nil)
       super
 
       @vendors = params.dig(:filter, :vendor_ids)&.split(',')
