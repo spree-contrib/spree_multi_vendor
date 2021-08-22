@@ -1,7 +1,8 @@
 require 'spec_helper'
 
 describe 'API V2 Storefront Products Spec', type: :request do
-  let!(:products)              { create_list(:product, 5) }
+  let(:store)                  { Spree::Store.default }
+  let!(:products)              { create_list(:product, 5, stores: [store]) }
   let!(:vendor)                { create(:vendor) }
   let!(:vendor_2)              { create(:vendor) }
 

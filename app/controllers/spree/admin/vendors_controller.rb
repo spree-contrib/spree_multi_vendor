@@ -3,14 +3,14 @@ module Spree
     class VendorsController < ResourceController
 
       def create
-        if permitted_resource_params[:image] && Spree.version.to_f >= 3.6
+        if permitted_resource_params[:image]
           @vendor.build_image(attachment: permitted_resource_params.delete(:image))
         end
         super
       end
 
       def update
-        if permitted_resource_params[:image] && Spree.version.to_f >= 3.6
+        if permitted_resource_params[:image]
           @vendor.create_image(attachment: permitted_resource_params.delete(:image))
         end
         format_translations if defined? SpreeGlobalize

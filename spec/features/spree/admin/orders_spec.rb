@@ -1,13 +1,14 @@
 require 'spec_helper'
 
 RSpec.feature 'Admin Orders', :js do
+  let(:store) { Spree::Store.default }
   let(:vendor) { create(:active_vendor, name: 'Vendor') }
   let(:vendor_2) { create(:active_vendor, name: 'Other vendor') }
-  let(:order) { create(:order, ship_address: create(:address), bill_address: create(:address)) }
-  let(:order_2) { create(:order) }
+  let(:order) { create(:order, ship_address: create(:address), bill_address: create(:address), store: store) }
+  let(:order_2) { create(:order, store: store) }
   let!(:user) { create(:user, vendors: [vendor]) }
-  let(:product) { create(:product_in_stock, vendor: vendor) }
-  let(:product_2) { create(:product_in_stock, vendor: vendor_2) }
+  let(:product) { create(:product_in_stock, vendor: vendor, stores:[store]) }
+  let(:product_2) { create(:product_in_stock, vendor: vendor_2,stores:[store]) }
 
   before do
     create(:line_item, order: order, product: product)

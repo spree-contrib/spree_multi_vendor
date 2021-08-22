@@ -42,13 +42,11 @@ RSpec.feature 'Admin Vendor Settings', :js do
       expect(page).not_to have_text 'contact_us can\'t be blank'
     end
 
-    if Spree.version.to_f >= 3.6
-      scenario 'can update an existing vendor image' do
-        create(:vendor, name: 'New vendor')
-        page.attach_file("vendor_image", Spree::Core::Engine.root + 'spec/fixtures' + 'thinking-cat.jpg')
-        click_button 'Update'
-        expect(page).to have_css("img[src*='thinking-cat.jpg']")
-      end
+    scenario 'can update an existing vendor image' do
+      create(:vendor, name: 'New vendor')
+      page.attach_file("vendor_image", Spree::Core::Engine.root + 'spec/fixtures' + 'thinking-cat.jpg')
+      click_button 'Update'
+      expect(page).to have_css("img[src*='thinking-cat.jpg']")
     end
   end
 
@@ -70,7 +68,7 @@ RSpec.feature 'Admin Vendor Settings', :js do
 
     it 'renders forbidden page' do
       visit spree.admin_vendor_settings_path
-      expect(current_path).to eq spree.forbidden_path
+      expect(current_path).to eq spree.admin_forbidden_path
     end
   end
 end

@@ -48,7 +48,7 @@ class Spree::VendorAbility
                   end
 
     if order_scope.present?
-      can %i[admin index edit update cart], Spree::Order, order_scope.merge(state: 'complete')
+      can %i[admin show index edit update cart], Spree::Order, order_scope.merge(state: 'complete')
     else
       cannot_display_model(Spree::Order)
     end
