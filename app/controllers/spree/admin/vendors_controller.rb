@@ -40,8 +40,21 @@ module Spree
         @search = vendors.ransack(params[:q])
 
         @collection = @search.result.
+            includes(vendor_includes).
             page(params[:page]).
             per(params[:per_page])
+      end
+
+      def vendor_includes
+        {
+<<<<<<< HEAD
+          image: [],
+=======
+          images: [],
+>>>>>>> a78fd60 (API for listing Vendors.)
+          products: []
+        }
+
       end
 
       def format_translations
