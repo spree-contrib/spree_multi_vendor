@@ -3,7 +3,14 @@ module Spree
     module V2
       module Storefront
         class VendorsController < ::Spree::Api::V2::ResourceController
+          include Spree::Api::V2::BaseController
+          include Spree::Api::V2::CollectionOptionsHelpers
 
+          def index
+            render_serialized_payload { {"hello":"world"} }
+          end
+
+          
           private
 
           def model_class
