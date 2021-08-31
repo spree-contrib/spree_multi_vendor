@@ -3,7 +3,7 @@ module Spree
     module V2
       module Storefront
         class VendorsController < ::Spree::Api::V2::ResourceController
-
+          
           private
 
           def model_class
@@ -21,6 +21,11 @@ module Spree
           def resource_serializer
             Spree::V2::Storefront::VendorSerializer
           end
+
+          def collection_serializer
+            Spree::V2::Storefront::VendorSerializer
+          end
+
         end
       end
     end
