@@ -58,6 +58,7 @@ module Spree
         {
           image: [],
           products: []
+          banner: []
         }
 
       end
