@@ -6,6 +6,10 @@ module Spree
         if permitted_resource_params[:image]
           @vendor.build_image(attachment: permitted_resource_params.delete(:image))
         end
+
+        if permitted_resource_params[:banner]
+          @vendor.build_banner(attachment: permitted_resource_params.delete(:banner))
+        end
         super
       end
 
@@ -13,6 +17,11 @@ module Spree
         if permitted_resource_params[:image]
           @vendor.create_image(attachment: permitted_resource_params.delete(:image))
         end
+
+        if permitted_resource_params[:banner]
+          @vendor.create_banner(attachment: permitted_resource_params.delete(:banner))
+        end
+
         format_translations if defined? SpreeGlobalize
         super
       end
