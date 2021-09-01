@@ -12,7 +12,7 @@ Spree::Core::Engine.routes.draw do
   namespace :api, defaults: { format: 'json' } do
     namespace :v2 do
       namespace :storefront do
-        resources :vendors, only: [:show, :index]
+        resources :vendors, only: [:show]
       end
     end
     namespace :v1 do
