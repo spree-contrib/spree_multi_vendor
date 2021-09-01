@@ -14,9 +14,7 @@ module Spree
             ::Spree::Vendor.active
           end
 
-          def collection
-            collection_finder.new(scope: scope, params: finder_params).execute
-          end
+        
 
           def resource
             scope.find_by(slug: params[:id]) || scope.find(params[:id])
