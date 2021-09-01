@@ -25,7 +25,7 @@ module Spree
           end
 
           def collection_serializer
-            Spree::Api::Storefront::VendorSerializer
+            Spree::V2::Storefront::VendorSerializer
           end
 
         end
