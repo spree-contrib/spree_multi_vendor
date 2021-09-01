@@ -14,8 +14,6 @@ module Spree
             ::Spree::Vendor.active
           end
 
-        
-
           def resource
             scope.find_by(slug: params[:id]) || scope.find(params[:id])
           end
