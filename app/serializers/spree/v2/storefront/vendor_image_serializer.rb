@@ -4,7 +4,7 @@ module Spree
       class VendorImageSerializer < BaseSerializer
         set_type :vendor_image
 
-        attributes :styles
+        attributes :styles, :original_url
       end
     end
   end
