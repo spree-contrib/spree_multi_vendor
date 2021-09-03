@@ -47,7 +47,7 @@ module Spree
 
       def vendor_includes
         {
-          images: [],
+          image: [],
           products: []
         }
 
