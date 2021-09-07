@@ -20,6 +20,17 @@
         <% end %>
       </div>
     <% end %>
+
+    <% if Spree.version.to_f >= 3.6 %>
+    <div class="form-group">
+      <%= f.field_container :banner do %>
+        <%= f.label :banner %>
+        <%= f.file_field :banner %>
+        <%= image_tag main_app.url_for(@vendor.banner.url(:small)) if @vendor.banner %>
+      <% end %>
+    </div>
+  <% end %>
+
     <div class="form-group">
       <%= f.field_container :about_us do %>
         <%= f.label :about_us %>
@@ -38,10 +49,55 @@
         <%= f.email_field :notification_email, class: 'form-control' %>
       <% end %>
     </div>
+
+    <div class="card mb-4">
+    <div class="card-header">
+      <h1 class="card-title mb-0 h5">
+        <%= Spree.t(:social) %>
+      </h1>
+    </div>
+
+    <div class="card-body">
+      <div class="form-group">
+        <%= f.field_container :facebook do %>
+          <%= f.label :facebook, Spree.t(:facebook) %>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon3">https://facebook.com</span>
+            </div>
+            <%= f.text_field :facebook, class: 'form-control' %>
+          </div>
+          <%= f.error_message_on :facebook %>
+        <% end %>
+        <%= f.field_container :twitter do %>
+          <%= f.label :twitter, Spree.t(:twitter) %>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon3">https://twitter.com</span>
+            </div>
+            <%= f.text_field :twitter , class: 'form-control' %>
+          </div>
+          <%= f.error_message_on :twitter %>
+        <% end %>
+        <%= f.field_container :instagram do %>
+          <%= f.label :instagram, Spree.t(:instagram) %>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon3">https://instagram.com</span>
+            </div>
+            <%= f.text_field :instagram, class: 'form-control' %>
+          </div>
+          <%= f.error_message_on :instagram %>
+        <% end %>
+    </div>
+    </div>
+  </div>
     <div class="form-actions" data-hook="buttons">
       <%= button Spree.t('actions.update'), 'save' %>
       <span class="or"><%= Spree.t(:or) %></span>
       <%= button_link_to Spree.t('actions.cancel'), admin_vendor_settings_url, icon: 'delete' %>
     </div>
+
+
   </fieldset>
 <% end %>

@@ -17,6 +17,7 @@ module Spree
 
     with_options dependent: :destroy do
       has_one :image, as: :viewable, dependent: :destroy, class_name: 'Spree::VendorImage'
+      has_one :banner, as: :viewable, dependent: :destroy, class_name: 'Spree::VendorBanner'
       has_many :commissions, class_name: 'Spree::OrderCommission'
       has_many :vendor_users
 
