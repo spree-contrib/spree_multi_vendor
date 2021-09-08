@@ -9,7 +9,7 @@ module Spree
           @vendor.create_image(attachment: vendor_params[:image])
         end
 
-        if vendor_params[:banenr]
+        if vendor_params[:banner]
           @vendor.create_banner(attachment: vendor_params[:banner])
         end
 
