@@ -47,14 +47,9 @@ module Spree
 
       def vendor_includes
         {
-<<<<<<< HEAD
           image: [],
-=======
-          images: [],
->>>>>>> a78fd60 (API for listing Vendors.)
           products: []
         }
-
       end
 
       def format_translations

@@ -49,4 +49,67 @@ describe 'API V2 Storefront Vendor Spec', type: :request do
       end
     end
   end
+
+
+  describe 'vendors#index' do
+    context 'returns vendors list' do
+      let!(:vendors) { create_list(:vendor, 30, :active) }
+
+      it 'must return a list of vendor paged' do
+        get "/api/v2/storefront/vendors"
+        it_behaves_like 'returns 200 HTTP status'
+      end
+
+      it 'must return a list of vendor paged' do
+        get "/api/v2/storefront/vendors"
+        expect(response).to have_http_status(:ok)
+        expect(json['data'].count).to eq (25)
+      end
+
+      it 'can request different pages' do
+        get "/api/v2/storefront/vendors?page=2"
+        expect(response).to have_http_status(:ok)
+        expect(json['data'].count).to eq (6)
+      end
+
+      it 'can control paging size' do
+        get "/api/v2/storefront/vendors?page=2&per_page=10"
+        expect(response).to have_http_status(:ok)
+        expect(json['data'].count).to eq (10)
+      end
+
+
+      it 'returns data type vendor' do
+        get "/api/v2/storefront/vendors"
+        json_response = JSON.parse(response.body)
+        expect(json_response)
+        expect(json_response['data']['type']).to eq('vendor')
+      end
+
+      it 'does not return included' do
+        get "/api/v2/storefront/vendors"
+        json_response = JSON.parse(response.body)
+        expect(json_response.keys).to contain_exactly('data')
+      end
+    end
+
+    context 'with products and images included' do
+      before { get "/api/v2/storefront/vendors?include=products,image" }
+
+      it_behaves_like 'returns 200 HTTP status'
+
+      it 'returns product information' do
+        json_response = JSON.parse(response.body)
+        expect(json_response.keys).to contain_exactly('data', 'included')
+        expect(json_response['included'].first['id']).to eq(product.id.to_s)
+      end
+
+      it 'returns image information' do
+        json_response = JSON.parse(response.body)
+        expect(json_response.keys).to contain_exactly('data', 'included')
+
+        expect(json_response['included'].second['id']).to eq(vendor_image.id.to_s)
+      end
+    end
+  end
 end
