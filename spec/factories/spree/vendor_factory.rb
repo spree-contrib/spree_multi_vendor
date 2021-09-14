@@ -9,6 +9,12 @@ FactoryBot.define do
       state { :active }
     end
 
+    factory :active_vendor_list do
+      name { "#{FFaker::Company.name} #{FFaker::Company.suffix }" }
+      state { :active }
+    end
+
+
     factory :pending_vendor do
       name { 'Pending vendor' }
       state { :pending }
