@@ -97,6 +97,17 @@ Spree Multi Vendor adds new [API v2](https://api.spreecommerce.org/docs/api-v2/a
 
      `/api/v2/storefront/vendors/test-vendor?include=image,products`
 
+2. `GET` Returns a list of Vendors
+    
+     ```
+     /api/v2/storefront/vendors
+     ```    
+
+     you can also include Vendor image and/or Products in that call:
+
+     `/api/v2/storefront/vendors?include=image,products`
+
+
 And modfies existing:
 
 1. `GET` Filtering Products by Vendor ID(s):
