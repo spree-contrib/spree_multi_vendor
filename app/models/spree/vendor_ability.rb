@@ -25,6 +25,7 @@ class Spree::VendorAbility
       apply_vendor_permissions
       apply_vendor_settings_permissions
       apply_state_changes_permissions
+      apply_video_permissions
     end
   end
 
@@ -147,6 +148,16 @@ class Spree::VendorAbility
     can [:admin, :index], Spree::StateChange do |state_change|
       (@vendor_ids & state_change.user.vendor_ids).any?
     end
+  end
+
+  def apply_video_permissions
+    cannot_display_model(Spree::Video)
+
+    return unless Spree::Video.reflect_on_association(:vendor)
+    can :modify, Spree::VideoSecondaryProduct
+    can :modify, Spree::VideoTaxon
+    can :manage, Spree::Video, vendor_id: @vendor_ids
+    can :create, Spree::Video
   end
 
   def cannot_display_model(model)
