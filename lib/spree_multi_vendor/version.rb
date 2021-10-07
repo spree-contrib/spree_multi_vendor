@@ -1,5 +1,5 @@
 module SpreeMultiVendor
-  VERSION = '2.3.0.rc1'
+  VERSION = '2.3.0'
 
   module_function
 
