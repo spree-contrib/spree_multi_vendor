@@ -2,11 +2,11 @@
 lib = File.expand_path('../lib/', __FILE__)
 $LOAD_PATH.unshift lib unless $LOAD_PATH.include?(lib)
 
-require 'spree_multi_vendor/version'
+require 'multi_vendor_sintaxy/version'
 
 Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
-  s.name        = 'spree_multi_vendor'
+  s.name        = 'multi_vendor_sintaxy'
   s.version     = SpreeMultiVendor.version
   s.summary     = 'Spree Commerce multi vendor marketplace extension'
   s.description = 'Spree Commerce multi vendor marketplace extension'
