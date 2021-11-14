@@ -7,7 +7,6 @@ module SpreeMultiVendor::Spree::VariantDecorator
 
   def vendor
     @vendor ||= if self.class.reflect_on_association(:vendor) && self[:vendor_id].present?
-                  product.vendor
                   ::Spree::Vendor.unscoped.find(self[:vendor_id])
                 elsif Spree::Product.reflect_on_association(:vendor) && product.vendor_id.present?
                   product.vendor
