@@ -61,7 +61,7 @@ module Spree
     private
 
     def create_stock_location
-      stock_locations.where(name: name, country: Spree::Country.default).first_or_create!
+      stock_locations.where(name: name, country: Spree::Store.default.default_country).first_or_create!
     end
 
     def should_generate_new_friendly_id?
