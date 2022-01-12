@@ -1,0 +1,139 @@
+<% @body_id = 'home' %>
+
+<div class="homepage-hero-image mb-3 position-relative">
+  <img class="lazyload hero-image position-absolute"
+    data-src="<%= asset_path('homepage/main_banner.jpg') %>"
+    data-srcset="<%= image_source_set('homepage/main_banner') %>"
+    alt="<%= Spree.t('homepage.hero')%>" />
+
+  <div class="hero-content w-100">
+    <div class="homepage-hero-image-text mb-lg-4 mx-auto py-1 py-lg-3 text-center text-uppercase">
+      <%= Spree.t('homepage.hero') %>
+    </div>
+    <div class="text-center">
+      <%= link_to Spree.t('homepage.shop_now'), spree.products_path,
+                  class: 'btn btn-primary spree-btn rounded-15 px-4 px-lg-5 mt-1 mt-lg-3' %>
+    </div>
+  </div>
+</div>
+
+<%= render partial: 'vendors_logo' %>
+
+<div class="container">
+  <div class="row">
+    <div class="col-12 col-lg-6">
+
+      <div class="homepage-taxon-box mb-3">
+        <%= link_to spree.nested_taxons_path('categories/men') do %>
+          <img class="w-100 lazyload"
+            data-src="<%= asset_path('homepage/category_banner_upper.jpg') %>"
+            data-srcset="<%= image_source_set('homepage/category_banner_upper') %>"
+            alt="<%= Spree.t('homepage.ambiance')%>" />
+
+          <div class="homepage-taxon-box-text">
+            <h3 class="btn spree-btn btn-primary"><%= Spree.t('homepage.men') %></h3>
+          </div>
+        <% end %>
+      </div>
+
+      <div class="homepage-taxon-box mb-3 mb-lg-0">
+        <%= link_to spree.nested_taxons_path('categories/sportswear') do %>
+          <img class="w-100 lazyload"
+            data-src="<%= asset_path('homepage/category_banner_lower.jpg') %>"
+            data-srcset="<%= image_source_set('homepage/category_banner_lower') %>"
+            alt="<%= Spree.t('homepage.sportswear')%>" />
+
+          <div class="homepage-taxon-box-text" role="img" aria-label="<%= Spree.t('homepage.sportswear') %>">
+            <h3 class="btn spree-btn btn-primary"><%= Spree.t('homepage.sportswear') %></h3>
+          </div>
+        <% end %>
+      </div>
+
+    </div>
+
+    <div class="col-12 col-lg-6 d-flex flex-column">
+
+      <div class="homepage-taxon-box flex-grow-1">
+        <%= link_to spree.nested_taxons_path('categories/women') do %>
+          <img class="w-100 lazyload"
+            data-src="<%= asset_path('homepage/big_category_banner.jpg') %>"
+            data-srcset="<%= image_source_set('homepage/big_category_banner') %>"
+            alt="<%= Spree.t('homepage.women')%>" />
+
+          <div class="homepage-taxon-box-text">
+            <h3 class="btn spree-btn btn-primary"><%= Spree.t('homepage.women') %></h3>
+          </div>
+        <% end %>
+      </div>
+
+    </div>
+
+    <div class="d-flex col-12 text-left align-items-center mt-3 mt-lg-5 mx-0">
+      <div class="homepage-taxon-box flex-grow-1">
+        <%#= link_to spree.nested_taxons_path('') do %>
+          <img class="d-lg-none w-100 lazyload"
+               data-src="<%= asset_path('homepage/big_promo_banner_mobile.jpg') %>"
+               alt="" />
+
+          <img class="d-none d-lg-block w-100 lazyload"
+               data-src="<%= asset_path('homepage/big_promo_banner.jpg') %>"
+               data-srcset="<%= image_source_set('homepage/big_promo_banner') %>"
+               alt="" />
+
+          <div class="homepage-taxon-box-wide-text">
+            <h3 class=""><%= Spree.t('homepage.big_promo_banner_text') %></h3>
+            <%= link_to Spree.t('homepage.shop_now'), '/t/fashion-store/sale', class: 'btn spree-btn btn-primary' %>
+          </div>
+        <%# end %>
+      </div>
+    </div>
+
+
+  </div>
+</div>
+
+<div data-product-carousel data-product-carousel-taxon-id='<%= Spree::Taxon.find_by(permalink: 'bestsellers')&.id %>' class="my-5 mb-ly-3"></div>
+
+<div class="container my-4 mb-lg-5">
+  <div class="row text-uppercase">
+    <div class="col-12 col-lg-6">
+      <%= link_to spree.nested_taxons_path('categories/home-workout') do %>
+        <div class="homepage-bottom-box text-center mb-3">
+          <img class="w-100 lazyload"
+            data-src="<%= asset_path('homepage/promo_banner_left.jpg') %>"
+            data-srcset="<%= image_source_set('homepage/promo_banner_left') %>"
+            alt="<%= Spree.t('homepage.be_healthy')%>" />
+
+          <div class="homepage-bottom-box-inner" role="img" aria-label="<%= Spree.t('homepage.new_collection') %>">
+            <div class="homepage-bottom-box-inner-small-text">
+              <%= Spree.t('homepage.be_healthy') %>
+            </div>
+            <div class="homepage-bottom-box-inner-big-text">
+              <%= Spree.t('homepage.home_workout') %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="col-12 col-lg-6">
+      <%= link_to spree.nested_taxons_path('categories/find-new-denim') do %>
+        <div class="homepage-bottom-box text-center mb-3">
+          <img class="w-100 lazyload"
+            data-src="<%= asset_path('homepage/promo_banner_right.jpg') %>"
+            data-srcset="<%= image_source_set('homepage/promo_banner_right') %>"
+            alt="<%= Spree.t('homepage.denim')%>" />
+
+          <div class="homepage-bottom-box-inner">
+            <div class="homepage-bottom-box-inner-small-text">
+              <%= Spree.t('homepage.denim') %>
+            </div>
+            <div class="homepage-bottom-box-inner-big-text">
+              <%= Spree.t('homepage.find_new_denim') %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

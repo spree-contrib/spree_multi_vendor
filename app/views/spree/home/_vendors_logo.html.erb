@@ -1,0 +1,13 @@
+<div class="container">
+  <div class="d-none d-md-block my-4 overflow-auto homepage-vendors-logo text-center">
+    <% Spree::Vendor.active.each do |vendor| %>
+      <%= link_to vendor_path(vendor.slug), class: "d-inline-block mx-4 my-3 homepage-vendors-logo-vendor" do %>
+        <% if asset_exists?("homepage/vendors_logo/#{vendor.slug}.png") %>
+          <img src="<%= asset_path("homepage/vendors_logo/#{vendor.slug}.png") %>" alt="<%= vendor.name %>" />
+        <% else %>
+          <h3 class="d-inline-block mb-0"><%= vendor.name %></h3>
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
+</div>
