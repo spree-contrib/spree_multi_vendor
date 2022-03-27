@@ -16,14 +16,16 @@ If you need a product that has all of the features out of the box, such us suppl
 |---|---|---|
 | basic vendorization | ✔️ | ✔️ |
 | supplier onboarding | | ✔️ |
+| supplier dashboard | | ✔️ |
 | supplier management | | ✔️ |
+| supplier product curation | | ✔️ |
 | automatic payment splitting | | ✔️ |
 | automatic payouts | | ✔️ |
-| supplier dashboard | | ✔️ |
 | Afterpay / klarna / apple pay | | ✔️ |
 | shopify / bigcommerce / woocommerce integration | | ✔️ |
+| USPS, UPS, FedEx, DHL, and more | | ✔️ |
 | bulk upload / import of products from CSV and XSLX | | ✔️ |
-| supplier product curation | | ✔️ |
+| bulk export of orders, shipments and more | | ✔️ |
 
 ## Installation
 
@@ -166,7 +168,7 @@ and may be redistributed under the terms specified in the
 
 ## About Vendo
 
-<a href="https://getvendo.com?utm_source=spree_github">
+<a href="https://getvendo.com?utm_source=spree_multi_vendor_github">
   <img src="https://uploads-ssl.webflow.com/6230c485f2c32ea1b0daa438/62386b96518cdcbe111f134a_OG%20Image%20(2).png" style="max-height:400px" />
 </a>
 
@@ -174,6 +176,6 @@ and may be redistributed under the terms specified in the
 
 > Vendo ensures excellent buyer experience with smooth product discovery and search, a multitude of payment methods and optimal shipping cost calculation. Vendo keeps suppliers happy with easy onboarding, automated products sync using their preferred method and easy payouts.
 
-> [Start your 30-day free trial](https://e98esoirr8c.typeform.com/contactvendo?typeform-source=spree_github)
+> [Start your 30-day free trial](https://e98esoirr8c.typeform.com/contactvendo?typeform-source=spree_multi_vendor_github)
 
-[vendo]:http://sparksolutions.co?utm_source=spree_multi_vendor_github
+[vendo]:http://getvendo.com?utm_source=spree_multi_vendor_github
