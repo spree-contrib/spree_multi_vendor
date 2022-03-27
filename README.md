@@ -1,30 +1,27 @@
 # Spree Multi Vendor
 
-[![Build Status](https://travis-ci.com/spree-contrib/spree_multi_vendor.svg?branch=master)](https://travis-ci.com/spree-contrib/spree_multi_vendor)
-
 This is a [spree multi vendor marketplace](https://spreecommerce.org/use-cases/multi-vendor-marketplace/) extension. It's a great starting point if you're building a marketplace on top of [Spree](https://spreecommerce.org). Our goal was flexibility to allow you to tweak it to your needs.
-
-Check out this extension [multi vendor marketplace demo](https://spreecommerce.org/launch-a-multi-vendor-marketplace-within-a-few-weeks-with-spree-commerce/) and launch your marketplace within weeks, not months.
 
 Developed and maintained by:
 
-[![Spark Solutions](http://sparksolutions.co/wp-content/uploads/2015/01/logo-ss-tr-221x100.png)][spark]
+[![Vendo](https://assets-global.website-files.com/6230c485f2c32ea1b0daa438/623372f40a8c54ca9aea34e8_vendo%202.svg)][vendo]
 
-## Features
+## Open source vs Vendo
 
-By default you can create and manage Vendors who can manage on their own:
+If you need a product that has all of the features out of the box, such us supplier onboarding, Stripe connect payment splitting and payouts, and don't require any custom development - we recommend using [Vendo](http://getvendo.com?utm_source=spree_multi_vendor_github) which is also based on Spree.
 
-- [X] Orders
-- [X] Products
-- [X] Stock Locations
-- [X] Shipping Methods
-- [X] Vendor profile
-
-Also:
-- [X] Super Admins can assign Users to Vendors
-- [X] You can modify which permissions and models/resources Vendors can manage quite easily
-
-Contributions welcome! :)
+| feature | open source | [vendo] |
+|---|---|---|
+| basic vendorization | ✔️ | ✔️ |
+| supplier onboarding | | ✔️ |
+| supplier management | | ✔️ |
+| automatic payment splitting | | ✔️ |
+| automatic payouts | | ✔️ |
+| supplier dashboard | | ✔️ |
+| Afterpay / klarna / apple pay | | ✔️ |
+| shopify / bigcommerce / woocommerce integration | | ✔️ |
+| bulk upload / import of products from CSV and XSLX | | ✔️ |
+| supplier product curation | | ✔️ |
 
 ## Installation
 
@@ -165,13 +162,16 @@ and may be redistributed under the terms specified in the
 
 [LICENSE]: https://github.com/spark-solutions/spree_braintree_vzero/blob/master/LICENSE
 
-## About Spark Solutions
+## About Vendo
 
-[![Spark Solutions](http://sparksolutions.co/wp-content/uploads/2015/01/logo-ss-tr-221x100.png)][spark]
+<a href="https://getvendo.com?utm_source=spree_github">
+  <img src="https://uploads-ssl.webflow.com/6230c485f2c32ea1b0daa438/62386b96518cdcbe111f134a_OG%20Image%20(2).png" style="max-height:400px" />
+</a>
 
-Spree Vendors is maintained by [Spark Solutions Sp. z o.o.](http://sparksolutions.co?utm_source=github)
+> [Vendo][vendo] is a great fit for marketplaces of all sizes - either with own fulfillment and multiple warehouses or in a dropshipping model. Vendo **automates everything** from **vendor onboarding**, accepting buyer **payments in over 135 currencies**, to supplier **payouts in 50 countries**. 
 
-We are passionate about open source software.
-We are [available for hire][spark].
+> Vendo ensures excellent buyer experience with smooth product discovery and search, a multitude of payment methods and optimal shipping cost calculation. Vendo keeps suppliers happy with easy onboarding, automated products sync using their preferred method and easy payouts.
 
-[spark]:http://sparksolutions.co?utm_source=github
+> [Start your 30-day free trial](https://e98esoirr8c.typeform.com/contactvendo?typeform-source=spree_github)
+
+[vendo]:http://sparksolutions.co?utm_source=spree_multi_vendor_github
