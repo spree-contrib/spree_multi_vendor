@@ -1,0 +1,47 @@
+<% description = simple_format(@vendor.about_us, class: 'mb-0') %>
+<% short = truncate(description, separator: ' ', length: 200, escape: false) %>
+
+<div class="container">
+  <div class="row px-lg-3 mt-3 vendor-details">
+    <div class="col-12 text-uppercase text-center mt-4 mb-5 mb-sm-4">
+      <h1 class="mt-2 mb-4"><%= @vendor.name %></h1>
+    </div>
+    <div class="col-12 col-sm-6 col-lg-5 text-center pt-sm-4 pt-lg-3 pb-sm-5 vendor-details-image">
+      <% if @vendor.image.present? %>
+        <%= image_tag main_app.url_for(@vendor.image.attachment), class: 'mw-100' %>
+      <% end %>
+    </div>
+    <div class="col-12 col-sm-6 col-lg-5 offset-lg-1 mt-5 mt-sm-0 d-flex flex-column justify-content-center vendor-description">
+      <div class="vendor-details-about">
+        <% if description == short %>
+          <%= description %>
+        <% else %>
+          <div class="js-readMore">
+            <%= tag.div class: "js-readMore-short" do %>
+              <%= short %>
+            <% end %>
+
+            <%= tag.div class: "js-readMore-full d-none" do %>
+              <%= description %>
+            <% end %>
+
+            <div class="text-right">
+              <button class="text-primary btn btn-link px-0 js-readMore-showMore"><%= Spree.t(:read_more) %></button>
+              <button class="text-primary btn btn-link px-0 js-readMore-showLess d-none"><%= Spree.t(:read_less) %></button>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <hr/>
+
+  <div class="row">
+    <div class="col-12 mt-5 vendor-details-products">
+      <% cache(cache_key_for_vendor_products) do %>
+        <%= render template: @taxon ? 'spree/taxons/show' : 'spree/products/index' %>
+      <% end %>
+    </div>
+  </div>
+</div>

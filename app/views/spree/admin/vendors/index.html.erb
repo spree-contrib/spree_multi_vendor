@@ -23,15 +23,22 @@
           </div>
         </div>
       </div>
-      <div data-hook="admin_vendors_index_search_buttons" class="form-actions">
-        <%= button Spree.t(:filter_results), 'search' %>
-      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-12">
+    <% selected = params[:q][:state_eq].present? %>
+    <%= link_to Spree.t(:all), admin_vendors_path, class: "btn #{selected ? 'btn-outline-secondary' : 'btn-secondary'}" %>
+    <% Spree::Vendor.state_machines[:state].states.collect.each do |state| %>
+      <%= link_to Spree.t("vendor_states.#{state.name}"), params.permit(:per_page, {:q => [:name_cont]}).merge({ 'q[state_eq]': state.value }), class: "btn #{selected && params[:q][:state_eq] == state.value ? 'btn-secondary' : 'btn-outline-secondary'}" %>
     <% end %>
   </div>
-<% end %>
+</div>
 
 <%= render partial: 'spree/admin/shared/index_table_options', locals: { collection: @collection } %>
-
+    
 <% if @vendors.any? %>
   <table class="table sortable" data-hook="vendors_table" data-sortable-link="<%= update_positions_admin_vendors_url %>">
     <thead>
