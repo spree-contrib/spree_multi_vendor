@@ -19,6 +19,10 @@ module SpreeMultiVendor
       end
     end
 
+    def self.api_v1_available?
+      @@api_v1_available ||= defined?(Spree::Api::V1).present?
+    end
+
     config.to_prepare &method(:activate).to_proc
   end
 end
