@@ -1,3 +1,5 @@
+require_relative 'configuration'
+
 module SpreeMultiVendor
   class Engine < Rails::Engine
     require 'spree/core'
@@ -11,6 +13,10 @@ module SpreeMultiVendor
 
     initializer 'spree_multi_vendor.environment', before: :load_config_initializers do |_app|
       SpreeMultiVendor::Config = SpreeMultiVendor::Configuration.new
+    end
+
+    config.after_initialize do
+      ::Spree::PermittedAttributes.product_attributes << :vendor_id if SpreeMultiVendor::Config[:vendorized_models].include?('product')
     end
 
     def self.activate

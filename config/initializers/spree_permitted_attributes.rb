@@ -6,7 +6,5 @@ module Spree
 
     @@vendor_attributes = [:name, :about_us, :contact_us, :notification_email]
     @@vendor_attributes << :image if Spree.version.to_f >= 3.6
-
-    @@product_attributes << :vendor_id if SpreeMultiVendor::Config[:vendorized_models].include?('product')
   end
 end
