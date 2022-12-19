@@ -2,7 +2,6 @@ module SpreeMultiVendor::Spree::Api::BaseControllerDecorator
   Spree::Api::V1::BaseController.include(Spree::Api::VendorHelper) if SpreeMultiVendor::Engine.api_v1_available?
   Spree::Api::V2::BaseController.include(Spree::Api::VendorHelper)
 
-
   def self.prepended(base)
     base.helper_method :current_spree_vendor
   end
@@ -16,7 +15,5 @@ module SpreeMultiVendor::Spree::Api::BaseControllerDecorator
   end
 end
 
-if SpreeMultiVendor::Engine.api_v1_available?
-  Spree::Api::V1::BaseController.prepend SpreeMultiVendor::Spree::Api::BaseControllerDecorator
-end
-Spree::Api::V2::BaseController.prepend SpreeMultiVendor::Spree::Api::BaseControllerDecorator
+::Spree::Api::V2::BaseController.prepend SpreeMultiVendor::Spree::Api::BaseControllerDecorator
+::Spree::Api::V1::BaseController.prepend SpreeMultiVendor::Spree::Api::BaseControllerDecorator if SpreeMultiVendor::Engine.api_v1_available?

@@ -10,6 +10,4 @@ module SpreeMultiVendor::Spree::Api::V1::UsersControllerDecorator
   end
 end
 
-if SpreeMultiVendor::Engine.api_v1_available?
-  Spree::Api::V1::UsersController.prepend SpreeMultiVendor::Spree::Api::V1::UsersControllerDecorator
-end
+Spree::Api::V1::UsersController.prepend SpreeMultiVendor::Spree::Api::V1::UsersControllerDecorator if SpreeMultiVendor::Engine.api_v1_available?

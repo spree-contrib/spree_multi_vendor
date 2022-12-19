@@ -16,7 +16,4 @@ module SpreeMultiVendor
   end
 end
 
-if SpreeMultiVendor::Engine.api_v1_available?
-  ::Spree::Api::ApiHelpers.prepend(SpreeMultiVendor::Spree::Api::ApiHelpersDecorator)
-end
-
+::Spree::Api::ApiHelpers.prepend(SpreeMultiVendor::Spree::Api::ApiHelpersDecorator) if SpreeMultiVendor::Engine.api_v1_available?
