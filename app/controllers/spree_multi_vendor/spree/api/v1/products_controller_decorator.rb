@@ -6,4 +6,4 @@ module SpreeMultiVendor::Spree::Api::V1::ProductsControllerDecorator
   end
 end
 
-Spree::Api::V1::ProductsController.prepend SpreeMultiVendor::Spree::Api::V1::ProductsControllerDecorator
+Spree::Api::V1::ProductsController.prepend SpreeMultiVendor::Spree::Api::V1::ProductsControllerDecorator if SpreeMultiVendor::Engine.api_v1_available?

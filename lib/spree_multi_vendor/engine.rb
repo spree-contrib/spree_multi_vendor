@@ -25,6 +25,10 @@ module SpreeMultiVendor
       end
     end
 
+    def self.api_v1_available?
+      @@api_v1_available ||= Gem::Specification.find_all_by_name('spree_api_v1').any?
+    end
+
     config.to_prepare &method(:activate).to_proc
   end
 end
