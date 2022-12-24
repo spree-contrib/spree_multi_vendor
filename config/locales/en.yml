@@ -25,6 +25,7 @@ en:
         subject: Vendor notification
         thanks: Thanks
     vendor: Vendor
+    vendors: Vendors
     vendor_name: Vendor Name
     vendor_states:
       active: Active
