@@ -24,6 +24,7 @@ fr:
         subject: Notification vendeur
         thanks: Merci
     vendor: Vendeur
+    vendor: Vendeurs
     vendor_name: Nom du vendeur
     vendor_states:
       active: Actif
