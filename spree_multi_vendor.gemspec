@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.version     = SpreeMultiVendor.version
   s.summary     = 'Spree Commerce multi vendor marketplace extension'
   s.description = 'Spree Commerce multi vendor marketplace extension'
-  s.required_ruby_version = '>= 2.5'
+  s.required_ruby_version = '>= 3.0'
 
   s.author    = 'Spark Solutions'
   s.email     = 'we@sparksolutions.co'
@@ -29,7 +29,7 @@ Gem::Specification.new do |s|
   s.require_path = 'lib'
   s.requirements << 'none'
 
-  spree_version = '>= 4.3.0.rc1'
+  spree_version = '>= 4.7.0'
   s.add_dependency 'spree', spree_version
   s.add_dependency 'spree_backend', spree_version
   s.add_dependency 'spree_emails', spree_version
