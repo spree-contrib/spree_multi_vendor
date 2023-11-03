@@ -10,6 +10,10 @@ module Spree
       def vendor_state_options
         @vendor_state_options ||= Spree::Vendor.state_machines[:state].states.collect { |s| [Spree.t("vendor_states.#{s.name}"), s.value] }
       end
+
+      def vendor_tabs
+        Rails.application.config.spree_backend.tabs[:vendor]
+      end
     end
   end
 end

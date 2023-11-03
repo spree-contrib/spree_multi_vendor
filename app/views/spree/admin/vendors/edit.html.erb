@@ -1,7 +1,4 @@
-<% content_for :page_title do %>
-  <%= link_to plural_resource_name(Spree::Vendor), spree.admin_vendors_url %> /
-  <%= @vendor.name %>
-<% end %>
+<%= render partial: 'spree/admin/vendors/tabs', locals: { current: :details } %>
 
 <%= form_for [:admin, @vendor] do |f| %>
   <fieldset>
