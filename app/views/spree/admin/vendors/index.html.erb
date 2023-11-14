@@ -66,9 +66,9 @@
             <!-- Add translation icon support -->
             <%= link_to_with_icon 'translate',
                                   nil,
-                                  spree.admin_translations_path('vendor', vendor.id),
+                                  spree.translations_admin_vendor_path(vendor.id),
                                   title: Spree.t(:'i18n.translations'),
-                                  class: 'btn btn-sm btn-primary' if defined? (SpreeGlobalize)%>
+                                  class: 'btn btn-sm btn-primary' %>
           </td>
         </tr>
       <% end %>
