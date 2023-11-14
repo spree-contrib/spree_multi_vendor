@@ -1,6 +1,11 @@
 module Spree
   class Vendor < Spree::Base
     extend FriendlyId
+    include TranslatableResource
+    include TranslatableResourceSlug
+
+    TRANSLATABLE_FIELDS = %i[name about_us contact_us slug].freeze
+    translates(*TRANSLATABLE_FIELDS)
 
     acts_as_paranoid
     acts_as_list column: :priority
@@ -46,16 +51,6 @@ module Spree
 
     def update_notification_email(email)
       update(notification_email: email)
-    end
-
-    # Spree Globalize support
-    # https://github.com/spree-contrib/spree_multi_vendor/issues/104
-    if defined?(SpreeGlobalize)
-      attr_accessor :translations_attributes
-      translates :name,
-                 :about_us,
-                 :contact_us,
-                 :slug, fallbacks_for_empty_translations: true
     end
 
     private
