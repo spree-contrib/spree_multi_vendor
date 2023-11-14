@@ -11,15 +11,13 @@
         <%= f.text_field :name, class: 'form-control' %>
       <% end %>
     </div>
-    <% if Spree.version.to_f >= 3.6 %>
-      <div class="form-group">
-        <%= f.field_container :image do %>
-          <%= f.label :image %>
-          <%= f.file_field :image %>
-          <%= image_tag main_app.url_for(@vendor.image.url(:small)) if @vendor.image %>
-        <% end %>
-      </div>
-    <% end %>
+    <div class="form-group">
+      <%= f.field_container :image do %>
+        <%= f.label :image %>
+        <%= f.file_field :image %>
+        <%= image_tag main_app.url_for(@vendor.image.url(:small)) if @vendor.image %>
+      <% end %>
+    </div>
     <div class="form-group">
       <%= f.field_container :about_us do %>
         <%= f.label :about_us %>

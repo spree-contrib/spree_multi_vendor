@@ -16,7 +16,7 @@ module Spree
               uniqueness: { case_sensitive: false }
 
     validates :slug, uniqueness: true
-    validates_associated :image if Spree.version.to_f >= 3.6
+    validates_associated :image
 
     validates :notification_email, email: true, allow_blank: true
 
