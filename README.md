@@ -4,13 +4,13 @@ This is a spree [multi vendor marketplace](https://getvendo.com) extension. It's
 
 ## Developed by
 
-[![Vendo](https://assets-global.website-files.com/6230c485f2c32ea1b0daa438/623372f40a8c54ca9aea34e8_vendo%202.svg)](https://getvendo.com?utm_source=spree_multi_vendor_github)
+[![Vendo](https://cdn.getvendo.com/assets/vendo-logo-4bda02af8c99bc2ecc5a400120f0ebe4eafcd385e02e25f198a8c355ab75d1ff.png)](https://www.getvendo.com/marketplace-platform)
 
-> All-in-one platform for all your multi-vendor Marketplace needs. [Get your free account](https://app.getvendo.com/users/new?utm_source=spree_multi_vendor_github)
+> All-in-one platform for all your multi-vendor Marketplace needs. [Get started](https://www.getvendo.com/get-started?utm_source=spree_multi_vendor_github)
 
 ## Open source vs Vendo
 
-If you need a product that has all of the features out of the box, such us supplier onboarding, Stripe connect payment splitting and payouts, and don't require any custom development - we recommend using [Vendo](https://app.getvendo.com/users/new?utm_source=spree_multi_vendor_github).
+If you need a product that has all of the features out of the box, such us supplier onboarding, Stripe connect payment splitting and payouts, and don't require any custom development - we recommend using [Vendo](https://www.getvendo.com/marketplace-platform).
 
 | feature | open source | [vendo] |
 |---|---|---|
@@ -159,19 +159,19 @@ pull request.
 
 ## License
 
-Spree Multi Vendor is copyright © 2017-2021
-[Spark Solutions Sp. z o.o.][spark]. It is free software,
+Spree Multi-Vendor is copyright © 2017-2023
+[Vendo Connect Inc][vendo]. It is free software,
 and may be redistributed under the terms specified in the
 [LICENCE](LICENSE) file.
 
-[LICENSE]: https://github.com/spark-solutions/spree_braintree_vzero/blob/master/LICENSE
+[LICENSE]: https://github.com/spree-contrib/spree_multi_vendor/blob/main/LICENSE
 
 ## About Vendo
 
-> [Vendo][vendo] is a great fit for marketplaces of all sizes - either with own fulfillment and multiple warehouses or in a dropshipping model. Vendo **automates everything** from **vendor onboarding**, accepting buyer **payments in over 135 currencies**, to supplier **payouts in 50 countries**. 
+> [Vendo][vendo] is a great fit for marketplaces of all sizes - either with its own fulfillment and multiple warehouses or in a dropshipping model. Vendo **automates everything** from **vendor onboarding**, accepting buyer **payments in over 135 currencies**, to supplier **payouts in 50 countries**. 
 
-> Vendo ensures excellent buyer experience with smooth product discovery and search, a multitude of payment methods and optimal shipping cost calculation. Vendo keeps suppliers happy with easy onboarding, automated products sync using their preferred method and easy payouts.
+> Vendo ensures excellent buyer experience with smooth product discovery and search, many payment methods, and optimal shipping cost calculation. Vendo keeps suppliers happy with easy onboarding, automated product sync using their preferred method, and easy payouts.
 
-> [Get your free account](https://app.getvendo.com/users/new?utm_source=spree_multi_vendor_github)
+> [Get started](https://www.getvendo.com/get-started)
 
-[vendo]:https://app.getvendo.com/users/new?utm_source=spree_multi_vendor_github
+[vendo]:https://www.getvendo.com/marketplace-platform
