@@ -71,11 +71,11 @@ describe Spree::Order do
     end
 
     describe '#vendor_subtotal' do
-      it { expect(order.vendor_subtotal(vendor)).to eq(320) }
+      it { expect(order.vendor_subtotal(vendor)).to eq(270) }
     end
 
     describe '#display_subtotal' do
-      it { expect(order.display_vendor_subtotal(vendor).to_s).to eq('$320.00') }
+      it { expect(order.display_vendor_subtotal(vendor).to_s).to eq('$270.00') }
     end
 
     describe '#vendor_pre_tax_item_amount' do

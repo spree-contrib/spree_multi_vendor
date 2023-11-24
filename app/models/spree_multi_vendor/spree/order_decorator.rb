@@ -22,9 +22,7 @@ module SpreeMultiVendor::Spree::OrderDecorator
   end
 
   def vendor_subtotal(vendor)
-    vendor_pre_tax_item_amount(vendor) +
-      vendor_pre_tax_ship_amount(vendor) +
-      vendor_additional_tax_total(vendor)
+    vendor_line_items(vendor).sum(&:total)
   end
 
   def vendor_promo_total(vendor)
