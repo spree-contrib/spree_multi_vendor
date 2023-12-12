@@ -1,0 +1,182 @@
+version: 2.1
+
+defaults: &defaults
+  parameters: &default_parameters
+    ruby_image:
+      type: string
+    redis_image:
+      type: string
+    restore_cache_key_1:
+      type: string
+      default: 'spree-bundle-v10-ruby-3-2-{{ .Branch }}'
+    restore_cache_key_2:
+      type: string
+      default: spree-bundle-v10-ruby-3-2
+    save_cache_key:
+      type: string
+      default: "n"
+    run_file_path:
+      type: string
+    rails_version:
+      type: string
+      default: '~> 7.0.0'
+    store_artefacts:
+      type: boolean
+      default: false
+  environment: &environment
+      CIRCLE_TEST_REPORTS: /tmp/test-results
+      CIRCLE_ARTIFACTS: /tmp/test-artifacts
+      BUNDLE_JOBS: 4
+      BUNDLE_RETRY: 3
+      BUNDLE_PATH: ~/spree/vendor/bundle
+      RAILS_VERSION: << parameters.rails_version >>
+  working_directory: ~/spree
+  docker:
+    - image: &ruby_image << parameters.ruby_image >>
+    - image: &redis_image << parameters.redis_image >>
+
+
+jobs:
+  run_test: &run_test
+    <<: *defaults
+    steps: &default_steps
+      - checkout
+      - restore_cache:
+          keys:
+            - << parameters.restore_cache_key_1 >>
+            - << parameters.restore_cache_key_2 >>
+      - run:
+          name: Allow executing given file
+          command: chmod +x << parameters.run_file_path >>
+      - run:
+          name: Run << parameters.run_file_path >> file
+          command: bash << parameters.run_file_path >>
+      - when:
+          condition: << parameters.save_cache_key >>
+          steps:
+              - save_cache:
+                  key: << parameters.save_cache_key >>
+                  paths:
+                    - ~/spree/vendor/bundle
+      - when:
+          condition: <<  parameters.store_artefacts >>
+          steps:
+              - store_artifacts:
+                  path: /tmp/test-artifacts
+                  destination: test-artifacts
+              - store_artifacts:
+                  path: /tmp/test-results
+                  destination: raw-test-output
+              - store_test_results:
+                  path: ~/rspec
+
+  tests_postgres:
+    <<: *run_test
+    parallelism: << parameters.parallelism >>
+    parameters:
+        <<: *default_parameters
+        postgres_image:
+            type: string
+        parallelism:
+            type: integer
+            default: 3
+    environment:
+      <<: *environment
+      DB: postgres
+      DB_HOST: localhost
+      DB_USERNAME: postgres
+    docker:
+      - image: *ruby_image
+      - image: << parameters.postgres_image >>
+        environment:
+          POSTGRES_USER: postgres
+      - image: *redis_image
+
+  tests_mysql:
+    <<: *run_test
+    parallelism: << parameters.parallelism >>
+    parameters:
+        <<: *default_parameters
+        mysql_image:
+            type: string
+        parallelism:
+            type: integer
+            default: 3
+    environment:
+      <<: *environment
+      DB: mysql
+      DB_HOST: 127.0.0.1
+      DB_USERNAME: root
+      COVERAGE: true
+      COVERAGE_DIR: /tmp/workspace/simplecov
+    docker:
+      - image: *ruby_image
+      - image: *redis_image
+      - image: << parameters.mysql_image >>
+        command: [--default-authentication-plugin=mysql_native_password]
+
+  send_test_coverage:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: /tmp/workspace
+      - run:
+          name: Allow executing given file
+          command: chmod +x << parameters.run_file_path >>
+      - run:
+          name:  Send test coverage
+          command: bash << parameters.run_file_path >>
+          
+
+workflows:
+  version: 2
+  main:
+    jobs:
+      - run_test:
+          name: bundle_ruby_3_0
+          restore_cache_key_1: "spree-dashboard-bundle-v10-ruby-3-0-{{ .Branch }}"
+          restore_cache_key_2: "spree-dashboard-bundle-v10-ruby-3-0"
+          ruby_image: circleci/ruby:3.0-node-browsers
+          redis_image: circleci/redis:6.2-alpine
+          run_file_path: ./.circleci/bundle_ruby_3_0.sh
+          save_cache_key: spree-dashboard-bundle-v10-ruby-3-0-{{ checksum "Gemfile.lock" }}
+      - run_test:
+          name: bundle_ruby_3_2
+          ruby_image: cimg/ruby:3.2.0-browsers
+          redis_image: circleci/redis:6.2-alpine
+          run_file_path: ./.circleci/bundle_ruby_3_2.sh
+          save_cache_key: spree-dashboard-bundle-v10-ruby-3-2-{{ checksum "Gemfile.lock" }}
+      - tests_postgres:
+          name: tests_ruby_3_2_rails_7_1_postgres
+          parallelism: 8
+          rails_version: '~> 7.1.0'
+          ruby_image: cimg/ruby:3.2.0-browsers
+          redis_image: circleci/redis:6.2-alpine
+          postgres_image: circleci/postgres:12-alpine
+          store_artefacts: true
+          run_file_path: ./.circleci/tests_database_ci.sh
+          requires:
+              - bundle_ruby_3_2
+      - tests_postgres:
+          name: tests_ruby_3_0_rails_7_0_postgres
+          parallelism: 8
+          rails_version: '~> 7.0.0'
+          ruby_image: circleci/ruby:3.0-node-browsers
+          redis_image: circleci/redis:6.2-alpine
+          postgres_image: circleci/postgres:12-alpine
+          store_artefacts: true
+          run_file_path: ./.circleci/tests_database_ci.sh
+          requires:
+              - bundle_ruby_3_0
+      - tests_mysql:
+          name: tests_ruby_3_2_rails_7_1_mysql
+          rails_version: '~> 7.1.0'
+          ruby_image: cimg/ruby:3.2.0-browsers
+          redis_image: circleci/redis:6.2-alpine
+          mysql_image: circleci/mysql:8-ram
+          store_artefacts: true
+          run_file_path: ./.circleci/tests_database_ci.sh
+          requires:
+              - bundle_ruby_3_2
+       
