@@ -36,7 +36,7 @@ describe Spree::Vendor do
       expect { vendor.save! }.to change(Spree::StockLocation, :count).by(1)
       stock_location = Spree::StockLocation.last
       expect(vendor.stock_locations.first).to eq stock_location
-      expect(stock_location.country).to eq Spree::Country.default
+      expect(stock_location.country).to eq Spree::Store.default.default_country
     end
 
     it 'should act as list' do
