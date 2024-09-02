@@ -1,16 +1,16 @@
 # Spree Multi Vendor
 
-This is a spree [multi vendor marketplace](https://getvendo.com) extension. It's a great starting point if you're building a marketplace on top of [Spree](https://spreecommerce.org). Our goal was flexibility to allow you to tweak it to your needs.
+This is a spree [multi vendor marketplace](https://spreecommerce.org/marketplace-ecommerce/) extension. It's a great starting point if you're building a marketplace on top of [Spree](https://spreecommerce.org). Our goal was flexibility to allow you to tweak it to your needs.
 
 ## Developed by
 
 [![Vendo](https://cdn.getvendo.com/assets/vendo-logo-4bda02af8c99bc2ecc5a400120f0ebe4eafcd385e02e25f198a8c355ab75d1ff.png)](https://www.getvendo.com/marketplace-platform)
 
-> All-in-one platform for all your multi-vendor Marketplace needs. [Get started](https://www.getvendo.com/get-started?utm_source=spree_multi_vendor_github)
+> All-in-one platform for all your multi-vendor Marketplace needs.
 
 ## Open source vs Vendo
 
-If you need a product that has all of the features out of the box, such us supplier onboarding, Stripe connect payment splitting and payouts, and don't require any custom development - we recommend using [Vendo](https://www.getvendo.com/marketplace-platform).
+If you need a product that has all of the features out of the box, such us supplier onboarding, Stripe connect payment splitting and payouts, and don't require any custom development - we recommend using [Vendo Marketplace platform](https://www.getvendo.com/marketplace-platform).
 
 | feature | open source | [vendo] |
 |---|---|---|
