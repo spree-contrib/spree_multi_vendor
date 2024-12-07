@@ -9,7 +9,7 @@ module SpreeMultiVendor
     def execute
       products = by_vendors(super)
 
-      products.distinct
+      products.try(:distinct)
     end
 
     private
