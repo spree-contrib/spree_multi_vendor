@@ -2,9 +2,16 @@
 
 This is a spree [multi vendor marketplace](https://spreecommerce.org/marketplace-ecommerce/) extension. It's a great starting point if you're building a marketplace on top of [Spree](https://spreecommerce.org). Our goal was flexibility to allow you to tweak it to your needs.
 
-## Community edition vs Enterprise edition
+## Community Edition vs Enterprise Edition
 
 If you need a product that has all of the features out of the box, such as supplier onboarding, Stripe Connect payment splitting and payouts, and doesn't require any custom development, we recommend using [Spree Enterprise Edition](https://spreecommerce.org/pricing/).
+
+### [Multi-vendor Marketplace](https://spreecommerce.org/marketplace-ecommerce/) Enterprise Edition
+Run your own marketplace with multiple suppliers, each with a dedicated supplier dashboard
+- [Marketplace eCommerce Capabilities](https://spreecommerce.org/docs/use-case/marketplace/capabilities)
+- [Marketplace eCommerce Admin Panel](https://spreecommerce.org/docs/use-case/marketplace/admin-dashboard)
+- [Marketplace eCommerce Vendor Panel](https://spreecommerce.org/docs/use-case/marketplace/vendor-dashboard)
+- [Marketplace eCommerce Customer Experience](https://spreecommerce.org/docs/use-case/marketplace/customer-ux)
 
 ## Installation
 
