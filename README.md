@@ -1,10 +1,16 @@
 > [!IMPORTANT]
 >
-> Multi Vendor is now [part of Spree Core with Spree 6](https://github.com/spree/spree/releases/tag/v6.0.0.beta2). This plugin is no longer needed.
+> [Multi Vendor Marketplace is now natively supported in Spree 6](https://spreecommerce.org/docs/developer/how-to/build-a-marketplace) - and it's much better than this extension:
+> * Seller onboarding and checklists
+> * Dedicated Seller API / SDK and Seller Panel which you can white-label
+> * Automatic order and payment splitting
+> * Payment-agnostic money transfers and payouts, also for reversal transfers for refunds
+>
+>  [Installation instructions](https://spreecommerce.org/docs/developer/getting-started/quickstart)
 
 # Spree Commerce Multi Vendor Marketplace Open Source
 
-This is a Spree Commerce open-source [multi vendor marketplace](https://spreecommerce.org/marketplace-ecommerce/) extension. It's a great starting point if you're building a marketplace on top of [Spree](https://spreecommerce.org). Our goal was flexibility to allow you to tweak it to your needs.
+This is a Spree Commerce open-source [multi-vendor marketplace](https://spreecommerce.org/marketplace-ecommerce/) extension. It's a great starting point if you're building a marketplace on top of [Spree](https://spreecommerce.org). Our goal was flexibility to allow you to tweak it to your needs.
 
 ## License
 
